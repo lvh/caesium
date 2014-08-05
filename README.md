@@ -2,8 +2,9 @@
 
 caesium is a Clojure binding to the Networking and Cryptography (NaCl) library.
 
-It is built on top of [kalium](https://github.com/abstractj/kalium), the Java
-binding to [Networking and Cryptography](http://nacl.cr.yp.to/) library by
+It aims to provide an idiomatic Clojure API on top of
+[kalium](https://github.com/abstractj/kalium), the Java binding to
+[Networking and Cryptography](http://nacl.cr.yp.to/) library by
 [Daniel J. Bernstein](http://cr.yp.to/djb.html). In turn, kalium builds on
 cool software like [libsodium](https://github.com/jedisct1/libsodium) and
 [RbNaCl](https://github.com/cryptosphere/rbnacl).
