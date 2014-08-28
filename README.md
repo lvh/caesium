@@ -1,16 +1,23 @@
 # caesium
 
-caesium is a Clojure binding to the Networking and Cryptography (NaCl) library.
+caesium is a Clojure binding for libsodium.
 
-It aims to provide an idiomatic Clojure API on top of
-[kalium](https://github.com/abstractj/kalium), the Java binding to
-[Networking and Cryptography](http://nacl.cr.yp.to/) library by
-[Daniel J. Bernstein](http://cr.yp.to/djb.html). In turn, kalium builds on
-cool software like [libsodium](https://github.com/jedisct1/libsodium) and
-[RbNaCl](https://github.com/cryptosphere/rbnacl).
+It builds on top of [kalium][kalium], the Java binding to
+[libsodium][libsodium], which in turn is a more convenient fork of
+the original [NaCl][nacl] library by [djb][djb].
 
-"Real" development should most likely happen in the parent library, so that
-this one can stay a simple bunch of wrappers.
+[kalium]: https://github.com/abstractj/kalium
+[nacl]: http://nacl.cr.yp.to/.
+[djb]: http://cr.yp.to/djb.html
+[libsodium]: https://github.com/jedisct1/libsodium
+
+"Real" development should most likely happen in the parent library, so
+that this one can stay a simple bunch of wrappers.
+
+One difference between kalium and caesium is that kalium follows the
+structure of libsodium. For example, in libsodium, BLAKE2b lives in
+`crypto_generichash`. In kalium, it lives in `crypto.Hash`. In
+caesium, it lives in the `crypto_generichash` namespace.
 
 ## License
 
