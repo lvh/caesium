@@ -1,4 +1,4 @@
-(ns caesium.crypto.hash
+(ns caesium.crypto.generichash
   (:import (org.abstractj.kalium.crypto Hash)))
 
 (def sixteen-nuls (repeat 16 (byte 0)))

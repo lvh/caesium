@@ -1,5 +1,5 @@
-(ns caesium.crypto.hash-test
-  (:require [caesium.crypto.hash :refer :all]
+(ns caesium.crypto.generichash-test
+  (:require [caesium.crypto.generichash :refer :all]
             [clojure.test :refer :all])
   (:import (java.util Arrays)))
 
