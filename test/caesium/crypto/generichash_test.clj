@@ -1,26 +1,7 @@
 (ns caesium.crypto.generichash-test
   (:require [caesium.crypto.generichash :refer :all]
-            [clojure.test :refer :all])
-  (:import (java.util Arrays)))
-
-(defn array-eq [a b] (Arrays/equals a b))
-
-(defn unhexify [s]
-  (let [encoded-bytes (partition 2 s)
-        hex-pair->int (fn [[x y]]
-                        (unchecked-byte (Integer/parseInt (str x y) 16)))
-        decoded-bytes (map hex-pair->int encoded-bytes)]
-    (into-array Byte/TYPE decoded-bytes)))
-
-(deftest unhexify-test
-  (testing "unhexify works"
-    (are [hex raw] (= (vec (unhexify hex))
-                      (vec (byte-array raw)))
-         "" []
-         "01" [1]
-         "02" [2]
-         "ff" [-1]
-         "010203" [1 2 3])))
+            [caesium.crypto]
+            [clojure.test :refer :all]))
 
 (deftest blake2b-test-vectors-test
   (testing "blake2b works directly"
