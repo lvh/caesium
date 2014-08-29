@@ -11,13 +11,14 @@ the original [NaCl][nacl] library by [djb][djb].
 [djb]: http://cr.yp.to/djb.html
 [libsodium]: https://github.com/jedisct1/libsodium
 
-"Real" development should most likely happen in the parent library, so
-that this one can stay a simple bunch of wrappers.
-
 ## Differences between kalium and caesium
 
 Despite caesium being a thin wrapper around kalium, there are some
 differences, mostly in the interest of being more Clojure-friendly.
+
+"Real" development should most likely happen in the parent library, so
+that this one can stay a simple bunch of wrappers. However, this is
+just a generic rule, and convenience trumps it.
 
 Unlike kalium, caesium just exposes functions instead of instantiating
 objects. (It instantiates objects internally, but ideally you never
