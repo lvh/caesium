@@ -6,4 +6,4 @@ jdk:
 before_install:
   - sudo add-apt-repository ppa:shnatsel/dnscrypt -y
   - sudo apt-get update -qq
-  - sudo apt-get install -y libsodium
+  - sudo apt-get install -y libsodium4
