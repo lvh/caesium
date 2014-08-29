@@ -1,6 +1,6 @@
 (ns caesium.crypto.generichash-test
   (:require [caesium.crypto.generichash :refer :all]
-            [caesium.crypto]
+            [caesium.crypto.util :refer [unhexify array-eq]]
             [clojure.test :refer :all]))
 
 (deftest blake2b-kat-test
