@@ -3,7 +3,7 @@
             [caesium.crypto]
             [clojure.test :refer :all]))
 
-(deftest blake2b-test-vectors-test
+(deftest blake2b-kat-test
   (testing "blake2b works directly"
     (are [args expected] (array-eq (apply blake2b args)
                                    expected)
