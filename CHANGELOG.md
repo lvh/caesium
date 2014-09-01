@@ -1,6 +1,8 @@
 # 0.1.1
 
-First release on Clojars.
+This release will never be uploaded anywhere because the upstream
+dependency, kalium, does not yet have a release that supports all
+features caesium exposes.
 
 - generichash (BLAKE2b) support
 - secretbox (XSalsa20 + Poly1305-AES) support
