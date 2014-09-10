@@ -1,6 +1,7 @@
 (ns caesium.crypto.generichash
   (:import (org.abstractj.kalium.crypto Hash)))
 
+(def ^:private empty-byte-array (byte-array 0))
 (def ^:private sixteen-nuls (byte-array 16))
 
 (defn blake2b
@@ -11,5 +12,5 @@
   ([message & {salt :salt key :key personal :personal
                :or {salt sixteen-nuls
                     personal sixteen-nuls
-                    key (byte-array 0)}}]
+                    key empty-byte-array}}]
      (.blake2 (new Hash) message key salt personal)))
