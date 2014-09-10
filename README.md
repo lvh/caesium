@@ -1,5 +1,7 @@
 # caesium
 
+![https://dl.dropboxusercontent.com/u/38476311/Logos/caesium.png][caesium spectral lines]g
+
 caesium is a Clojure binding for libsodium.
 
 It builds on top of [kalium][kalium], the Java binding to
