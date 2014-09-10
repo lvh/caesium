@@ -1,6 +1,6 @@
 # caesium
 
-![https://dl.dropboxusercontent.com/u/38476311/Logos/caesium.png][caesium spectral lines]g
+![caesium spectral lines](https://dl.dropboxusercontent.com/u/38476311/Logos/caesium.png)
 
 caesium is a Clojure binding for libsodium.
 
