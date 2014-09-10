@@ -12,3 +12,4 @@
                :or {salt sixteen-nuls
                     personal sixteen-nuls
                     key (byte-array 0)}}]
+     (.blake2 (new Hash) message key salt personal)))
