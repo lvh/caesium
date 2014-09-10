@@ -9,5 +9,6 @@
   ([message]
      (.blake2 (new Hash) message))
   ([message & {salt :salt key :key personal :personal
-               :or {salt sixteen-nuls key sixteen-nuls personal sixteen-nuls}}]
-     (.blake2 (new Hash) message salt key personal)))
+               :or {salt sixteen-nuls
+                    personal sixteen-nuls
+                    key (byte-array 0)}}]
