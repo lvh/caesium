@@ -1,7 +1,7 @@
 (ns caesium.crypto.generichash
   (:import (org.abstractj.kalium.crypto Hash)))
 
-(def sixteen-nuls (repeat 16 (byte 0)))
+(def ^:private sixteen-nuls (repeat 16 (byte 0)))
 
 (defn blake2b
   "Computes the BLAKE2b digest of the given message, with optional
