@@ -4,7 +4,14 @@ jdk:
   - oraclejdk7
   - oraclejdk8
 before_install:
-  - sudo add-apt-repository ppa:shnatsel/dnscrypt -y
   - sudo apt-get update -qq
+  - sudo apt-get -y install build-essential libtool autotools-dev automake checkinstall check git yasm
 install:
-  - sudo apt-get install -y libsodium4
+  - git clone git://github.com/jedisct1/libsodium.git
+  - cd libsodium
+  - git checkout tags/0.7.0
+  - ./autogen.sh
+  - ./configure && make check
+  - sudo checkinstall --install --pkgname libsodium --pkgversion 0.7.0 --nodoc
+  - sudo ldconfig
+  - cd ..
