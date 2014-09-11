@@ -1,3 +1,8 @@
+# 0.1.2
+
+As 0.1.1, but actually supporting those features, by bumping the
+kalium dependency to 0.3.0.
+
 # 0.1.1
 
 This release will never be uploaded anywhere because the upstream
