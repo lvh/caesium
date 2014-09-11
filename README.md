@@ -2,6 +2,8 @@
 
 ![caesium spectral lines](https://dl.dropboxusercontent.com/u/38476311/Logos/caesium.png)
 
+[![Build Status](https://travis-ci.org/lvh/caesium.svg?branch=master)](https://travis-ci.org/lvh/caesium)
+
 caesium is a Clojure binding for libsodium.
 
 It builds on top of [kalium][kalium], the Java binding to
