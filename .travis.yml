@@ -12,6 +12,6 @@ install:
   - git checkout tags/0.7.0
   - ./autogen.sh
   - ./configure && make check
-  - sudo checkinstall --install --pkgname libsodium --pkgversion 0.7.0 --nodoc
+  - sudo make install
   - sudo ldconfig
   - cd ..
