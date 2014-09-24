@@ -17,6 +17,14 @@ the original [NaCl][nacl] library by [djb][djb].
 [djb]: http://cr.yp.to/djb.html
 [libsodium]: https://github.com/jedisct1/libsodium
 
+## Documentation
+
+The most important documentation for caesium is actually the
+[documentation for libsodium][libsodiumdocs]. Since it's all just tiny
+wrappers around that, everything in it applies.
+
+[libsodiumdocs]: http://doc.libsodium.org
+
 ## Differences between kalium and caesium
 
 Despite caesium being a thin wrapper around kalium, there are some
