@@ -1,3 +1,10 @@
+# 0.2.0
+
+Added support for:
+
+- randombytes (caesium.randombytes)
+- sodium_init (caesium.core.sodium-init)
+
 # 0.1.2
 
 As 0.1.1, but actually supporting those features, by bumping the
