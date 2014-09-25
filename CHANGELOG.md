@@ -1,3 +1,20 @@
+# 0.3.0
+
+Type hinting, resulting in performance gains:
+
+- `randombytes` knows it's calling `Random`
+- `array-eq` knows it's working with byte arrays. (This might be a
+  regression if you were using it to compare non-byte arrays.)
+
+`*warn-on-reflection*` has been turned on to prevent future hinting
+issues.
+
+`caesium.crypto.util` has been renamed to `crypto.util`, because it
+broke the "follow libsodium" rule. Furthermore, there is nothing
+cryptographic about that module. (I'm not terribly happy about doing
+this, even though it's 0.x. Nonetheless, it's a band-aid that needed
+to be ripped off.)
+
 # 0.2.0
 
 Added support for:
