@@ -1,7 +1,9 @@
 (ns caesium.crypto.util
   (:import (java.util Arrays)))
 
-(defn array-eq [a b] (Arrays/equals a b))
+(defn array-eq [^bytes a ^bytes b]
+  "Compares two byte arrays for equality."
+  (Arrays/equals a b))
 
 (defn unhexify [s]
   (let [encoded-bytes (partition 2 s)
