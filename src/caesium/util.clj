@@ -1,4 +1,4 @@
-(ns caesium.crypto.util
+(ns caesium.util
   (:import (java.util Arrays)))
 
 (defn array-eq [^bytes a ^bytes b]

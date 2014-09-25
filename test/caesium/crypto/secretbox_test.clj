@@ -1,6 +1,6 @@
 (ns caesium.crypto.secretbox-test
   (:require [caesium.crypto.secretbox :refer :all]
-            [caesium.crypto.util :refer [array-eq unhexify]]
+            [caesium.util :refer [array-eq unhexify]]
             [clojure.test :refer :all]))
 
 (def message (byte-array [80 117 114 101 32 105 110 116 101 110 116 105 111 110 32 106 117 120 116 97 112 111 115 101 100]))

@@ -1,5 +1,5 @@
-(ns caesium.crypto.util-test
-  (:require [caesium.crypto.util :refer :all]
+(ns caesium.util-test
+  (:require [caesium.util :refer :all]
             [clojure.test :refer :all]))
 
 (deftest array-eq-test
