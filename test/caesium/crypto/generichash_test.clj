@@ -29,6 +29,7 @@
          :personal (.getBytes "fedcba9876543210")]
         (unhexify "9479874d504f0447d43d72a969c989c34032172276ac50077e0027277c3c8d867bee9ee314c8506e4e4a9b3030b989d3eb7b4c1826c8e0d56e6aa71b1d4cf388")))
   (testing "blake2b defaults are accurate"
-    (let [results (map #(apply blake2b %) blake2b-empty-args-variations)
-          empty-string-digest? (partial array-eq empty-string-digest)]
-      (is (every? empty-string-digest? results)))))
+    (doseq [args blake2b-empty-args-variations]
+      (is (array-eq (apply blake2b args)
+                    empty-string-digest)
+          (str "args: " args)))))
