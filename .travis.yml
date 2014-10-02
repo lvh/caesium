@@ -3,15 +3,8 @@ lein: lein2
 jdk:
   - oraclejdk7
   - oraclejdk8
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get -y install build-essential libtool autotools-dev automake checkinstall check git yasm
 install:
-  - git clone git://github.com/jedisct1/libsodium.git
-  - cd libsodium
-  - git checkout tags/0.7.0
-  - ./autogen.sh
-  - ./configure && make check
-  - sudo make install
-  - sudo ldconfig
-  - cd ..
+  - sudo apt-get -qq update
+  - sudo apt-get -y -qq -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
+  - wget https://b25518159d104e8997f8-d5f47ab458856b6ee0c2780ddf5e291c.ssl.cf5.rackcdn.com/libsodium-1.0.0_amd64.deb
+  - sudo dpkg -i libsodium-1.0.0_amd64.deb
