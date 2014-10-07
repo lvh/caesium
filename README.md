@@ -48,6 +48,19 @@ All APIs take `byte[]`, never `String`. While the API kalium uses
 makes sense when you're consuming it from Java, it's much simpler to
 just have function calls in Clojure.
 
+## Compatibility
+
+caesium uses [semver](http://semver.org/).
+
+I will try not to break backwards compatibility unnecessarily, even in
+major versions. However, since this is a security-sensitive library, I
+will actively remove functions or APIs that have serious security
+problems, instead of simply documenting the problem. Hence, despite
+the rapidly changing major version numbers, you are strongly
+encouraged to always upgrade to the latest version. If it breaks your
+code, that's a sign your code might have a previously undetected
+issue.
+
 ## License
 
 Copyright © 2014 the caesium authors (see AUTHORS)
