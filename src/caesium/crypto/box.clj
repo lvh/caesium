@@ -1,8 +1,24 @@
 (ns caesium.crypto.box
   "Bindings to the public-key authenticated encryption scheme."
-  (:import (org.abstractj.kalium.keys PublicKey
+  (:import (org.abstractj.kalium.keys KeyPair
+                                      PublicKey
                                       PrivateKey)
            org.abstractj.kalium.crypto.Box))
+
+(defn generate-keypair
+  "Generate a secret-key and corresponding public-key with `crypto_box_keypair`.
+  
+  If secret-key is provided as an argument, generate the corresponding public-key with `crypto_scalarmult_base`.
+
+  Returns a map containing the public and private key bytes (mutable arrays)."
+  ([]
+   (let [kp (KeyPair.)]
+     {:public (.toBytes (.getPublicKey kp))
+      :secret (.toBytes (.getPrivateKey kp)) }))
+  ([secret-key]
+   (let [kp (KeyPair. secret-key)]
+     {:public (.toBytes (.getPublicKey kp))
+      :secret secret-key})))
 
 (defn encrypt
   "Encrypt with `crypto_box_easy`.

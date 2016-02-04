@@ -3,7 +3,19 @@
             [caesium.util :refer :all]
             [clojure.test :refer :all]))
 
-;; These test values taken from Kalium
+(deftest box-keypair-generation
+  (testing "Simply generates new keypairs"
+    (is (let [kp1 (generate-keypair)
+              kp2 (generate-keypair)]
+          (and (not (array-eq (:public kp1) (:public kp2)))
+               (not (array-eq (:secret kp1) (:secret kp2)))))))
+  (testing "Can generate the public-key from a secret-key"
+    (is (let [kp1 (generate-keypair)
+              kp2 (generate-keypair (:secret kp1))]
+          (array-eq (:public kp1)
+                    (:public kp2))))))
+
+;; These values taken from Kalium's test suite
 (def nonce
   (unhexify "69696ee955b62b73cd62bda875fc73d68219e0036b7a0b37"))
 (def plaintext
