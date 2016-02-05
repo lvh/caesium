@@ -25,11 +25,11 @@
 
   Please note that contrary to Kalium, it only accepts keys in byte array form. It also returns a mutable byte array."
   [^bytes public-key
-   ^bytes private-key
+   ^bytes secret-key
    nonce
    plaintext]
   (let [pbk (PublicKey. public-key)
-        pvk (PrivateKey. private-key)]
+        pvk (PrivateKey. secret-key)]
     (.encrypt (Box. pbk pvk) nonce plaintext)))
 
 (defn decrypt
@@ -37,9 +37,9 @@
 
   Please note that contrary to Kalium, it only accepts keys in byte array form. It also returns a mutable byte array."
   [^bytes public-key
-   ^bytes private-key
+   ^bytes secret-key
    nonce
    ciphertext]
   (let [pbk (PublicKey. public-key)
-        pvk (PrivateKey. private-key)]
+        pvk (PrivateKey. secret-key)]
     (.decrypt (Box. pbk pvk) nonce ciphertext)))
