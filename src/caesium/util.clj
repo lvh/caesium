@@ -1,13 +1,13 @@
 (ns caesium.util
-  (:import (java.util Arrays)))
+  (:import (java.util Arrays)
+           (org.abstractj.kalium.encoders Encoder)))
 
 (defn array-eq [^bytes a ^bytes b]
   "Compares two byte arrays for equality."
   (Arrays/equals a b))
 
 (defn unhexify [s]
-  (let [encoded-bytes (partition 2 s)
-        hex-pair->int (fn [[x y]]
-                        (unchecked-byte (Integer/parseInt (str x y) 16)))
-        decoded-bytes (map hex-pair->int encoded-bytes)]
-    (into-array Byte/TYPE decoded-bytes)))
+  (.decode Encoder/HEX s))
+
+(defn hexify [b]
+  (.encode Encoder/HEX b))

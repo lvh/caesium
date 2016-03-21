@@ -21,3 +21,13 @@
          "02" [2]
          "ff" [-1]
          "010203" [1 2 3])))
+
+(deftest hexify-text
+  (testing "hexify works"
+    (are [hex raw] (= (hexify (byte-array raw))
+                      hex)
+         "" []
+         "01" [1]
+         "02" [2]
+         "ff" [-1]
+         "010203" [1 2 3])))
