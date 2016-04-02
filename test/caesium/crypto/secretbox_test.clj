@@ -5,20 +5,24 @@
    [caesium.vectors :as v]
    [clojure.test :refer :all]))
 
-(def message (byte-array [80 117 114 101 32 105 110 116 101 110 116 105 111 110 32 106 117 120 116 97 112 111 115 101 100]))
+(def ptext (v/hex-resource "vectors/secretbox/plaintext"))
 (def secret-key (byte-array (range 32)))
 
+(def n0 (s/int->nonce 0))
+(def n1 (s/int->nonce 1))
+
 (deftest secretbox-kat-test
-  (are [nonce ciphertext] (and (u/array-eq (s/encrypt secret-key nonce message)
-                                           ciphertext)
-                               (u/array-eq (s/decrypt secret-key nonce ciphertext)
-                                           message))
-    (s/int->nonce 0) (u/unhexify "cb97a2f8b60ea0cafd933dd497c0eddc1a7b8224b8c3d147393a06664a289eb8914c009137895b290f")
-    (s/int->nonce 1) (u/unhexify "74f47d0db1fc9d22265d85218cd546e1924ef845d27696ba971614282f0a6647a23b481a91dd20399a"))
+  (are [nonce ctext] (let [encrypted (s/encrypt secret-key nonce ptext)
+                           decrypted (s/decrypt secret-key nonce ctext)]
+                       (and (u/array-eq encrypted ctext)
+                            (u/array-eq decrypted ptext)))
+    n0 (v/hex-resource "vectors/secretbox/ciphertext0")
+    n1 (v/hex-resource "vectors/secretbox/ciphertext1"))
   (are [nonce ciphertext]
-      (thrown-with-msg? RuntimeException #"Decryption failed. Ciphertext failed verification"
-                        (s/decrypt secret-key nonce ciphertext))
-    (s/int->nonce 1) (u/unhexify "74f47d0db1fc9d22265d85218cd546e1924ef845d27696ba971614282f0a6647a23b481a91dd203990")))
+      (thrown-with-msg?
+       RuntimeException #"Decryption failed. Ciphertext failed verification"
+       (s/decrypt secret-key nonce ciphertext))
+    n1 (v/hex-resource "vectors/secretbox/forgery1")))
 
 (deftest int->nonce-test
   (testing "Turning numbers into nonces works"
