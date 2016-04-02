@@ -14,8 +14,7 @@
   (testing "generate public key from secret key"
     (is (let [kp1 (generate-keypair)
               kp2 (generate-keypair (:secret kp1))]
-          (array-eq (:public kp1)
-                    (:public kp2))))))
+          (array-eq (:public kp1) (:public kp2))))))
 
 (def nonce (v/hex-resource "vectors/box/nonce"))
 (def plaintext (v/hex-resource "vectors/box/plaintext"))
