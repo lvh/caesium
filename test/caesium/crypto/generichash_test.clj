@@ -34,7 +34,7 @@
       blake2b-empty-string-digest
 
       [(byte-array [90])]
-      (blake2b-vector digest-0)
+      (blake2b-vector "digest-0")
 
       [(.getBytes "The quick brown fox jumps over the lazy dog")
        :key (.getBytes "This is a super secret key. Ssshh!")
