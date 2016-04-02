@@ -7,7 +7,7 @@
    [caesium.util :as u]))
 
 (def ^:private hash-vector
-  (comp u/hex-resource (partial str "vectors/generichash/")))
+  (comp v/hex-resource (partial str "vectors/generichash/")))
 
 (def ^:private blake2b-vector
   (comp hash-vector (partial str "blake2b/")))
