@@ -1,3 +1,13 @@
+# 0.4.0
+
+@cbowdon added a bunch of features:
+
+- `crypto.box`, asymmetric encryption primitives
+- `crypto.sign`, asymmetric signatures
+- `generichash` now has SHA-256, SHA-512 bindings
+
+Added better linting tools to CI.
+
 # 0.3.0
 
 Type hinting, resulting in performance gains:
