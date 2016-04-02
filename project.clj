@@ -1,4 +1,4 @@
-(defproject caesium "0.4.0-SNAPSHOT"
+(defproject caesium "0.4.0"
   :description "libsodium for clojure"
   :url "https://github.com/lvh/caesium"
   :license {:name "Eclipse Public License"
