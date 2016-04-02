@@ -15,7 +15,7 @@
   (for [key-expr [[] [:key (byte-array 0)]]
         salt-expr [[] [:salt (byte-array 16)]]
         personal-expr [[] [:personal (byte-array 16)]]]
-    (flatten (conj [(byte-array 0)] key-expr salt-expr personal-expr))))
+    (concat [(byte-array 0)] key-expr salt-expr personal-expr)))
 
 (deftest blake2b-kat-test
   (testing "blake2b works directly"
