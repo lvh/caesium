@@ -8,12 +8,12 @@
   "Computes the BLAKE2b digest of the given message, with optional
   salt, key and personalization parameters."
   ([message]
-     (.blake2 (new Hash) message))
+   (.blake2 (new Hash) message))
   ([message & {salt :salt key :key personal :personal
                :or {salt sixteen-nuls
                     personal sixteen-nuls
                     key empty-byte-array}}]
-     (.blake2 (new Hash) message key salt personal)))
+   (.blake2 (new Hash) message key salt personal)))
 
 (defn sha256
   "Computes the SHA-256 digest of the given message with `crypto_hash_sha256`."

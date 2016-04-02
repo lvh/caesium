@@ -14,7 +14,7 @@
   ([]
    (let [kp (KeyPair.)]
      {:public (.toBytes (.getPublicKey kp))
-      :secret (.toBytes (.getPrivateKey kp)) }))
+      :secret (.toBytes (.getPrivateKey kp))}))
   ([secret-key]
    (let [kp (KeyPair. secret-key)]
      {:public (.toBytes (.getPublicKey kp))
