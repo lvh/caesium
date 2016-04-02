@@ -6,12 +6,12 @@
    [caesium.vectors :as v]))
 
 (deftest box-keypair-generation
-  (testing "Simply generates new keypairs"
+  (testing "generates new keypairs"
     (is (let [kp1 (generate-keypair)
               kp2 (generate-keypair)]
           (and (not (array-eq (:public kp1) (:public kp2)))
                (not (array-eq (:secret kp1) (:secret kp2)))))))
-  (testing "Can generate the public-key from a secret-key"
+  (testing "generate public key from secret key"
     (is (let [kp1 (generate-keypair)
               kp2 (generate-keypair (:secret kp1))]
           (array-eq (:public kp1)
