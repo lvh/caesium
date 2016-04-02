@@ -15,8 +15,7 @@
 
 (deftest unhexify-test
   (testing "unhexify works"
-    (are [hex raw] (= (vec (u/unhexify hex))
-                      (vec (byte-array raw)))
+    (are [hex raw] (= raw (vec (u/unhexify hex)))
       "" []
       "01" [1]
       "02" [2]
