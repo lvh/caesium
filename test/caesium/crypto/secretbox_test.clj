@@ -29,4 +29,4 @@
     (are [n nonce] (u/array-eq (s/int->nonce n) nonce)
       0 (byte-array 24)
       0M (byte-array 24)
-      1000000000000 (byte-array [0 -24 -44 -91 16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]))))
+      1000000000000 (byte-array (into [0 -24 -44 -91 16] (repeat 19 0))))))
