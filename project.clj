@@ -7,5 +7,8 @@
                  [org.abstractj.kalium/kalium "0.4.0" :scope "compile"]]
   :main ^:skip-aot caesium.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}}
+  :profiles {:uberjar {:aot :all}
+             :test {:plugins [[lein-cljfmt "0.3.0"]
+                              [lein-kibit "0.1.2"]
+                              [jonase/eastwood "0.2.3"]]}}
   :global-vars {*warn-on-reflection* true})
