@@ -2,8 +2,9 @@
   (:import (java.util Arrays)
            (org.abstractj.kalium.encoders Encoder)))
 
-(defn array-eq [^bytes a ^bytes b]
+(defn array-eq
   "Compares two byte arrays for equality."
+  [^bytes a ^bytes b]
   (Arrays/equals a b))
 
 (defn unhexify [s]
