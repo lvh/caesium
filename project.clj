@@ -1,6 +1,8 @@
-(defproject caesium "0.4.0"
+(defproject caesium "0.5.0-SNAPSHOT"
   :description "libsodium for clojure"
   :url "https://github.com/lvh/caesium"
+  :deploy-repositories [["releases" :clojars]
+                        ["snapshots" :clojars]]
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
