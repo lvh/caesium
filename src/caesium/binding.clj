@@ -35,8 +35,13 @@
   ;; TODO: how do I reference a crypto_generichash_state *?
 
   (^int crypto_hash_sha256_bytes [])
-
   (^int crypto_hash_sha256
+   [^bytes ^{Pinned {}} buf
+    ^bytes ^{Pinned {}} msg
+    ^long ^{LongLong {}} msglen])
+
+  (^int crypto_hash_sha512_bytes [])
+  (^int crypto_hash_sha512
    [^bytes ^{Pinned {}} buf
     ^bytes ^{Pinned {}} msg
     ^long ^{LongLong {}} msglen]))
