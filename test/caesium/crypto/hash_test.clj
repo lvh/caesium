@@ -1,7 +1,8 @@
 (ns caesium.crypto.hash-test
   (:require [caesium.crypto.hash :as h]
             [caesium.vectors :as v]
-            [clojure.test :refer [deftest is are]]))
+            [clojure.test :refer [deftest is are]]
+            [caesium.util :refer [array-eq]]))
 
 (def ^:private hash-vector
   (comp v/hex-resource (partial str "vectors/hash/")))
@@ -23,8 +24,8 @@
 (deftest sha-256-512-test
   "sha256 and 512 work directly"
   (are [f message expected] (array-eq expected (f message))
-    sha256 sha256-message (sha256-vector "digest-0")
-    sha256 empty-string (sha256-vector "digest-empty-string")
+    h/sha256 sha256-message (sha256-vector "digest-0")
+    h/sha256 empty-string (sha256-vector "digest-empty-string")
 
-    sha512 sha512-message (sha512-vector "digest-0")
-    sha512 empty-string (sha512-vector "digest-empty-string")))
+    h/sha512 sha512-message (sha512-vector "digest-0")
+    h/sha512 empty-string (sha512-vector "digest-empty-string")))
