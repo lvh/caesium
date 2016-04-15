@@ -52,6 +52,11 @@
 
 (assert (#{0 1} (.sodium_init sodium)))
 
+(defn prefix
+  "Gets the parts of the current namespace, minus the leading `caesium`."
+  []
+  (-> *ns* ns-name str (s/split #"\.") rest vec))
+
 (defmacro defconsts
   "Given constant names (syms) in the C pseudo-namespace corresponding
   to the current namespace, call the corresponding libsodium function
@@ -61,7 +66,7 @@
     `(do
        ~@(for [const consts]
            (let [name (-> const name (s/replace "-" "_") symbol)
-                 call (->> name (conj prefix) (s/join "_") (str ".") symbol)]
+                 call (->> name (conj (prefix)) (s/join "_") (str ".") symbol)]
              `(def ~const (~call sodium)))))))
 
 
