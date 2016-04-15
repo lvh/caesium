@@ -53,6 +53,9 @@
 (assert (#{0 1} (.sodium_init sodium)))
 
 (defmacro defconsts
+  "Given constant names (syms) in the C pseudo-namespace corresponding
+  to the current namespace, call the corresponding libsodium function
+  the get the constants and assign them to vars."
   [consts]
   (let [prefix (-> *ns* ns-name str (s/split #"\.") rest vec)]
     `(do
