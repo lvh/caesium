@@ -1,7 +1,7 @@
 (ns caesium.core
-  (:import (org.abstractj.kalium NaCl)))
+  (:require [caesium.binding :refer [sodium]]))
 
-(defn sodium-init
+(defn init
   "Initializes libsodium.
 
   This should be called once, when your application starts. It is
@@ -12,4 +12,4 @@
   problem: just run it synchronously in your application's init
   routine."
   []
-  (NaCl/init))
+  (.sodium_init sodium))

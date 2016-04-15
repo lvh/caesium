@@ -45,26 +45,3 @@
     (doseq [args blake2b-empty-args-variations]
       (is (array-eq (apply blake2b args) blake2b-empty-string-digest)
           (str "args: " args)))))
-
-(def empty-string (byte-array 0))
-
-(def sha256-message
-  (.getBytes "My Bonnie lies over the ocean, my Bonnie lies over the sea"))
-
-(def sha512-message
-  (.getBytes "My Bonnie lies over the ocean, Oh bring back my Bonnie to me"))
-
-(def ^:private sha256-vector
-  (comp hash-vector (partial str "sha256/")))
-
-(def ^:private sha512-vector
-  (comp hash-vector (partial str "sha512/")))
-
-(deftest sha-256-512-test
-  (testing "sha256 and 512 work directly"
-    (are [f message expected] (array-eq expected (f message))
-      sha256 sha256-message (sha256-vector "digest-0")
-      sha256 empty-string (sha256-vector "digest-empty-string")
-
-      sha512 sha512-message (sha512-vector "digest-0")
-      sha512 empty-string (sha512-vector "digest-empty-string"))))

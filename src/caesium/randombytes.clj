@@ -1,8 +1,8 @@
 (ns caesium.randombytes
-  (:import (org.abstractj.kalium.crypto Random)))
-
-(def ^:private ^Random random (new Random))
+  (:require [caesium.binding :refer [sodium]]))
 
 (defn randombytes
   [n]
-  (.randomBytes random n))
+  (let [buf (byte-array n)]
+    (.randombytes sodium buf n)
+    buf))
