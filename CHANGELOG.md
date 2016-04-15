@@ -1,3 +1,11 @@
+# 0.5.0
+
+Pretty much a rewrite. Now binds libsodium directly with jnr-ffi instead of
+using `kalium`.
+
+`blake2`, `sha256`, `sha512` were moved from `crypto.generichash` to
+`crypto.hash` where they belong.
+
 # 0.4.0
 
 @cbowdon added a bunch of features:
