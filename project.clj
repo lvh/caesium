@@ -6,6 +6,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.abstractj.kalium/kalium "0.4.0" :scope "compile"]
                  [com.github.jnr/jnr-ffi "2.0.9"]]
   :main ^:skip-aot caesium.core
   :target-path "target/%s"
