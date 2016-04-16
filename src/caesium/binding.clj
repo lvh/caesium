@@ -94,6 +94,8 @@
     (.load loader "sodium")))
 
 (assert (#{0 1} (.sodium_init sodium)))
+;; TODO When does this get called? Guaranteed from 1 thread?
+
 
 (defmacro defconsts
   "Given constant names (syms) in the C pseudo-namespace corresponding
