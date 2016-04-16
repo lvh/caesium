@@ -47,6 +47,7 @@
     ^long ^{LongLong {}} msglen]))
 
 (def ^Sodium sodium
+  "The sodium library singleton instance."
   (let [loader (LibraryLoader/create Sodium)]
     (.load loader "sodium")))
 
