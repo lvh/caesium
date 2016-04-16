@@ -13,5 +13,6 @@
   :profiles {:uberjar {:aot :all}
              :test {:plugins [[lein-cljfmt "0.3.0"]
                               [lein-kibit "0.1.2"]
-                              [jonase/eastwood "0.2.3"]]}}
+                              [jonase/eastwood "0.2.3"]
+                              [lein-codox "0.9.4"]]}}
   :global-vars {*warn-on-reflection* true})
