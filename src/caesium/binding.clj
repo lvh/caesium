@@ -109,21 +109,3 @@
                  call (->> name (conj (prefix)) (s/join "_") (str ".") symbol)]
              `(def ~const (~call sodium)))))))
 
-
-;; int crypto_generichash(unsigned char *out, size_t outlen,
-;;                                 const unsigned char *in, unsigned long long inlen,
-;;                                 const unsigned char *key, size_t keylen);
-
-;; SODIUM_EXPORT
-;; int crypto_generichash_init(crypto_generichash_state *state,
-;;                                                      const unsigned char *key,
-;;                                                      const size_t keylen, const size_t outlen);
-
-;; SODIUM_EXPORT
-;; int crypto_generichash_update(crypto_generichash_state *state,
-;;                                                        const unsigned char *in,
-;;                                                        unsigned long long inlen);
-
-;; SODIUM_EXPORT
-;; int crypto_generichash_final(crypto_generichash_state *state,
-;;                                                       unsigned char *out, const size_t outlen);
