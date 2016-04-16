@@ -125,6 +125,8 @@
               (~(java-call-sym c-name) sodium)))))
 
 (defmacro defbindings
+  "Creates relevant bindings in the C pseudo-namespace corresponding
+  to the current namespace."
   [fs]
   `(do ~@(for [f fs
                :let [c-name (c-name *ns* f)
