@@ -96,16 +96,28 @@
 (assert (#{0 1} (.sodium_init sodium)))
 ;; TODO When does this get called? Guaranteed from 1 thread?
 
+(defn ^:private c-name
+  "Resolves the fn name in the current ns to the fn name in the equivalent
+  libsodium C pseudo-namespace."
+  [^clojure.lang.Namespace namespace ^clojure.lang.Symbol fn-name]
+  (let [adjusted-name (-> (name fn-name) (s/replace "-" "_"))
+        prefix (-> namespace ns-name str (s/split #"\.") rest vec)
+        full-path (conj prefix adjusted-name)]
+    (symbol (s/join "_" full-path))))
+
+(defn ^:private java-call-sym
+  "Creates the Clojure Java method call syntax to call a method on the
+  libsodium binding."
+  [c-name]
+  (symbol (str "." c-name)))
 
 (defmacro defconsts
   "Given constant names (syms) in the C pseudo-namespace corresponding
   to the current namespace, call the corresponding libsodium function
   the get the constants and assign them to vars."
   [consts]
-  (let [prefix (-> *ns* ns-name str (s/split #"\.") rest vec)]
-    `(do
-       ~@(for [const consts]
-           (let [name (-> const name (s/replace "-" "_") symbol)
-                 call (->> name (conj (prefix)) (s/join "_") (str ".") symbol)]
-             `(def ~const (~call sodium)))))))
+  `(do ~@(for [const consts
+               :let [c-name (c-name *ns* const)]]
+           `(def ~const
+              (~(java-call-sym c-name) sodium)))))
 
