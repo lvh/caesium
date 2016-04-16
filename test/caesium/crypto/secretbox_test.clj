@@ -5,6 +5,12 @@
    [caesium.vectors :as v]
    [clojure.test :refer :all]))
 
+(deftest const-tests
+  (is (= 32 s/keybytes))
+  (is (= 24 s/noncebytes))
+  (is (= 16 s/macbytes))
+  (is (= "xsalsa20poly1305" s/primitive)))
+
 (def ptext (v/hex-resource "vectors/secretbox/plaintext"))
 (def secret-key (byte-array (range 32)))
 
