@@ -1,6 +1,9 @@
 (ns caesium.crypto.secretbox
   "Bindings to the secretbox secret-key authenticated encryption scheme."
+  (:require [caesium.binding :refer [sodium defconsts]])
   (:import [org.abstractj.kalium.crypto SecretBox]))
+
+(defconsts [keybytes noncebytes macbytes primitive])
 
 (defn encrypt
   "Encrypt with `secretbox`.
