@@ -121,3 +121,12 @@
            `(def ~const
               (~(java-call-sym c-name) sodium)))))
 
+(defmacro defbindings
+  [fs]
+  `(do ~@(for [f fs
+               :let [c-name (c-name *ns* f)
+                     args (->> (bound-fns c-name)
+                               (mapv (fn [args] (with-meta args {}))))]]
+           `(defn ~f
+              ~args
+              (~(java-call-sym c-name) sodium ~@args)))))
