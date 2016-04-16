@@ -37,7 +37,7 @@
   is truncated. If the integer is smaller than the nonce, it is padded
   with NUL bytes at the end.
 
-  Being a byte array (`bytes[]`), the return value is mutable."
+  The return value is a mutable byte array."
   [n]
   (let [unpadded (.toByteArray (biginteger n))
         output (byte-array 24)]
