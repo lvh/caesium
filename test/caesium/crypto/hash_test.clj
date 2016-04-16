@@ -4,6 +4,10 @@
             [clojure.test :refer [deftest is are]]
             [caesium.util :refer [array-eq]]))
 
+(deftest const-tests
+  (is (= h/sha256-bytes 32))
+  (is (= h/sha512-bytes 64)))
+
 (def ^:private hash-vector
   (comp v/hex-resource (partial str "vectors/hash/")))
 
