@@ -32,7 +32,8 @@
 
 (deftest int->nonce-test
   (testing "Turning numbers into nonces works"
-    (are [n nonce] (u/array-eq (s/int->nonce n) nonce)
+    (are [n expected] (u/array-eq expected (s/int->nonce n))
       0 (byte-array 24)
       0M (byte-array 24)
-      1000000000000 (byte-array (into (repeat 19 0) [0 -24 -44 -91 16])))))
+      1000000000000 (byte-array (into (vec (repeat 19 0))
+                                      [-24 -44 -91 16 0])))))
