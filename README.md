@@ -57,14 +57,9 @@ buffers with canaries, secure memset, et cetera.
 
 caesium uses [semver](http://semver.org/).
 
-I will try not to break backwards compatibility unnecessarily, even in
-major versions. However, since this is a security-sensitive library, I
-will actively remove functions or APIs that have serious security
-problems, instead of simply documenting the problem. Hence, despite
-the rapidly changing major version numbers, you are strongly
-encouraged to always upgrade to the latest version. If it breaks your
-code, that's a sign your code might have a previously undetected
-issue.
+Since this is a security-sensitive library, I will actively remove functions
+or APIs that have serious security problems, instead of simply documenting the
+problem.
 
 ## License
 
