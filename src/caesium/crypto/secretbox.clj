@@ -6,7 +6,7 @@
 (defconsts [keybytes noncebytes macbytes primitive])
 
 (defn encrypt
-  "Encrypt with `secretbox`.
+  "Encrypt with `secretbox_easy`.
 
   Please note that this returns a (mutable!) byte array.
 
@@ -18,7 +18,7 @@
   (.encrypt (new SecretBox key) nonce plaintext))
 
 (defn decrypt
-  "Decrypt with `secretbox_open`.
+  "Decrypt with `secretbox_open_easy`.
 
   Please note that this returns a (mutable!) byte array.
 
