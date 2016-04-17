@@ -32,14 +32,15 @@
 (defn int->nonce
   "Turns an integer into a byte array, suitable as a nonce.
 
-  The resulting byte-array is in big-endian order: it starts with the
-  most significant byte. If the integer is larger than the nonce, it
-  is truncated. If the integer is smaller than the nonce, it is padded
-  with NUL bytes at the end.
+  The resulting byte-array is in big-endian order: it starts with the most
+  significant byte. If the integer is larger than the nonce, it is
+  truncated. If the integer is smaller than the nonce, it is padded with NUL
+  bytes at the front.
 
   The return value is a mutable byte array."
   [n]
   (let [unpadded (.toByteArray (biginteger n))
+        bytelen (alength unpadded)
         output (byte-array 24)]
-    (System/arraycopy unpadded 0 output 0 (alength unpadded))
+    (System/arraycopy unpadded 0 output (- 24 bytelen) bytelen)
     output))
