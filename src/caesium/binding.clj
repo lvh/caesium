@@ -113,23 +113,14 @@
   (symbol (str "." c-name)))
 
 (defmacro defconsts
-  "Given constant names (syms) in the C pseudo-namespace corresponding
-  to the current namespace, call the corresponding libsodium function
-  the get the constants and assign them to vars."
+  "Define a number of constants by name.
+
+  Uses the *ns* to figure out the const-returning fn in libsodium."
   [consts]
   `(do ~@(for [const consts
-               :let [c-name (c-name *ns* const)]]
+               :let [c-name (c-name *ns* const)
+                     docstring (str "Constant returned by `" c-name "`. "
+                                    "See libsodium docs.")]]
            `(def ~const
+              ~docstring
               (~(java-call-sym c-name) sodium)))))
-
-(defmacro defbindings
-  "Creates relevant bindings in the C pseudo-namespace corresponding
-  to the current namespace."
-  [fs]
-  `(do ~@(for [f fs
-               :let [c-name (c-name *ns* f)
-                     args (->> (bound-fns c-name)
-                               (mapv (fn [args] (with-meta args {}))))]]
-           `(defn ~f
-              ~args
-              (~(java-call-sym c-name) sodium ~@args)))))
