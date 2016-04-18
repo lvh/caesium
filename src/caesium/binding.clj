@@ -1,7 +1,5 @@
 (ns caesium.binding
-  "Bindings to libsodium, using jnr-ffi.
-
-  Warning: crazy macro magic, here be dragons!"
+  "Bindings to libsodium, using jnr-ffi."
   (:require [clojure.string :as s])
   (:import [jnr.ffi LibraryLoader]
            [jnr.ffi.annotations In Out Pinned LongLong]
