@@ -26,7 +26,6 @@
   (comp hash-vector (partial str "sha512/")))
 
 (deftest sha-256-512-test
-  "sha256 and 512 work directly"
   (are [f message expected] (array-eq expected (f message))
     h/sha256 sha256-message (sha256-vector "digest-0")
     h/sha256 empty-string (sha256-vector "digest-empty-string")
