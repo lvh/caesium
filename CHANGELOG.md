@@ -10,6 +10,7 @@ using `kalium`.
   returning `0x01 0x00 ...`, which doesn't look like it has the MSB at the
   end). This breaks backwards compatibility within caesium, but improves
   compatibility with other systems.
+* init moved from `caesium.core` to `caesium.sodium` for consistency
 
 # 0.4.0
 
