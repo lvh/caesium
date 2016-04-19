@@ -15,4 +15,5 @@
                               [lein-kibit "0.1.2"]
                               [jonase/eastwood "0.2.3"]
                               [lein-codox "0.9.4"]]}}
+  :codox {:metadata {:doc/format :markdown}}
   :global-vars {*warn-on-reflection* true})
