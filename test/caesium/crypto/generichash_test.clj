@@ -4,15 +4,35 @@
    [caesium.util :refer [unhexify array-eq]]
    [clojure.test :refer :all]
    [caesium.vectors :as v]
-   [caesium.util :as u]))
+   [caesium.util :as u]
+   [caesium.crypto.hash :as h]))
+
+(deftest const-tests
+  (are [const expected] (= expected const)
+    32 g/bytes
+    16 g/bytes-min
+    64 g/bytes-max
+
+    32 g/keybytes
+    16 g/keybytes-min
+    64 g/keybytes-max
+
+    32 g/blake2b-bytes
+    16 g/blake2b-bytes-min
+    64 g/blake2b-bytes-max
+
+    32 g/blake2b-keybytes
+    16 g/blake2b-keybytes-min
+    64 g/blake2b-keybytes-max
+
+    16 g/blake2b-saltbytes
+    16 g/blake2b-personalbytes))
 
 (def blake2b-vector
   (comp v/hex-resource (partial str "vectors/generichash/blake2b/")))
 
 (deftest generichash-kat-test
-  (are [args expected] (and
-                        (array-eq (apply g/hash args) expected)
-                        (array-eq (apply g/blake2b args) expected))
+  (are [args expected] (array-eq (apply g/hash args) expected)
     [(byte-array [])]
     (blake2b-vector "digest-empty-string")
 
