@@ -33,26 +33,30 @@
 
 (deftest generichash-kat-test
   (are [args expected] (array-eq (apply g/hash args) expected)
-    [(byte-array [])]
-    (blake2b-vector "digest-empty-string")
+    [(byte-array [])
+     {:size 64}]
+    (blake2b-vector "digest-empty-string-64")
 
-    [(byte-array [90])]
-    (blake2b-vector "digest-0")))
+    [(byte-array [90])
+     {:size 64}]
+    (blake2b-vector "digest-Z-64")))
 
 (deftest blake2b-kat-test
-  (testing "blake2b works directly"
-    (are [args expected] (array-eq (apply g/blake2b args) expected)
-      [(byte-array [])]
-      (blake2b-vector "digest-empty-string")
+  (are [args expected] (array-eq (apply g/blake2b args) expected)
+    [(byte-array [])
+     {:size 64}]
+    (blake2b-vector "digest-empty-string-64")
 
-      [(byte-array [90])]
-      (blake2b-vector "digest-0")
+    [(byte-array [90])
+     {:size 64}]
+    (blake2b-vector "digest-Z-64")
 
-      [(.getBytes "The quick brown fox jumps over the lazy dog")
-       {:key (.getBytes "This is a super secret key. Ssshh!")
-        :salt (.getBytes "0123456789abcdef")
-        :personal (.getBytes "fedcba9876543210")}]
-      (blake2b-vector "digest-with-key-salt-personal"))))
+    [(.getBytes "The quick brown fox jumps over the lazy dog")
+     {:size 64
+      :key (.getBytes "This is a super secret key. Ssshh!")
+      :salt (.getBytes "0123456789abcdef")
+      :personal (.getBytes "fedcba9876543210")}]
+    (blake2b-vector "digest-with-key-salt-personal-64")))
 
 (def blake2b-empty-args-variations
   "All of the different ways you could spell that you want the digest
