@@ -71,6 +71,34 @@
 
     ;; TODO: how do I reference a crypto_generichash_state *?
 
+    ^long ^{size_t {}} crypto_generichash_blake2b_bytes_min []
+    ^long ^{size_t {}} crypto_generichash_blake2b_bytes_max []
+    ^long ^{size_t {}} crypto_generichash_blake2b_bytes []
+    ^long ^{size_t {}} crypto_generichash_blake2b_keybytes_min []
+    ^long ^{size_t {}} crypto_generichash_blake2b_keybytes_max []
+    ^long ^{size_t {}} crypto_generichash_blake2b_keybytes []
+    ^long ^{size_t {}} crypto_generichash_blake2b_saltbytes []
+    ^long ^{size_t {}} crypto_generichash_blake2b_personalbytes []
+    ^long ^{size_t {}} crypto_generichash_blake2b_statebytes []
+    ^int crypto_generichash_blake2b
+    [^bytes ^{Pinned {}} buf
+     ^long ^{LongLong {}} buflen
+     ^bytes ^{Pinned {}} msg
+     ^long ^{LongLong {}} msglen
+     ^bytes ^{Pinned {}} key
+     ^long ^{LongLong {}} keylen]
+    ^int crypto_generichash_blake2b_salt_personal
+    [^bytes ^{Pinned {}} buf
+     ^long ^{LongLong {}} buflen
+     ^bytes ^{Pinned {}} msg
+     ^long ^{LongLong {}} msglen
+     ^bytes ^{Pinned {}} key
+     ^long ^{LongLong {}} keylen
+     ^bytes ^{Pinned {}} salt
+     ^bytes ^{Pinned {}} personal]
+
+    ;; TODO: how do I reference a crypto_generichash_blake2b_state *?
+
     ^int crypto_hash_sha256_bytes []
     ^int crypto_hash_sha256
     [^bytes ^{Pinned {}} buf

@@ -3,8 +3,9 @@
 Pretty much a rewrite. Now binds libsodium directly with jnr-ffi instead of
 using `kalium`.
 
-* `blake2`, `sha256`, `sha512` were moved from `crypto.generichash` to
-`crypto.hash` where they belong.
+* lots of extra APIs exposed; check the API docs :-)
+* `sha256`, `sha512` were moved from `crypto.generichash` to `crypto.hash`
+  where they belong.
 * `secretbox/int->nonce` now returns an entirely big-endian array; instead of
   a big-endian number that's padded at the end (potentially confusingly
   returning `0x01 0x00 ...`, which doesn't look like it has the MSB at the
