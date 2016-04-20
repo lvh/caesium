@@ -1,12 +1,16 @@
 (ns caesium.crypto.secretbox
   "Bindings to the secretbox secret-key authenticated encryption scheme."
-  (:require [caesium.binding :refer [sodium defconsts]])
-  (:import [org.abstractj.kalium.crypto SecretBox]))
+  (:require [caesium.binding :refer [sodium defconsts]]))
 
 (defconsts [keybytes noncebytes macbytes primitive])
 
-(defn encrypt
-  "Encrypt with `secretbox_easy`.
+(defn secretbox-easy-to-buf!
+  [out msg nonce key]
+  (let [mlen (alength ^bytes msg)]
+    (.crypto_secretbox_easy sodium out msg mlen nonce key)))
+
+(defn secretbox-easy
+  "Encrypt with `crypto_secretbox_easy`.
 
   Please note that this returns a (mutable!) byte array.
 
@@ -14,11 +18,21 @@
   automatically prepend the required `ZERO_BYTES` NUL bytes, verify
   that the encryption succeeded, and strip them from the returned
   ciphertext."
-  [key nonce plaintext]
-  (.encrypt (new SecretBox key) nonce plaintext))
+  [msg nonce key]
+  (let [out (byte-array (+ macbytes (alength ^bytes msg)))]
+    (secretbox-easy-to-buf! out msg nonce key)
+    out))
 
-(defn decrypt
-  "Decrypt with `secretbox_open_easy`.
+(defn secretbox-open-easy-to-buf!
+  [out ctext nonce key]
+  (let [clen (alength ^bytes ctext)
+        res (.crypto_secretbox_open_easy sodium out ctext clen nonce key)]
+    (if (= res 0)
+      out
+      (throw (RuntimeException. "Ciphertext verification failed")))))
+
+(defn secretbox-open-easy
+  "Decrypt with `crypto_secretbox_open_easy`.
 
   Please note that this returns a (mutable!) byte array.
 
@@ -26,8 +40,19 @@
   automatically prepend the required `BOXZERO_BYTES` NUL bytes, verify
   that the decryption succeeded, and strip them from the returned
   plaintext."
+  [ctext nonce key]
+  (let [out (byte-array (- (alength ^bytes ctext) macbytes))]
+    (secretbox-open-easy-to-buf! out ctext nonce key)))
+
+(defn encrypt
+  "Backwards-compatible alias for `secretbox-easy`."
+  [key nonce plaintext]
+  (secretbox-easy plaintext nonce key))
+
+(defn decrypt
+  "Backwards-compatible alias for `secretbox-open-easy`."
   [key nonce ciphertext]
-  (.decrypt (new SecretBox key) nonce ciphertext))
+  (secretbox-open-easy ciphertext nonce key))
 
 (defn int->nonce
   "Turns an integer into a byte array, suitable as a nonce.
