@@ -33,6 +33,13 @@
 
 (deftest generichash-kat-test
   (are [args expected] (array-eq (apply g/hash args) expected)
+    [(byte-array [])]
+    (blake2b-vector "digest-empty-string-32")
+
+    [(byte-array [])
+     {:size 32}]
+    (blake2b-vector "digest-empty-string-32")
+
     [(byte-array [])
      {:size 64}]
     (blake2b-vector "digest-empty-string-64")
@@ -43,6 +50,13 @@
 
 (deftest blake2b-kat-test
   (are [args expected] (array-eq (apply g/blake2b args) expected)
+    [(byte-array [])]
+    (blake2b-vector "digest-empty-string-32")
+
+    [(byte-array [])
+     {:size 32}]
+    (blake2b-vector "digest-empty-string-32")
+
     [(byte-array [])
      {:size 64}]
     (blake2b-vector "digest-empty-string-64")
