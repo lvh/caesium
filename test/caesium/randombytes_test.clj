@@ -4,4 +4,4 @@
 
 (deftest randombytes-tests
   (let [some-bytes (r/randombytes 10)]
-    (is (= 10 (alength some-bytes)))))
+    (is (= 10 (alength ^bytes some-bytes)))))
