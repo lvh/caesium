@@ -5,6 +5,10 @@
 (defconsts [keybytes noncebytes macbytes primitive])
 
 (defn secretbox-easy-to-buf!
+  "Encrypt with `crypto_secretbox_easy` into the given byte array.
+
+  You only want this to manage the output byte array yourself. Otherwise,
+  you want [[secretbox-easy]]."
   [out msg nonce key]
   (let [mlen (alength ^bytes msg)]
     (.crypto_secretbox_easy sodium out msg mlen nonce key)))
@@ -26,6 +30,10 @@
     out))
 
 (defn secretbox-open-easy-to-buf!
+  "Encrypt with `crypto_secretbox_open_easy` into the given byte array.
+
+  You only want this to manage the output byte array yourself. Otherwise,
+  you want [[secretbox-open-easy]]."
   [out ctext nonce key]
   (let [clen (alength ^bytes ctext)
         res (.crypto_secretbox_open_easy sodium out ctext clen nonce key)]
