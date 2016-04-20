@@ -33,7 +33,7 @@
         ptext (box-vector "plaintext")
         ctext (box-vector "ciphertext")
         bob-pk (box-vector "bob-public-key")
-        bob-sk (box-vector "bob-sk")
+        bob-sk (box-vector "bob-secret-key")
         alice-pk (box-vector "alice-public-key")
         alice-sk (box-vector "alice-secret-key")]
     (is (u/array-eq ctext (b/encrypt alice-pk bob-sk nonce ptext)))
