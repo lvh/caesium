@@ -12,7 +12,9 @@
 (defn secretbox-easy
   "Encrypt with `crypto_secretbox_easy`.
 
-  Please note that this returns a (mutable!) byte array.
+  Please note that this returns a (mutable!) byte array. This is a
+  higher level API than [[secretbox-easy-to-buf!]] because it create
+  that output byte array for you.
 
   This API is marginally higher level than `secretbox`: it will
   automatically prepend the required `ZERO_BYTES` NUL bytes, verify
@@ -34,7 +36,9 @@
 (defn secretbox-open-easy
   "Decrypt with `crypto_secretbox_open_easy`.
 
-  Please note that this returns a (mutable!) byte array.
+  Please note that this returns a (mutable!) byte array. This is a
+  higher level API than [[secretbox-open-easy-to-buf!]] because it
+  create that output byte array for you.
 
   This API is marginally higher level than `secretbox_open`: it will
   automatically prepend the required `BOXZERO_BYTES` NUL bytes, verify
