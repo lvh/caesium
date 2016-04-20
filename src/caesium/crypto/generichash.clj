@@ -56,8 +56,8 @@
      ;; You can't set the defaults in the argspec's destructuring form,
      ;; because you want to be able to differentiate between a salt that
      ;; wasn't passed and an empty salt, to call a different fn.
-     (let [salt (or salt (byte-array 0))
-           personal (or personal (byte-array 0))]
+     (let [salt (or salt (byte-array blake2b-saltbytes))
+           personal (or personal (byte-array blake2b-personalbytes))]
        (.crypto_generichash_blake2b_salt_personal
         sodium
         buf (alength ^bytes buf)
