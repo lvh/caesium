@@ -26,7 +26,7 @@
           (u/array-eq (:public kp1) (:public kp2))))))
 
 (def box-vector
-  (comp v/hex-resource (partial "vectors/box/")))
+  (comp v/hex-resource (partial str "vectors/box/")))
 
 (deftest box-encrypt-decrypt-test
   (let [nonce (box-vector "nonce")
