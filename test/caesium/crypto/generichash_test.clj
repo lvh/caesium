@@ -72,5 +72,6 @@
 
 (deftest blake2b-empty-args-variations-tests
   (doseq [args blake2b-empty-args-variations]
-    (is (array-eq (apply g/blake2b args) (blake2b-vector "digest-empty-string"))
+    (is (array-eq (apply g/blake2b args)
+                  (blake2b-vector "digest-empty-string-32"))
         (str "args: " args))))
