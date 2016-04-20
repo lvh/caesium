@@ -66,6 +66,19 @@
     (blake2b-vector "digest-Z-64")
 
     [(.getBytes "The quick brown fox jumps over the lazy dog")
+     {:key (.getBytes "This is a super secret key. Ssshh!")
+      :salt (.getBytes "0123456789abcdef")
+      :personal (.getBytes "fedcba9876543210")}]
+    (blake2b-vector "digest-with-key-salt-personal-32")
+
+    [(.getBytes "The quick brown fox jumps over the lazy dog")
+     {:size 32
+      :key (.getBytes "This is a super secret key. Ssshh!")
+      :salt (.getBytes "0123456789abcdef")
+      :personal (.getBytes "fedcba9876543210")}]
+    (blake2b-vector "digest-with-key-salt-personal-32")
+
+    [(.getBytes "The quick brown fox jumps over the lazy dog")
      {:size 64
       :key (.getBytes "This is a super secret key. Ssshh!")
       :salt (.getBytes "0123456789abcdef")
