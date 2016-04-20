@@ -5,6 +5,15 @@
    [clojure.test :refer :all]
    [caesium.vectors :as v]))
 
+(deftest const-tests
+  (are [const expected] (= expected const)
+    b/seedbytes 32
+    b/publickeybytes 32
+    b/secretkeybytes 32
+    b/noncebytes 24
+    b/macbytes 16
+    b/primitive "curve25519xsalsa20poly1305"))
+
 (deftest box-keypair-generation
   (testing "generates new keypairs"
     (is (let [kp1 (b/generate-keypair)

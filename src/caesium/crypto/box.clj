@@ -1,9 +1,17 @@
 (ns caesium.crypto.box
-  "Bindings to the public-key authenticated encryption scheme."
+  "Bindings to the public key authenticated encryption scheme."
+  (:require [caesium.binding :refer [defconsts]])
   (:import (org.abstractj.kalium.keys KeyPair
                                       PublicKey
                                       PrivateKey)
            org.abstractj.kalium.crypto.Box))
+
+(defconsts [seedbytes
+            publickeybytes
+            secretkeybytes
+            noncebytes
+            macbytes
+            primitive])
 
 (defn generate-keypair
   "Generate a secret key and corresponding public key with

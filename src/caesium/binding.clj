@@ -54,6 +54,13 @@
      ^bytes ^{Pinned {}} n
      ^bytes ^{Pinned {}} k]
 
+    ^long ^{size_t {}} crypto_box_seedbytes []
+    ^long ^{size_t {}} crypto_box_publickeybytes []
+    ^long ^{size_t {}} crypto_box_secretkeybytes []
+    ^long ^{size_t {}} crypto_box_noncebytes []
+    ^long ^{size_t {}} crypto_box_macbytes []
+    ^String ^{size_t {}} crypto_box_primitive[]
+
     ^long ^{size_t {}} crypto_generichash_bytes_min []
     ^long ^{size_t {}} crypto_generichash_bytes_max []
     ^long ^{size_t {}} crypto_generichash_bytes []
