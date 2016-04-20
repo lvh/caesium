@@ -25,7 +25,8 @@
               kp2 (b/generate-keypair (:secret kp1))]
           (u/array-eq (:public kp1) (:public kp2))))))
 
-(def box-vector (partial v/hex-resource "vectors/box/"))
+(def box-vector
+  (comp v/hex-resource (partial "vectors/box/")))
 
 (deftest box-encrypt-decrypt-test
   (let [nonce (box-vector "nonce")
@@ -36,8 +37,8 @@
         alice-pk (box-vector "alice-public-key")
         alice-sk (box-vector "alice-secret-key")]
     (is (u/array-eq ctext (b/encrypt alice-pk bob-sk nonce ptext)))
-    (is (u/array-eq ptext (b/decrypt bob-pk alice-sk nonce ctext))))
-  (let [hex-pk (u/hexify (box-vector "alice-pk"))
-        hex-sk (u/hexify (box-vector "bob-secret-key"))]
-    (is (thrown? java.lang.ClassCastException
-                 (b/encrypt hex-pk hex-sk nonce ptext)))))
+    (is (u/array-eq ptext (b/decrypt bob-pk alice-sk nonce ctext)))
+    (let [hex-pk (u/hexify alice-pk)
+          hex-sk (u/hexify bob-sk)]
+      (is (thrown? java.lang.ClassCastException
+                   (b/encrypt hex-pk hex-sk nonce ptext))))))
