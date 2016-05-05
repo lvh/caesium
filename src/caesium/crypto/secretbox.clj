@@ -1,6 +1,7 @@
 (ns caesium.crypto.secretbox
   "Bindings to the secretbox secret-key authenticated encryption scheme."
-  (:require [caesium.binding :refer [sodium defconsts]]))
+  (:require [caesium.binding :refer [sodium defconsts]]
+            [caesium.utils :as u]))
 
 (defconsts [keybytes noncebytes macbytes primitive])
 
@@ -66,7 +67,7 @@
   [key nonce ciphertext]
   (secretbox-open-easy ciphertext nonce key))
 
-(defn int->nonce
+(def int->nonce
   "Turns an integer into a byte array, suitable as a nonce.
 
   The resulting byte-array is in big-endian order: it starts with the most
@@ -75,9 +76,4 @@
   bytes at the front.
 
   The return value is a mutable byte array."
-  [n]
-  (let [unpadded (.toByteArray (biginteger n))
-        bytelen (alength unpadded)
-        output (byte-array noncebytes)]
-    (System/arraycopy unpadded 0 output (- noncebytes bytelen) bytelen)
-    output))
+  (partial u/n->bytes noncebytes))
