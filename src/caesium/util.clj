@@ -12,3 +12,12 @@
 
 (defn hexify [b]
   (.encode Encoder/HEX b))
+
+(defn n->bytes
+  "Turns n into a byte array of length len."
+  [len n]
+  (let [unpadded (.toByteArray (biginteger n))
+        bytelen (alength unpadded)
+        output (byte-array len)]
+    (System/arraycopy unpadded 0 output (- noncebytes bytelen) bytelen)
+    output))
