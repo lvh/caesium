@@ -1,7 +1,7 @@
 (ns caesium.util-test
   (:require
    [caesium.util :as u]
-   [clojure.test :refer :all]))
+   [clojure.test :refer [deftest testing are]]))
 
 (deftest array-eq-test
   (testing "array equality works"
