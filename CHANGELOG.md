@@ -6,6 +6,10 @@ using `kalium`.
 * lots of extra APIs exposed; check the API docs :-)
 * `sha256`, `sha512` were moved from `crypto.generichash` to `crypto.hash`
   to match libsodium.
+* `blake2b` hashes were previously 64 bytes by default because that is the
+  default in kalium (see abstractj/kalium#54), although the blake2b spec says
+  they're 32 bytes by default, which is also what libsodium does. caesium now
+  defaults to the libsodium behavior.
 * `secretbox/int->nonce` now returns an entirely big-endian array; instead of
   a big-endian number that's padded at the end (potentially confusingly
   returning `0x01 0x00 ...`, which doesn't look like it has the MSB at the
