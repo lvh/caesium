@@ -30,3 +30,15 @@
       "02" [2]
       "ff" [-1]
       "010203" [1 2 3])))
+
+(deftest n->bytes-test
+  (are [n expected] (u/array-eq expected (u/n->bytes 24 n))
+    0 (byte-array 24)
+    0M (byte-array 24)
+    1000000000000 (byte-array (into (vec (repeat 19 0))
+                                    [-24 -44 -91 16 0])))
+  (are [n expected] (u/array-eq expected (u/n->bytes 16 n))
+    0 (byte-array 16)
+    0M (byte-array 16)
+    1000000000000 (byte-array (into (vec (repeat 11 0))
+                                    [-24 -44 -91 16 0]))))
