@@ -1,7 +1,7 @@
 (ns caesium.crypto.secretbox
   "Bindings to the secretbox secret-key authenticated encryption scheme."
   (:require [caesium.binding :refer [sodium defconsts]]
-            [caesium.utils :as u]))
+            [caesium.util :as u]))
 
 (defconsts [keybytes noncebytes macbytes primitive])
 
