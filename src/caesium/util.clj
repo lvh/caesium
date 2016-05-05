@@ -19,5 +19,5 @@
   (let [unpadded (.toByteArray (biginteger n))
         bytelen (alength unpadded)
         output (byte-array len)]
-    (System/arraycopy unpadded 0 output (- noncebytes bytelen) bytelen)
+    (System/arraycopy unpadded 0 output (- len bytelen) bytelen)
     output))
