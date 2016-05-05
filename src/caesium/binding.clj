@@ -61,6 +61,14 @@
     ^long ^{size_t {}} crypto_box_macbytes []
     ^String ^{size_t {}} crypto_box_primitive[]
 
+    ^int crypto_box_seed_keypair
+    [^bytes ^{Pinned {}} pk
+     ^bytes ^{Pinned {}} sk
+     ^bytes ^{Pinned {}} seed]
+    ^int crypto_box_keypair
+    [^bytes ^{Pinned {}} pk
+     ^bytes ^{Pinned {}} sk]
+
     ^long ^{size_t {}} crypto_generichash_bytes_min []
     ^long ^{size_t {}} crypto_generichash_bytes_max []
     ^long ^{size_t {}} crypto_generichash_bytes []
