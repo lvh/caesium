@@ -22,7 +22,7 @@
       "ff" [-1]
       "010203" [1 2 3])))
 
-(deftest hexify-text
+(deftest hexify-test
   (testing "hexify works"
     (are [hex raw] (= hex (u/hexify (byte-array raw)))
       "" []
