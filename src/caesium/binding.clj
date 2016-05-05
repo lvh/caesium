@@ -124,7 +124,11 @@
     ^int crypto_hash_sha512
     [^bytes ^{Pinned {}} buf
      ^bytes ^{Pinned {}} msg
-     ^long ^{LongLong {}} msglen]})
+     ^long ^{LongLong {}} msglen]
+
+    ^int ^{size_t {}} crypto_scalarmult_bytes []
+    ^int ^{size_t {}} crypto_scalarmult_scalarbytes []
+    ^String crypto_scalarmult_primitive []})
 
 (defmacro ^:private defsodium
   []
