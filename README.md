@@ -20,12 +20,28 @@ turn is a more convenient fork of the original [NaCl][nacl] library by
 ## Documentation
 
 The most important documentation for caesium is actually the
-[documentation for libsodium][libsodiumdocs]. Since it's all just tiny
-wrappers around that, everything in it applies.
+[documentation for libsodium][libsodiumdocs]. Since it's all just relatively
+small wrappers around that, everything in it applies.
 
 [libsodiumdocs]: http://doc.libsodium.org
 
 ## Differences with other bindings
+
+Instead of making specific claims about specific libraries which may become
+outdated, here are a few properties you may care about:
+
+* caesium is written by a cryptographer who has experience binding
+  cryptographic libraries.
+* caesium does not provide magic layers on top of libsodium that prevent you
+  from writing secure software because of JVM memory semantics, while not
+  getting in your way if you want the default good-enough behavior.
+* caesium uses jnr-ffi pinning correctly; resulting in zero-copy behavior
+  between JVM and C land at the call site.
+* All APIs take `byte[]`, never `String`. This gives you the option of zeroing
+  byte arrays out once you're done. `caesium` doesn't hide the no-magic C APIs
+  from you; but you have to understand libsodium to use them. The upside of
+  that is that this library provides the APIs necessary to use `libsodium`
+  safely; e.g. with locked buffers with canaries, secure memset, et cetera.
 
 caesium tries to just give you the libsodium experience from Clojure. It maps
 fns to predictable names; `sodium_crypto_secretbox_open_easy` will be called
@@ -46,12 +62,16 @@ replace underscores with dashes. Exceptions where this doesn't work out:
   `crypto_generichash_KEYBYTES_MIN` constant via the `libsodium` `size_t
   crypto_generichash_keybytes_min(void);` function, but in caesium, it's just
   `caesium.crypto.generichash/keybytes-min` (not a function you have to call).
+* some families of functions in libsodium are a consequence of C not
+  supporting multi-arity functions; e.g. `scalarmult` in libsodium has two
+  functions: one with the fixed base point and one with an explicit base
+  point; caesium just has one function with two arities.
 
-All APIs take `byte[]`, never `String`, for maximum similarity with
-`libsodium`. `caesium` doesn't hide the no-magic C APIs from you; but you have
-to understand libsodium to use them. The upside of that is that this library
-provides the APIs necessary to use `libsodium` safely; e.g. with locked
-buffers with canaries, secure memset, et cetera.
+The default caesium bindings will allocate the output array for you and raise
+exceptions on failure. There are also often `-to-buf!` variants of a function
+available, which are more direct bindings to libsodium. They have the
+advantage that you can specify your own output buffer, but the disadvantage
+that the responsibility for checking return codes is yours.
 
 ## Compatibility
 
