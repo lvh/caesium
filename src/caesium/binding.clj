@@ -1,5 +1,9 @@
 (ns caesium.binding
-  "Bindings to libsodium, using jnr-ffi."
+  "**DANGER** These are the low-level bindings to libsodium, using
+  jnr-ffi. They are probably not what you want; instead, please look at
+  the [[caesium.crypto.box]], [[caesium.crypto.secretbox]],
+  [[caesium.crypto.generichash]], [[caesium.crypto.sign]]  et cetera,
+  namespaces."
   (:require [clojure.string :as s])
   (:import [jnr.ffi LibraryLoader]
            [jnr.ffi.annotations In Out Pinned LongLong]
