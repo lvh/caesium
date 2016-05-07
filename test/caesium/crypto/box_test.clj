@@ -1,10 +1,9 @@
 (ns caesium.crypto.box-test
-  (:require
-   [caesium.crypto.box :as b]
-   [caesium.util :as u]
-   [caesium.crypto.scalarmult :as s]
-   [clojure.test :refer [deftest are is testing]]
-   [caesium.vectors :as v]))
+  (:require [caesium.crypto.box :as b]
+            [caesium.crypto.scalarmult :as s]
+            [caesium.util :as u]
+            [caesium.vectors :as v]
+            [clojure.test :refer [are deftest is testing]]))
 
 (deftest const-tests
   (are [const expected] (= expected const)

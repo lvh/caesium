@@ -1,11 +1,8 @@
 (ns caesium.crypto.generichash-test
-  (:require
-   [caesium.crypto.generichash :as g]
-   [caesium.util :refer [unhexify array-eq]]
-   [clojure.test :refer :all]
-   [caesium.vectors :as v]
-   [caesium.util :as u]
-   [caesium.crypto.hash :as h]))
+  (:require [caesium.crypto.generichash :as g]
+            [caesium.util :refer [array-eq]]
+            [caesium.vectors :as v]
+            [clojure.test :refer :all]))
 
 (deftest const-tests
   (are [const expected] (= expected const)

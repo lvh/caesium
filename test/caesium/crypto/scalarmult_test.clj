@@ -1,7 +1,7 @@
 (ns caesium.crypto.scalarmult-test
   (:require [caesium.crypto.scalarmult :as s]
-            [clojure.test :refer [deftest is are testing]]
-            [caesium.util :as u]))
+            [caesium.util :as u]
+            [clojure.test :refer [are deftest is testing]]))
 
 (deftest consts-tests
   (is (= 32 s/bytes))
