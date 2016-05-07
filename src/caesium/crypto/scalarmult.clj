@@ -32,10 +32,9 @@
 
 (def ^bytes int->scalar
   "**DANGER** This fn is typically only used for demos, not secure
-  cryptosystems; see rest of docstring for details.
-
-  Turns an integral type (int, bigint, biginteger) into a byte array
-  suitable for use as a scalar for scalarmult.
+  cryptosystems; see rest of docstring for details. Turns an integral
+  type (int, bigint, biginteger) into a byte array suitable for use as
+  a scalar for scalarmult.
 
   The resulting byte array will be `scalarbytes` wide.
 
