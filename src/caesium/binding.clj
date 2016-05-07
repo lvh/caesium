@@ -29,7 +29,7 @@
     ^long ^{size_t {}} crypto_secretbox_keybytes []
     ^long ^{size_t {}} crypto_secretbox_noncebytes []
     ^long ^{size_t {}} crypto_secretbox_macbytes []
-    ^String ^{size_t {}} crypto_secretbox_primitive[]
+    ^String ^{size_t {}} crypto_secretbox_primitive []
 
     ^int crypto_secretbox_easy
     [^bytes ^{Pinned {}} c
