@@ -132,7 +132,15 @@
 
     ^int ^{size_t {}} crypto_scalarmult_bytes []
     ^int ^{size_t {}} crypto_scalarmult_scalarbytes []
-    ^String crypto_scalarmult_primitive []})
+    ^String crypto_scalarmult_primitive []
+
+    ^int crypto_scalarmult_base
+    [^bytes ^{Pinned {}} q
+     ^bytes ^{Pinned {}} n]
+    ^int crypto_scalarmult
+    [^bytes ^{Pinned {}} q
+     ^bytes ^{Pinned {}} n
+     ^bytes ^{Pinned {}} p]})
 
 (defmacro ^:private defsodium
   []
