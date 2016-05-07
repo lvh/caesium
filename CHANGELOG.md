@@ -10,6 +10,15 @@ using `kalium`.
   default in kalium (see abstractj/kalium#54), although the blake2b spec says
   they're 32 bytes by default, which is also what libsodium does. caesium now
   defaults to the libsodium behavior.
+* The `crypto_box` key generation API from kalium, when given a secret input
+  to produce a key pair, would manually do the curve scalar mult. This is not
+  what libsodium does when producing a key pair from a secret: libsodium
+  hashes the input first. caesium exposes the libsodium API by default (part
+  of the general rule of "be like libsodium"), and has a new fn,
+  `sk->keypair`, to reproduce the old behavior.
+* As a consequence of the above point, caesium now exposes scalarmult, so you
+  can perform scalar multiplication against a given point or against the base
+  point. You probably don't want to use that API directly.
 * `secretbox/int->nonce` now returns an entirely big-endian array; instead of
   a big-endian number that's padded at the end (potentially confusingly
   returning `0x01 0x00 ...`, which doesn't look like it has the MSB at the
