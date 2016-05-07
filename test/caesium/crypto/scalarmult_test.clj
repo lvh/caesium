@@ -8,7 +8,7 @@
   (is (= 32 s/scalarbytes))
   (is (= "curve25519" s/primitive)))
 (deftest int->scalar-test
-  (are [n expected] (u/array-eq expected (u/n->bytes 32 n))
+  (are [n expected] (u/array-eq expected (s/int->scalar n))
     0 (byte-array 32)
     0M (byte-array 32)
     1000000000000 (byte-array (into (vec (repeat 27 0))
