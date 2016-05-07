@@ -42,6 +42,11 @@ outdated, here are a few properties you may care about:
   from you; but you have to understand libsodium to use them. The upside of
   that is that this library provides the APIs necessary to use `libsodium`
   safely; e.g. with locked buffers with canaries, secure memset, et cetera.
+* caesium's APIs match libsodium's behavior. If libsodium hashes a
+  seed to produce a keypair, caesium will hash a seed to produce a keypair. If
+  libsodium uses the default output size of a particular hash function,
+  caesium will use the default output size of that hash function. (These were
+  at time of writing not true for at least 1 other library).
 
 caesium tries to just give you the libsodium experience from Clojure. It maps
 fns to predictable names; `sodium_crypto_secretbox_open_easy` will be called
