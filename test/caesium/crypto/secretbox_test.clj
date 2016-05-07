@@ -24,9 +24,9 @@
     n0 (v/hex-resource "vectors/secretbox/ciphertext0")
     n1 (v/hex-resource "vectors/secretbox/ciphertext1"))
   (are [nonce ciphertext]
-      (thrown-with-msg?
-       RuntimeException #"Ciphertext verification failed"
-       (s/decrypt secret-key nonce ciphertext))
+       (thrown-with-msg?
+        RuntimeException #"Ciphertext verification failed"
+        (s/decrypt secret-key nonce ciphertext))
     n1 (v/hex-resource "vectors/secretbox/forgery1")))
 
 (deftest int->nonce-test
