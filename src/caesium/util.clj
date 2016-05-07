@@ -1,4 +1,5 @@
 (ns caesium.util
+  "Internal utilities."
   (:import (java.util Arrays)
            (org.abstractj.kalium.encoders Encoder)))
 
