@@ -74,7 +74,10 @@
     {:public pk :secret sk}))
 
 (defn encrypt
-  "Encrypt with `crypto_box_easy`."
+  "Encrypt with `crypto_box_easy`.
+
+  To encrypt, use the recipient's public key and the sender's secret
+  key."
   [^bytes public-key
    ^bytes secret-key
    nonce
@@ -84,7 +87,10 @@
     (.encrypt (Box. pbk pvk) nonce plaintext)))
 
 (defn decrypt
-  "Decrypt with `crypto_box_open_easy`."
+  "Decrypt with `crypto_box_open_easy`.
+
+  To decrypt, use the sender's public key and the recipient's secret
+  key."
   [^bytes public-key
    ^bytes secret-key
    nonce
