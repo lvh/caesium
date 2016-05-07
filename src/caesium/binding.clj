@@ -63,7 +63,7 @@
     ^long ^{size_t {}} crypto_box_secretkeybytes []
     ^long ^{size_t {}} crypto_box_noncebytes []
     ^long ^{size_t {}} crypto_box_macbytes []
-    ^String ^{size_t {}} crypto_box_primitive[]
+    ^String ^{size_t {}} crypto_box_primitive []
 
     ^int crypto_box_seed_keypair
     [^bytes ^{Pinned {}} pk
