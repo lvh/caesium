@@ -2,7 +2,8 @@
   (:require
    [caesium.crypto.box :as b]
    [caesium.util :as u]
-   [clojure.test :refer :all]
+   [caesium.crypto.scalarmult :as s]
+   [clojure.test :refer [deftest are is testing]]
    [caesium.vectors :as v]))
 
 (deftest const-tests
@@ -14,21 +15,28 @@
     b/macbytes 16
     b/primitive "curve25519xsalsa20poly1305"))
 
-(deftest box-keypair-generation
+(deftest keypair-generation-test
   (testing "generates new keypairs"
     (is (let [kp1 (b/generate-keypair)
               kp2 (b/generate-keypair)]
           (and (not (u/array-eq (:public kp1) (:public kp2)))
                (not (u/array-eq (:secret kp1) (:secret kp2)))))))
+  (testing "generate public key from seed"
+    (let [seed (s/int->scalar 1)
+          kp1 (b/generate-keypair seed)
+          kp2 (b/generate-keypair seed)]
+      (is (u/array-eq (:public kp1) (:public kp2)))
+      (is (u/array-eq (:secret kp1) (:secret kp2)))))
   (testing "generate public key from secret key"
-    (is (let [kp1 (b/generate-keypair)
-              kp2 (b/generate-keypair (:secret kp1))]
-          (u/array-eq (:public kp1) (:public kp2))))))
+    (let [kp1 (b/generate-keypair)
+          kp2 (b/sk->keypair (:secret kp1))]
+      (is (u/array-eq (:public kp1) (:public kp2)))
+      (is (u/array-eq (:secret kp1) (:secret kp2))))))
 
 (def box-vector
   (comp v/hex-resource (partial str "vectors/box/")))
 
-(deftest box-encrypt-decrypt-test
+(deftest encrypt-decrypt-test
   (let [nonce (box-vector "nonce")
         ptext (box-vector "plaintext")
         ctext (box-vector "ciphertext")
