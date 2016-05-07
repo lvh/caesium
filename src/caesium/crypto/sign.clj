@@ -1,6 +1,5 @@
 (ns caesium.crypto.sign
-  (:import (org.abstractj.kalium.keys SigningKey
-                                      VerifyKey)))
+  (:import (org.abstractj.kalium.keys SigningKey VerifyKey)))
 
 (defn generate-signing-keys
   "Generate a public-key and secret-key for signing with `crypto_sign_ed25519_seed_keypair`. If a seed is not provided, one is taken from `randombytes`.
