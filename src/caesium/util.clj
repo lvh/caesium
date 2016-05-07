@@ -3,7 +3,9 @@
            (org.abstractj.kalium.encoders Encoder)))
 
 (defn array-eq
-  "Compares two byte arrays for equality."
+  "Compares two byte arrays for equality.
+
+  Please note that this is not constant time!"
   [^bytes a ^bytes b]
   (Arrays/equals a b))
 
