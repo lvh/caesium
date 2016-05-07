@@ -58,12 +58,16 @@
     (secretbox-open-easy-to-buf! out ctext nonce key)))
 
 (defn encrypt
-  "Backwards-compatible alias for [[secretbox-easy]]."
+  "Backwards-compatible alias for [[secretbox-easy]].
+
+  Please note that this uses a different argument order."
   [key nonce plaintext]
   (secretbox-easy plaintext nonce key))
 
 (defn decrypt
-  "Backwards-compatible alias for [[secretbox-open-easy]]."
+  "Backwards-compatible alias for [[secretbox-open-easy]].
+
+  Please note that this uses a different argument order."
   [key nonce ciphertext]
   (secretbox-open-easy ciphertext nonce key))
 
