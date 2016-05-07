@@ -82,9 +82,9 @@
    ^bytes secret-key
    nonce
    plaintext]
-  (let [pbk (PublicKey. public-key)
-        pvk (PrivateKey. secret-key)]
-    (.encrypt (Box. pbk pvk) nonce plaintext)))
+  (let [pk (PublicKey. public-key)
+        sk (PrivateKey. secret-key)]
+    (.encrypt (Box. pk sk) nonce plaintext)))
 
 (defn decrypt
   "Decrypt with `crypto_box_open_easy`.
@@ -95,6 +95,6 @@
    ^bytes secret-key
    nonce
    ciphertext]
-  (let [pbk (PublicKey. public-key)
-        pvk (PrivateKey. secret-key)]
-    (.decrypt (Box. pbk pvk) nonce ciphertext)))
+  (let [pk (PublicKey. public-key)
+        sk (PrivateKey. secret-key)]
+    (.decrypt (Box. pk sk) nonce ciphertext)))
