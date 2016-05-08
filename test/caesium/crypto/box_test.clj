@@ -3,6 +3,7 @@
             [caesium.crypto.scalarmult :as s]
             [caesium.util :as u]
             [caesium.vectors :as v]
+            [caesium.randombytes :as r]
             [clojure.test :refer [are deftest is testing]]))
 
 (deftest const-tests
@@ -47,4 +48,8 @@
     (is (u/array-eq ptext (b/decrypt bob-pk alice-sk nonce ctext)))
     (let [pk (u/hexify alice-pk)
           sk (u/hexify bob-sk)]
-      (is (thrown? ClassCastException (b/encrypt pk sk nonce ptext))))))
+      (is (thrown? ClassCastException (b/encrypt pk sk nonce ptext))))
+    (let [forgery (r/randombytes (alength ctext))]
+      (is (thrown-with-msg?
+           RuntimeException #"Ciphertext validation failed"
+           (b/decrypt bob-pk alice-sk nonce forgery))))))
