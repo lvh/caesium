@@ -61,8 +61,8 @@
   "Backwards-compatible alias for [[secretbox-easy]].
 
   Please note that this uses a different argument order."
-  [key nonce plaintext]
-  (secretbox-easy plaintext nonce key))
+  [key nonce msg]
+  (secretbox-easy msg nonce key))
 
 (defn decrypt
   "Backwards-compatible alias for [[secretbox-open-easy]].
