@@ -45,7 +45,6 @@
         alice-sk (box-vector "alice-secret-key")]
     (is (u/array-eq ctext (b/encrypt alice-pk bob-sk nonce ptext)))
     (is (u/array-eq ptext (b/decrypt bob-pk alice-sk nonce ctext)))
-    (let [hex-pk (u/hexify alice-pk)
-          hex-sk (u/hexify bob-sk)]
-      (is (thrown? java.lang.ClassCastException
-                   (b/encrypt hex-pk hex-sk nonce ptext))))))
+    (let [pk (u/hexify alice-pk)
+          sk (u/hexify bob-sk)]
+      (is (thrown? ClassCastException (b/encrypt pk sk nonce ptext))))))
