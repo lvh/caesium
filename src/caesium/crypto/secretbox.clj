@@ -1,7 +1,9 @@
 (ns caesium.crypto.secretbox
   "Bindings to the secretbox secret-key authenticated encryption scheme."
   (:require [caesium.binding :refer [sodium defconsts]]
-            [caesium.util :as u]))
+            [caesium.crypto.generichash :as g]
+            [caesium.util :as u])
+  (:import [java.util Arrays]))
 
 (defconsts [keybytes noncebytes macbytes primitive])
 
@@ -81,3 +83,37 @@
 
   The return value is a mutable byte array."
   (partial u/n->bytes noncebytes))
+
+(def ^:private autononce-personal
+  (.getBytes "secretbox nonce "))
+
+(assert (count autononce-personal) g/blake2b-personalbytes)
+
+(defn ^:private autononce
+  [key msg]
+  (g/blake2b msg {:size noncebytes :key key :personal autononce-personal}))
+
+(defn ^:private encrypt-autononce
+  [key msg]
+  (let [clen (+ (alength ^bytes msg) macbytes)
+        tlen (+ clen noncebytes)
+        out (byte-array tlen)
+        nonce (autononce key msg)]
+    (secretbox-easy-to-buf! out msg nonce key)
+    (System/arraycopy nonce 0 out clen noncebytes)
+    out))
+
+(defn ^:private decrypt-autononce
+  [key ^bytes ctext]
+  (let [tlen (alength ctext)
+        clen (- tlen noncebytes)
+        nonce (Arrays/copyOfRange ctext ^int clen (inc tlen))
+        truncated-ctext (Arrays/copyOf ctext ^int clen)]
+    (decrypt key nonce truncated-ctext)))
+
+(defn ^:private autononce-test
+  []
+  (let [k (byte-array keybytes)]
+    (->> (byte-array 10)
+         (encrypt-autononce k)
+         (decrypt-autononce k))))
