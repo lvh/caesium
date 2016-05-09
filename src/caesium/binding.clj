@@ -180,6 +180,6 @@
                :let [c-name (c-name *ns* const)
                      docstring (str "Constant returned by `" c-name "`. "
                                     "See libsodium docs.")]]
-           `(def ~const
+           `(def ~(with-meta const {:const true})
               ~docstring
               (~(java-call-sym c-name) sodium)))))
