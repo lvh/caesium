@@ -2,28 +2,28 @@
   (:require [caesium.crypto.generichash :as g]
             [caesium.util :refer [array-eq]]
             [caesium.vectors :as v]
-            [clojure.test :refer :all]))
+            [caesium.test-utils :refer [const-test]]
+            [clojure.test :refer [deftest are is]]))
 
-(deftest const-tests
-  (are [const expected] (= expected const)
-    32 g/bytes
-    16 g/bytes-min
-    64 g/bytes-max
+(const-test
+ g/bytes 32
+ g/bytes-min 16
+ g/bytes-max 64
 
-    32 g/keybytes
-    16 g/keybytes-min
-    64 g/keybytes-max
+ g/keybytes 32
+ g/keybytes-min 16
+ g/keybytes-max 64
 
-    32 g/blake2b-bytes
-    16 g/blake2b-bytes-min
-    64 g/blake2b-bytes-max
+ g/blake2b-bytes 32
+ g/blake2b-bytes-min 16
+ g/blake2b-bytes-max 64
 
-    32 g/blake2b-keybytes
-    16 g/blake2b-keybytes-min
-    64 g/blake2b-keybytes-max
+ g/blake2b-keybytes 32
+ g/blake2b-keybytes-min 16
+ g/blake2b-keybytes-max 64
 
-    16 g/blake2b-saltbytes
-    16 g/blake2b-personalbytes))
+ g/blake2b-saltbytes 16
+ g/blake2b-personalbytes 16)
 
 (def blake2b-vector
   (comp v/hex-resource (partial str "vectors/generichash/blake2b/")))

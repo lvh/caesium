@@ -4,16 +4,16 @@
             [caesium.util :as u]
             [caesium.vectors :as v]
             [caesium.randombytes :as r]
+            [caesium.test-utils :refer [const-test]]
             [clojure.test :refer [are deftest is testing]]))
 
-(deftest const-tests
-  (are [const expected] (= expected const)
-    b/seedbytes 32
-    b/publickeybytes 32
-    b/secretkeybytes 32
-    b/noncebytes 24
-    b/macbytes 16
-    b/primitive "curve25519xsalsa20poly1305"))
+(const-test
+ b/seedbytes 32
+ b/publickeybytes 32
+ b/secretkeybytes 32
+ b/noncebytes 24
+ b/macbytes 16
+ b/primitive "curve25519xsalsa20poly1305")
 
 (deftest keypair-generation-test
   (testing "generates new keypairs"

@@ -2,13 +2,14 @@
   (:require [caesium.crypto.secretbox :as s]
             [caesium.util :as u]
             [caesium.vectors :as v]
+            [caesium.test-utils :refer [const-test]]
             [clojure.test :refer [deftest is are testing]]))
 
-(deftest const-tests
-  (is (= 32 s/keybytes))
-  (is (= 24 s/noncebytes))
-  (is (= 16 s/macbytes))
-  (is (= "xsalsa20poly1305" s/primitive)))
+(const-test
+ s/keybytes 32
+ s/noncebytes 24
+ s/macbytes 16
+ s/primitive "xsalsa20poly1305")
 
 (def ptext (v/hex-resource "vectors/secretbox/plaintext"))
 (def secret-key (byte-array (range 32)))

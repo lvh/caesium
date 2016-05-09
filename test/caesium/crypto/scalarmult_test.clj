@@ -1,12 +1,13 @@
 (ns caesium.crypto.scalarmult-test
   (:require [caesium.crypto.scalarmult :as s]
             [caesium.util :as u]
+            [caesium.test-utils :refer [const-test]]
             [clojure.test :refer [are deftest is testing]]))
 
-(deftest consts-tests
-  (is (= 32 s/bytes))
-  (is (= 32 s/scalarbytes))
-  (is (= "curve25519" s/primitive)))
+(const-test
+ s/bytes 32
+ s/scalarbytes 32
+ s/primitive "curve25519")
 
 (def basepoint
   (byte-array (into [9] (repeat (dec s/bytes) 0))))

@@ -2,11 +2,12 @@
   (:require [caesium.crypto.hash :as h]
             [caesium.util :refer [array-eq]]
             [caesium.vectors :as v]
+            [caesium.test-utils :refer [const-test]]
             [clojure.test :refer [are deftest is]]))
 
-(deftest const-tests
-  (is (= h/sha256-bytes 32))
-  (is (= h/sha512-bytes 64)))
+(const-test
+ h/sha256-bytes 32
+ h/sha512-bytes 64)
 
 (def ^:private hash-vector
   (comp v/hex-resource (partial str "vectors/hash/")))
