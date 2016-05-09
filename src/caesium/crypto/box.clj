@@ -1,11 +1,7 @@
 (ns caesium.crypto.box
   "Bindings to the public key authenticated encryption scheme."
   (:require [caesium.binding :refer [defconsts sodium]]
-            [caesium.crypto.scalarmult :as s])
-  (:import (org.abstractj.kalium.keys KeyPair
-                                      PublicKey
-                                      PrivateKey)
-           org.abstractj.kalium.crypto.Box))
+            [caesium.crypto.scalarmult :as s]))
 
 (defconsts [seedbytes
             publickeybytes
@@ -73,28 +69,90 @@
     (s/scalarmult-to-buf! sk pk)
     {:public pk :secret sk}))
 
+(defn box-easy-to-buf!
+  "Encrypts ptext into out with `crypto_box_easy` using given nonce,
+  public key and secret key.
+
+  This function is only useful if you're managing your own output
+  buffer, which includes in-place encryption. You probably
+  want [[box-easy]]."
+  [out ptext nonce pk sk]
+  (let [plen (alength ^bytes ptext)]
+    (.crypto_box_easy sodium out ptext plen nonce pk sk)
+    out))
+
+(defn box-open-easy-to-buf!
+  "Decrypts ptext into out with `crypto_box_open_easy` using given
+  nonce, public key and secret key.
+
+  This function is only useful if you're managing your own output
+  buffer, which includes in-place decryption. You probably
+  want [[box-open-easy]]."
+  [out ctext nonce pk sk]
+  (let [clen (alength ^bytes ctext)
+        res (.crypto_box_open_easy sodium out ctext clen nonce pk sk)]
+    (if (zero? res)
+      out
+      (throw (RuntimeException. "Ciphertext verification failed")))))
+
+(defn mlen->clen
+  "Given a plaintext length, return the ciphertext length.
+
+  This should be an implementation detail unless you want to manage
+  your own output buffer together with [[box-easy-to-buf!]]."
+  [mlen]
+  (+ mlen macbytes))
+
+(defn clen->mlen
+  "Given a ciphertext length, return the plaintext length.
+
+  This should be an implementation detail unless you want to manage
+  your own output buffer together with [[box-open-easy-to-buf!]]."
+  [clen]
+  (- clen macbytes))
+
+(defn box-easy
+  "Encrypts ptext with `crypto_box_easy` using given nonce, public key
+  and secret key.
+
+  This creates the output ciphertext byte array for you, which is
+  probably what you want. If you would like to manage the array
+  yourself, or do in-place encryption, see [[box-easy-to-buf!]]."
+  [ptext nonce pk sk]
+  (let [out (byte-array (mlen->clen (alength ^bytes ptext)))]
+    (box-easy-to-buf! out ptext nonce pk sk)))
+
+(defn box-open-easy
+  "Decrypts ptext with `crypto_box_open_easy` using given nonce, public
+  key and secret key.
+
+  This creates the output plaintext byte array for you, which is probably what
+  you want. If you would like to manage the array yourself, or do in-place
+  decryption, see [[box-open-easy-to-buf!]]."
+  [ctext nonce pk sk]
+  (let [out (byte-array (clen->mlen (alength ^bytes ctext)))]
+    (box-open-easy-to-buf! out ctext nonce pk sk)))
+
 (defn encrypt
   "Encrypt with `crypto_box_easy`.
 
   To encrypt, use the recipient's public key and the sender's secret
-  key."
-  [^bytes public-key
-   ^bytes secret-key
-   nonce
-   plaintext]
-  (let [pk (PublicKey. public-key)
-        sk (PrivateKey. secret-key)]
-    (.encrypt (Box. pk sk) nonce plaintext)))
+  key.
+
+  This is an alias for [[box-easy]] with a different argument
+  order. [[box-easy]] follows the same argument order as the libsodium
+  function."
+  [pk sk nonce ptext]
+  (box-easy ptext nonce pk sk))
 
 (defn decrypt
   "Decrypt with `crypto_box_open_easy`.
 
   To decrypt, use the sender's public key and the recipient's secret
-  key."
-  [^bytes public-key
-   ^bytes secret-key
-   nonce
-   ciphertext]
-  (let [pk (PublicKey. public-key)
-        sk (PrivateKey. secret-key)]
-    (.decrypt (Box. pk sk) nonce ciphertext)))
+  key.
+
+  This is an alias for [[box-open-easy]] with a different argument
+  order. [[box-open-easy]] follows the same argument order as the
+  libsodium function."
+  [pk sk nonce ctext]
+  (box-open-easy ctext nonce pk sk))
