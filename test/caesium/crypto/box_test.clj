@@ -49,7 +49,7 @@
     (let [pk (u/hexify alice-pk)
           sk (u/hexify bob-sk)]
       (is (thrown? ClassCastException (b/encrypt pk sk nonce ptext))))
-    (let [forgery (r/randombytes (alength ctext))]
+    (let [forgery (r/randombytes (alength ^bytes ctext))]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (b/decrypt bob-pk alice-sk nonce forgery))))))
