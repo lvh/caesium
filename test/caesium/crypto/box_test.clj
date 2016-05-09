@@ -1,11 +1,11 @@
 (ns caesium.crypto.box-test
   (:require [caesium.crypto.box :as b]
             [caesium.crypto.scalarmult :as s]
-            [caesium.util :as u]
-            [caesium.vectors :as v]
             [caesium.randombytes :as r]
             [caesium.test-utils :refer [const-test]]
-            [clojure.test :refer [are deftest is testing]]))
+            [caesium.util :as u]
+            [caesium.vectors :as v]
+            [clojure.test :refer [deftest is testing]]))
 
 (const-test
  b/seedbytes 32
