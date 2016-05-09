@@ -51,5 +51,5 @@
       (is (thrown? ClassCastException (b/encrypt pk sk nonce ptext))))
     (let [forgery (r/randombytes (alength ctext))]
       (is (thrown-with-msg?
-           RuntimeException #"Ciphertext validation failed"
+           RuntimeException #"Ciphertext verification failed"
            (b/decrypt bob-pk alice-sk nonce forgery))))))
