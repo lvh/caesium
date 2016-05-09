@@ -1,9 +1,9 @@
 (ns caesium.crypto.hash-test
   (:require [caesium.crypto.hash :as h]
+            [caesium.test-utils :refer [const-test]]
             [caesium.util :refer [array-eq]]
             [caesium.vectors :as v]
-            [caesium.test-utils :refer [const-test]]
-            [clojure.test :refer [are deftest is]]))
+            [clojure.test :refer [are deftest]]))
 
 (const-test
  h/sha256-bytes 32
