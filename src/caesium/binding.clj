@@ -88,8 +88,6 @@
      ^bytes ^{Pinned {}} key
      ^long ^{LongLong {}} keylen]
 
-    ;; TODO: how do I reference a crypto_generichash_state *?
-
     ^long ^{size_t {}} crypto_generichash_blake2b_bytes_min []
     ^long ^{size_t {}} crypto_generichash_blake2b_bytes_max []
     ^long ^{size_t {}} crypto_generichash_blake2b_bytes []
