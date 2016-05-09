@@ -72,6 +72,20 @@
     ^int crypto_box_keypair
     [^bytes ^{Pinned {}} pk
      ^bytes ^{Pinned {}} sk]
+    ^int crypto_box_easy
+    [^bytes ^{Pinned {}} c
+     ^bytes ^{Pinned {}} m
+     ^long ^{LongLong {}} mlen
+     ^bytes ^{Pinned {}} n
+     ^bytes ^{Pinned {}} pk
+     ^bytes ^{Pinned {}} sk]
+    ^int crypto_box_open_easy
+    [^bytes ^{Pinned {}} m
+     ^bytes ^{Pinned {}} c
+     ^long ^{LongLong {}} clen
+     ^bytes ^{Pinned {}} n
+     ^bytes ^{Pinned {}} pk
+     ^bytes ^{Pinned {}} sk]
 
     ^long ^{size_t {}} crypto_generichash_bytes_min []
     ^long ^{size_t {}} crypto_generichash_bytes_max []
