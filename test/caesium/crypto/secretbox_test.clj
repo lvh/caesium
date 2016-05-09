@@ -1,9 +1,9 @@
 (ns caesium.crypto.secretbox-test
   (:require [caesium.crypto.secretbox :as s]
+            [caesium.test-utils :refer [const-test]]
             [caesium.util :as u]
             [caesium.vectors :as v]
-            [caesium.test-utils :refer [const-test]]
-            [clojure.test :refer [deftest is are testing]]))
+            [clojure.test :refer [are deftest testing]]))
 
 (const-test
  s/keybytes 32
