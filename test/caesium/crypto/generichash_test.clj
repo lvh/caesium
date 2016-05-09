@@ -1,9 +1,9 @@
 (ns caesium.crypto.generichash-test
   (:require [caesium.crypto.generichash :as g]
+            [caesium.test-utils :refer [const-test]]
             [caesium.util :refer [array-eq]]
             [caesium.vectors :as v]
-            [caesium.test-utils :refer [const-test]]
-            [clojure.test :refer [deftest are is]]))
+            [clojure.test :refer [are deftest is]]))
 
 (const-test
  g/bytes 32
