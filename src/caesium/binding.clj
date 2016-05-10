@@ -87,6 +87,12 @@
      ^bytes ^{Pinned {}} pk
      ^bytes ^{Pinned {}} sk]
 
+    ^long ^{size_t {}} crypto_sign_bytes []
+    ^long ^{size_t {}} crypto_sign_seedbytes []
+    ^long ^{size_t {}} crypto_sign_publickeybytes []
+    ^long ^{size_t {}} crypto_sign_secretkeybytes []
+    ^String crypto_sign_primitive []
+
     ^long ^{size_t {}} crypto_generichash_bytes_min []
     ^long ^{size_t {}} crypto_generichash_bytes_max []
     ^long ^{size_t {}} crypto_generichash_bytes []

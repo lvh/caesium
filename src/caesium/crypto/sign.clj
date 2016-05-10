@@ -1,5 +1,9 @@
 (ns caesium.crypto.sign
+  (:refer-clojure :exclude [bytes])
+  (:require [caesium.binding :refer [defconsts]])
   (:import (org.abstractj.kalium.keys SigningKey VerifyKey)))
+
+(defconsts [bytes seedbytes publickeybytes secretkeybytes primitive])
 
 (defn generate-signing-keys
   "Generate a public-key and secret-key for signing with `crypto_sign_ed25519_seed_keypair`. If a seed is not provided, one is taken from `randombytes`.
