@@ -1,7 +1,15 @@
 (ns caesium.crypto.sign-test
   (:require [caesium.crypto.sign :as s]
             [caesium.util :as u]
-            [clojure.test :refer [deftest is testing]]))
+            [clojure.test :refer [deftest is testing]]
+            [caesium.test-utils :refer [const-test]]))
+
+(const-test
+ s/bytes 64
+ s/seedbytes 32
+ s/publickeybytes 32
+ s/secretkeybytes 64
+ s/primitive "ed25519")
 
 ;; Test values taken from Kalium's suite
 (def secret
