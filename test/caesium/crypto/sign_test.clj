@@ -1,7 +1,7 @@
 (ns caesium.crypto.sign-test
   (:require [caesium.crypto.sign :as s]
             [caesium.util :as u]
-            [clojure.test :refer :all]))
+            [clojure.test :refer [deftest is testing]]))
 
 ;; Test values taken from Kalium's suite
 (def secret
