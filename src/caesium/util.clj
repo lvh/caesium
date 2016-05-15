@@ -1,7 +1,7 @@
 (ns caesium.util
   "Internal utilities."
   (:import (java.util Arrays)
-           (org.abstractj.kalium.encoders Encoder)))
+           (org.apache.commons.codec.binary Hex)))
 
 (defn array-eq
   "Compares two byte arrays for equality.
@@ -10,11 +10,13 @@
   [^bytes a ^bytes b]
   (Arrays/equals a b))
 
-(defn unhexify [s]
-  (.decode Encoder/HEX s))
+(defn unhexify
+  [^String s]
+  (.decode (Hex.) (.getBytes s)))
 
-(defn hexify [b]
-  (.encode Encoder/HEX b))
+(defn hexify
+  [b]
+  (Hex/encodeHexString b))
 
 (defn n->bytes
   "Turns n into a byte array of length len."
