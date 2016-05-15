@@ -57,8 +57,13 @@
   When given a valid signed message, returns the unsigned
   message. When given a valid signature, returns nil. When given an
   invalid signed message or signature, raises RuntimeException."
-  ([pk signed-message]
-   #_(.crypto_sign_open))
+  ([pk sm]
+   (let [smlen (alength ^bytes sm)
+         m (byte-array (- smlen bytes))
+         res (.crypto_sign_open sodium m nil sm smlen pk)]
+     (if (zero? res)
+       m
+       (throw (RuntimeException. "Signature validation failed")))))
   ([pk msg sig]
    (let [mlen (alength ^bytes msg)
          res (.crypto_sign_verify_detached sodium sig msg mlen pk)]
