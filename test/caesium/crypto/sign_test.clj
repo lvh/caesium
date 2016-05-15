@@ -24,6 +24,7 @@
 (def public (sign-resource "public"))
 (def message (sign-resource "message"))
 (def signature (sign-resource "signature"))
+(def signed (sign-resource "signed"))
 
 (deftest pair-from-secret-test
   (let [kp (s/generate-signing-keys seed)]
@@ -42,3 +43,6 @@
        (let [{pk :public sk :secret} (s/generate-signing-keys)
              other-sig (s/sign sk message)]
          (s/verify public message other-sig)))))
+
+(deftest signed-test
+  (is (u/array-eq signed (s/signed secret message))))
