@@ -1,4 +1,4 @@
-# 0.5.0
+# 0.6.0
 
 Pretty much a rewrite. Now binds libsodium directly with jnr-ffi instead of
 using `kalium`.
@@ -25,6 +25,11 @@ using `kalium`.
   end). This breaks backwards compatibility within caesium, but improves
   compatibility with other systems.
 * init moved from `caesium.core` to `caesium.sodium` for consistency
+
+# 0.5.0
+
+Accidentally botched release; see 0.6.0. Tagged, but not signed or artifacts
+pushed.
 
 # 0.4.0
 
