@@ -19,13 +19,16 @@
     (is (not (u/array-eq (:secret kp1) (:secret kp2))))))
 
 (def sign-resource (comp hex-resource (partial str "vectors/sign/")))
+(def seed (sign-resource "seed"))
 (def secret (sign-resource "secret"))
 (def public (sign-resource "public"))
 (def message (sign-resource "message"))
 (def signature (sign-resource "signature"))
 
 (deftest pair-from-secret-test
-  (is (u/array-eq public (:public (s/generate-signing-keys secret)))))
+  (let [kp (s/generate-signing-keys seed)]
+    (is (u/array-eq public (:public kp)))
+    (is (u/array-eq secret (:secret kp)))))
 
 (deftest detached-sign-test
   (is (u/array-eq signature (s/sign secret message))))
