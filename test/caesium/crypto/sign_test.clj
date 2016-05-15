@@ -46,3 +46,11 @@
 
 (deftest signed-test
   (is (u/array-eq signed (s/signed secret message))))
+
+(deftest signed-verify-test
+  (is (u/array-eq message (s/verify public signed)))
+  (is (thrown-with-msg?
+       RuntimeException #"^Signature validation failed$"
+       (let [{pk :public sk :secret} (s/generate-signing-keys)
+             other-signed (s/signed sk message)]
+         (s/verify public other-signed)))))
