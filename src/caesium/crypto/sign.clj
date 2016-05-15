@@ -6,7 +6,9 @@
 (defconsts [bytes seedbytes publickeybytes secretkeybytes primitive])
 
 (defn generate-signing-keys
-  "Generate a public-key and secret-key for signing with `crypto_sign_ed25519_seed_keypair`. If a seed is not provided, one is taken from `randombytes`.
+  "Generate a public-key and secret-key for signing with
+  `crypto_sign_ed25519_seed_keypair`. If a seed is not provided, one
+  is taken from `randombytes`.
 
   A map of the secret seed and public-key is returned."
   ([]
