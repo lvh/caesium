@@ -48,8 +48,9 @@ outdated, here are a few properties you may care about:
   caesium will use the default output size of that hash function. (These were
   at time of writing not true for at least 1 other library).
 
-caesium tries to just give you the libsodium experience from Clojure. It maps
-fns to predictable names; `sodium_crypto_secretbox_open_easy` will be called
+caesium tries to just give you the libsodium experience from Clojure. C
+pseudo-namespaces are mapped to real Cojure namespaces. It usually maps fns to
+predictable names; `sodium_crypto_secretbox_open_easy` will be called
 `caesium.crypto.secretbox/open-easy`. Formally: take the C pseudo-namespace,
 turn it into a real namespace, replace the leading `sodium` with caesium,
 replace underscores with dashes. Exceptions where this doesn't work out:
@@ -71,6 +72,9 @@ replace underscores with dashes. Exceptions where this doesn't work out:
   supporting multi-arity functions; e.g. `scalarmult` in libsodium has two
   functions: one with the fixed base point and one with an explicit base
   point; caesium just has one function with two arities.
+* caesium sometimes takes a little artistic license with some of the exposed
+  names when that makes more sense than the original; generally fns will be
+  available under both the "official" name and an alias.
 
 The default caesium bindings will allocate the output array for you and raise
 exceptions on failure. There are also often `-to-buf!` variants of a function
