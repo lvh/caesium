@@ -43,7 +43,8 @@
           (s/verify pk message
                     (s/sign ss message)))))
   (testing "Will not verify arbitrary signature"
-    (is (thrown-with-msg? java.lang.RuntimeException #"^signature was forged or corrupted$"
-                          (let [{pk :public ss :secret} (s/generate-signing-keys)
-                                other-sig (s/sign ss message)]
-                            (s/verify public message other-sig))))))
+    (is (thrown-with-msg?
+         RuntimeException #"^Signature validation failed$"
+         (let [{pk :public sk :secret} (s/generate-signing-keys)
+               other-sig (s/sign sk message)]
+           (s/verify public message other-sig))))))
