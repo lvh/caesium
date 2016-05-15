@@ -93,6 +93,37 @@
     ^long ^{size_t {}} crypto_sign_secretkeybytes []
     ^String crypto_sign_primitive []
 
+    ^int crypto_sign_keypair
+    [^bytes ^{Pinned {}} pk
+     ^bytes ^{Pinned {}} sk]
+    ^int crypto_sign_seed_keypair
+    [^bytes ^{Pinned {}} pk
+     ^bytes ^{Pinned {}} sk
+     ^bytes ^{Pinned {}} seed]
+    ^int crypto_sign
+    [^bytes ^{Pinned {}} sm
+     ^jnr.ffi.byref.LongLongByReference ^{LongLong {}} smlen_p
+     ^bytes ^{Pinned {}} m
+     ^long ^{LongLong {}} mlen
+     ^bytes ^{Pinned {}} sk]
+    ^int crypto_sign_open
+    [^bytes ^{Pinned {}} m
+     ^jnr.ffi.byref.LongLongByReference ^{LongLong {}} mlen_p
+     ^bytes ^{Pinned {}} sm
+     ^long ^{LongLong {}} smlen
+     ^bytes ^{Pinned {}} pk]
+    ^int crypto_sign_detached
+    [^bytes ^{Pinned {}} sig
+     ^jnr.ffi.byref.LongLongByReference ^{LongLong {}} siglen_p
+     ^bytes ^{Pinned {}} m
+     ^long ^{LongLong {}} mlen
+     ^bytes ^{Pinned {}} sk]
+    ^int crypto_sign_verify_detached
+    [^bytes ^{Pinned {}} sig
+     ^bytes ^{Pinned {}} m
+     ^long ^{LongLong {}} mlen
+     ^bytes ^{Pinned {}} pk]
+
     ^long ^{size_t {}} crypto_generichash_bytes_min []
     ^long ^{size_t {}} crypto_generichash_bytes_max []
     ^long ^{size_t {}} crypto_generichash_bytes []
