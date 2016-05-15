@@ -31,15 +31,12 @@
 (deftest detached-sign-test
   (is (u/array-eq signature (s/sign secret message))))
 
-(deftest verify-test
-  (testing "Verifying correct signature works"
-    (is (s/verify public message signature))
-    (is (let [{pk :public ss :secret} (s/generate-signing-keys)]
-          (s/verify pk message
-                    (s/sign ss message)))))
-  (testing "Will not verify arbitrary signature"
-    (is (thrown-with-msg?
-         RuntimeException #"^Signature validation failed$"
-         (let [{pk :public sk :secret} (s/generate-signing-keys)
-               other-sig (s/sign sk message)]
-           (s/verify public message other-sig))))))
+(deftest detached-verify-test
+  (is (nil? (s/verify public message signature)))
+  (let [{pk :public sk :secret} (s/generate-signing-keys)]
+    (is (nil? (s/verify pk message (s/sign sk message)))))
+  (is (thrown-with-msg?
+       RuntimeException #"^Signature validation failed$"
+       (let [{pk :public sk :secret} (s/generate-signing-keys)
+             other-sig (s/sign sk message)]
+         (s/verify public message other-sig)))))
