@@ -22,14 +22,11 @@
   (u/unhexify "6bd710a368c1249923fc7a1610747403040f0cc30815a00f9ff548a896bbda0b4eb2ca19ebcf917f0f34200a9edbad3901b64ab09cc5ef7b9bcc3c40c0ff7509"))
 
 (deftest generate-signing-keys-test
-  (testing "Simply generates new keypairs"
-    (is (let [kp1 (s/generate-signing-keys)
-              kp2 (s/generate-signing-keys)]
-          (and (not (u/array-eq (:public kp1) (:public kp2)))
-               (not (u/array-eq (:secret kp1) (:secret kp2)))))))
-  (testing "Can generate expected public-key from secret seed"
-    (is (u/array-eq public
-                    (:public (s/generate-signing-keys secret))))))
+  (let [kp1 (s/generate-signing-keys)
+        kp2 (s/generate-signing-keys)]
+    (is (not (u/array-eq (:public kp1) (:public kp2))))
+    (is (not (u/array-eq (:secret kp1) (:secret kp2)))))
+  (is (u/array-eq public (:public (s/generate-signing-keys secret)))))
 
 (deftest sign-test
   (testing "Can sign a message"
