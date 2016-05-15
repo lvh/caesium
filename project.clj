@@ -1,4 +1,4 @@
-(defproject caesium "0.5.0-SNAPSHOT"
+(defproject caesium "0.5.0"
   :description "libsodium for clojure"
   :url "https://github.com/lvh/caesium"
   :deploy-repositories [["releases" :clojars]
@@ -16,5 +16,6 @@
                               [lein-kibit "0.1.2"]
                               [jonase/eastwood "0.2.3"]
                               [lein-codox "0.9.4"]]}}
-  :codox {:metadata {:doc/format :markdown}}
+  :codox {:metadata {:doc/format :markdown}
+          :output-path "doc"}
   :global-vars {*warn-on-reflection* true})
