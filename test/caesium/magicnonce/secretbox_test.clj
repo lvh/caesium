@@ -17,6 +17,12 @@
     (is (identical? (#'ms/xor-inplace! one two) one))
     (is (u/array-eq (byte-array [1 1 1]) one))))
 
+(deftest random-nonce!-test
+  (let [a (ms/random-nonce!)
+        b (ms/random-nonce!)]
+    (is (not (u/array-eq a b)))
+    (is (= s/noncebytes (alength ^bytes a) (alength ^bytes b)))))
+
 (deftest secretbox-pfx-test
   (let [nonce (byte-array (range s/noncebytes))
         ctext (ms/secretbox-pfx st/ptext nonce st/secret-key)
