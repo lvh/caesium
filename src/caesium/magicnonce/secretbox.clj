@@ -7,10 +7,11 @@
      resulting system safer or easier to use,
    * schemes that produce the nonce for you automatically.
 
-  See individual function docstrings for details, but the most interesting
-  function in this namespace is almost certainly [[secretbox-nmr]]. If you
-  just want a random nonce and do not care about nonce-misuse resistance,
-  use [[secretbox-rnd]]. The other functions are fairly limited use.")
+  See individual function docstrings for details, but the most
+  interesting function in this namespace is [[secretbox-nmr]]. If you
+  just want a random nonce and do not care about nonce-misuse
+  resistance, use [[secretbox-rnd]]. The other functions are fairly
+  limited use.")
 
 (defn secretbox-pfx
   "secretbox, with the given nonce embedded in the ciphertext as a prefix.
