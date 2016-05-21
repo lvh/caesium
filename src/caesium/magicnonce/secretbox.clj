@@ -72,20 +72,6 @@
   mutable byte array."
   [plaintext])
 
-(defn ^:private xor!
-  "Populates `out` with the XOR of matching elements in `a`, `b`.
-
-  All three arrays should be of identical length. Returns `out`."
-  [^bytes out ^bytes a ^bytes b]
-  (dotimes [i (alength a)]
-    (aset-byte out i (bit-xor (aget a i) (aget b i))))
-  out)
-
-(defn ^:private xor-inplace!
-  "XORs elements of array `a` in-place with the matching elem from `b`."
-  [^bytes a ^bytes b]
-  (xor! a a b))
-
 (defn secretbox-det
   "secretbox, with deterministic nonce.
 
@@ -110,6 +96,19 @@
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
   [msg key])
+(defn ^:private xor!
+  "Populates `out` with the XOR of matching elements in `a`, `b`.
+
+  All three arrays should be of identical length. Returns `out`."
+  [^bytes out ^bytes a ^bytes b]
+  (dotimes [i (alength a)]
+    (aset-byte out i (bit-xor (aget a i) (aget b i))))
+  out)
+
+(defn ^:private xor-inplace!
+  "XORs elements of array `a` in-place with the matching elem from `b`."
+  [^bytes a ^bytes b]
+  (xor! a a b))
 
 (defn secretbox-nmr
   "Encrypt a message like secretbox, but nonce-misuse resistant.
