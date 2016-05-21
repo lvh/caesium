@@ -18,8 +18,8 @@
 
   This is only useful if there is an obvious nonce in your protocol
   that can not repeat, you have ways of detecting when your peer
-  repeats nonces, your nonce is not implicitly part of your protocol
-  so you have to specify it as part of the ciphertext, and you can not
+  epeats nonces, your nonce is not implicitly part of your protocol so
+  you have to specify it as part of the ciphertext, and you can not
   afford to use a nonce-misuse resistant scheme. As you can see,
   that's a fairly rare circumstance; this function is mainly used
   internally by other, easier to use schemes in this namespace. Check
