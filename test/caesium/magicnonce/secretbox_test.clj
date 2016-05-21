@@ -38,8 +38,8 @@
 
     (is (u/array-eq st/ptext (ms/decrypt st/secret-key ctext)))
 
-    (let [forgery (r/randombytes (alength ^bytes out))]
-      (is (thrown-with-msg
+    (let [forgery (r/randombytes (alength ^bytes ctext))]
+      (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (ms/decrypt st/secret-key forgery))))
 
@@ -55,7 +55,7 @@
 
     (is (u/array-eq st/ptext (ms/open ctext st/secret-key)))
 
-    (let [forgery (r/randombytes (alength ^bytes out))]
-      (is (thrown-with-msg
+    (let [forgery (r/randombytes (alength ^bytes ctext))]
+      (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (ms/open forgery st/secret-key))))))
