@@ -126,20 +126,20 @@
 
 (defn decrypt-to-buf!
   "Decrypts any secretbox message with a prefix nonce into the given buffer."
-  [out key ctext])
+  [out key nonced-ctext])
 
 (defn decrypt
   "Decrypts any secretbox message with a prefix nonce."
-  [key ctext])
+  [key nonced-ctext]
 
 (defn open-to-buf!
   "Like [[decrypt-to-buf!]], but with different argument order;
   analogous to [[caesium.crypto.secretbox/secretbox-open-easy-to-buf!]]."
-  [out ctext key]
+  [out nonced-ctext key]
   (decrypt-to-buf! out key ctext))
 
 (defn open
   "Like [[decrypt]], but with different argument order; analogous to
   [[caesium.crypto.secretbox/secretbox-open-easy]]."
-  [ctext key]
+  [nonced-ctext key]
   (decrypt key ctext))
