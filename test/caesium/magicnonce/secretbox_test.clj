@@ -22,4 +22,6 @@
     (is (= (+ s/noncebytes
               (alength ^bytes st/ptext)
               s/macbytes)
-           (alength ^bytes ctext)))))
+           (alength ^bytes ctext)))
+    (is (= (range s/noncebytes)
+           (take s/noncebytes ctext)))))
