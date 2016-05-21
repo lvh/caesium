@@ -12,7 +12,8 @@
   just want a random nonce and do not care about nonce-misuse
   resistance, use [[secretbox-rnd]]. The other functions are fairly
   limited use."
-  (:require [caesium.crypto.secretbox :as s])
+  (:require [caesium.crypto.secretbox :as s]
+            [caesium.randombytes :as r])
   (:import [java.nio ByteBuffer]))
 
 (defn secretbox-pfx
@@ -48,7 +49,8 @@
 
   This function is not pure: it will request a different random nonce from
   the CSPRNG every time."
-  [])
+  []
+  (r/randombytes s/noncebytes))
 
 (defn secretbox-rnd
   "secretbox, with randomized prefix nonce.
