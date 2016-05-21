@@ -125,4 +125,4 @@
 (defn open
   "Like [[decrypt]], but with different argument order; analogous to
   [[caesium.crypto.secretbox/secretbox-open-easy]]."
-  [])
+  [ctext key])
