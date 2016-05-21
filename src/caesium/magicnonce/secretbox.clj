@@ -11,7 +11,9 @@
   interesting function in this namespace is [[secretbox-nmr]]. If you
   just want a random nonce and do not care about nonce-misuse
   resistance, use [[secretbox-rnd]]. The other functions are fairly
-  limited use.")
+  limited use."
+  (:require [caesium.crypto.secretbox :as s])
+  (:import [java.nio ByteBuffer]))
 
 (defn secretbox-pfx
   "secretbox, with the given nonce embedded in the ciphertext as a prefix.
@@ -31,7 +33,16 @@
 
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
-  [msg nonce key])
+  [msg nonce key]
+  (let [msglen (alength ^bytes msg)
+        ctextlen (+ msglen s/macbytes)
+        outlen (+ s/noncebytes ctextlen)
+        out (byte-array outlen)
+        ctextbuf (ByteBuffer/wrap out s/noncebytes ctextlen)]
+    (System/arraycopy nonce 0 out 0 s/noncebytes)
+    (s/secretbox-easy-to-byte-buf! ctextbuf msg nonce key)
+    out))
+
 (defn ^:private random-nonce!
   "Creates a random nonce suitable for use in secretbox.
 
