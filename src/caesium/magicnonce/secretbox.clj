@@ -25,6 +25,10 @@
   internally by other, easier to use schemes in this namespace. Check
   out [[secretbox-nmr]] instead.
 
+  The resulting layout will be 24 bytes of nonce, followed by the
+  secretbox ciphertext (which itself consists of the encryption of the
+  plaintext, followed by a 16 byte MAC).
+
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
   [msg nonce key])
