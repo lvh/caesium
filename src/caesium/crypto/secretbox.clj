@@ -15,9 +15,9 @@
     (.crypto_secretbox_easy sodium out msg mlen nonce key)))
 
 (defn secretbox-easy-to-byte-buf!
-  "Like [[secertbox-easy-to-buf!]], but with a ByteBuffer output.
+  "Like [[secretbox-easy-to-buf!]], but with a ByteBuffer output.
 
-  Like [[secertbox-easy-to-buf!]], this is only useful if you want to manage
+  Like [[secretbox-easy-to-buf!]], this is only useful if you want to manage
   the output byte buffer yourself. Otherwise, you want [[secretbox-easy]]."
   [^java.nio.ByteBuffer out ^bytes msg ^bytes nonce ^bytes key]
   (let [mlen (long (alength ^bytes msg))]
