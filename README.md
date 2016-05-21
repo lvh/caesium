@@ -78,9 +78,9 @@ replace underscores with dashes. Exceptions where this doesn't work out:
 
 The default caesium bindings will allocate the output array for you and raise
 exceptions on failure. There are also often `-to-buf!` variants of a function
-available, which are more direct bindings to libsodium. They have the
-advantage that you can specify your own output buffer, but the disadvantage
-that the responsibility for checking return codes is yours.
+available, which are more direct bindings to libsodium. They give you the
+option of managing your own output buffer. That's more trouble than most
+applications will want to go through, but it's available nonetheless.
 
 ## Compatibility
 
