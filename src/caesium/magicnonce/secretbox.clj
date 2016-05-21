@@ -126,22 +126,30 @@
   ([msg key]
    (secretbox-nmr msg (random-nonce!) key)))
 
-(defn decrypt-to-buf!
-  "Decrypts any secretbox message with a prefix nonce into the given buffer."
-  [out key nonced-ctext])
-
-(defn decrypt
-  "Decrypts any secretbox message with a prefix nonce."
-  [key nonced-ctext]
-
 (defn open-to-buf!
-  "Like [[decrypt-to-buf!]], but with different argument order;
-  analogous to [[caesium.crypto.secretbox/secretbox-open-easy-to-buf!]]."
-  [out nonced-ctext key]
-  (decrypt-to-buf! out key ctext))
+  "Decrypts any secretbox message with a prefix nonce into the given buffer.
+
+  Analogous to [[caesium.crypto.secretbox/secretbox-open-easy-to-buf!]]."
+  [^bytes out ^bytes nonced-ctext ^bytes key]
+  (let [noncebuf (ByteBuffer/wrap nonced-ctext 0 s/noncebytes)
+        ctextlen (- (alength nonced-ctext) s/noncebytes)
+        ctextbuf (ByteBuffer/wrap nonced-ctext s/noncebytes ctextlen)]
+    (s/decrypt-to-byte-buf! out key noncebuf ctextbuf)))
 
 (defn open
-  "Like [[decrypt]], but with different argument order; analogous to
-  [[caesium.crypto.secretbox/secretbox-open-easy]]."
-  [nonced-ctext key]
-  (decrypt key ctext))
+  "Decrypts any secretbox message with a prefix nonce.
+
+  Analogous to [[caesium.crypto.secretbox/secretbox-open-easy]]."
+  [^bytes nonced-ctext ^bytes key]
+  (let [out (byte-array (- (alength nonced-ctext) s/noncebytes s/macbytes))]
+    ))
+
+(defn decrypt-to-buf!
+  "Like [[open-to-buf!]], but with different argument order."
+  [out key nonced-ctext]
+  (open-to-buf! out nonced-ctext key))
+
+(defn decrypt
+  "Like [[open]], but with different argument order."
+  [key nonced-ctext]
+  (open nonced-ctext key))
