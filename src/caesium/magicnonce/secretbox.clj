@@ -133,10 +133,13 @@
   [key ctext])
 
 (defn open-to-buf!
-  "Open (decrypt and verify) a nonce-prefixed secretbox message."
-  [out ctext key])
+  "Like [[decrypt-to-buf!]], but with different argument order;
+  analogous to [[caesium.crypto.secretbox/secretbox-open-easy-to-buf!]]."
+  [out ctext key]
+  (decrypt-to-buf! out key ctext))
 
 (defn open
   "Like [[decrypt]], but with different argument order; analogous to
   [[caesium.crypto.secretbox/secretbox-open-easy]]."
-  [ctext key])
+  [ctext key]
+  (decrypt key ctext))
