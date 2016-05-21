@@ -28,6 +28,12 @@
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
   [msg nonce key])
+(defn ^:private random-nonce!
+  "Creates a random nonce suitable for use in secretbox.
+
+  This function is not pure: it will request a different random nonce from
+  the CSPRNG every time."
+  [])
 
 (defn secretbox-rnd
   "secretbox, with randomized prefix nonce.
@@ -50,13 +56,6 @@
   same byte array. However, note that the returned nonce will be a
   mutable byte array."
   [plaintext])
-
-(defn ^:private random-nonce!
-  "Creates a random nonce suitable for use in secretbox.
-
-  This function is not pure: it will request a different random nonce from
-  the CSPRNG every time."
-  [])
 
 (defn ^:private xor!
   "Populates `out` with the XOR of matching elements in `a`, `b`.
