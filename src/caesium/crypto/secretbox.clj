@@ -40,7 +40,7 @@
     out))
 
 (defn secretbox-open-easy-to-buf!
-  "Encrypt with `crypto_secretbox_open_easy` into the given byte array.
+  "Decrypt with `crypto_secretbox_open_easy` into the given byte array.
 
   You only want this to manage the output byte array yourself. Otherwise,
   you want [[secretbox-open-easy]]."
