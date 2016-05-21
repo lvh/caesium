@@ -37,13 +37,14 @@ outdated, here are a few properties you may care about:
   getting in your way if you want the default good-enough behavior.
 * caesium uses jnr-ffi pinning correctly; resulting in zero-copy behavior
   between JVM and C land at the call site.
-* All APIs take `byte[]`, never `String`. This gives you the option of zeroing
-  byte arrays out once you're done. `caesium` doesn't hide the no-magic C APIs
-  from you; but you have to understand libsodium to use them. The upside of
-  that is that this library provides the APIs necessary to use `libsodium`
-  safely; e.g. with locked buffers with canaries, secure memset, et cetera.
-* caesium's APIs match libsodium's behavior. If libsodium hashes a
-  seed to produce a keypair, caesium will hash a seed to produce a keypair. If
+* All APIs take `byte[]` and in some cases `ByteBuffer`, never `String`. This
+  gives you the option of zeroing byte arrays out once you're done. `caesium`
+  doesn't hide the no-magic C APIs from you; but you have to understand
+  libsodium to use them. The upside of that is that this library provides the
+  APIs necessary to use `libsodium` safely; e.g. with locked buffers with
+  canaries, secure memset, et cetera.
+* caesium's APIs match libsodium's behavior. If libsodium hashes a seed to
+  produce a keypair, caesium will hash a seed to produce a keypair. If
   libsodium uses the default output size of a particular hash function,
   caesium will use the default output size of that hash function. (These were
   at time of writing not true for at least 1 other library).
