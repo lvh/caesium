@@ -106,7 +106,7 @@
   repeated, instead of the usual plaintext disclosure that happens.
 
   If no nonce argument is specified, a random nonce is automatically
-  selected for you, and the nmr scheme is still applied."
+  selected for you, and the NMR scheme is applied on top of that."
   ([msg nonce key])
   ([msg key]
    (secretbox-nmr msg (random-nonce!) key)))
