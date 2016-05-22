@@ -120,9 +120,10 @@
    (let [just-ctext (fn [^bytes ptext]
                       (->> (scheme ptext)
                            (drop s/noncebytes)
-                           (take (alength ptext))))
+                           (take (alength ptext))
+                           byte-array))
          ctexts (map just-ctext ptexts)
-         shortest (apply min alength ptexts)
+         shortest (apply min (map alength ptexts))
          xord-ptexts (byte-array shortest)
          xord-ctexts (byte-array shortest)]
      (apply #'ms/xor! xord-ptexts ptexts)
@@ -150,4 +151,3 @@
 
     (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
       (is (not (repeated-keystream? scheme))))))
-
