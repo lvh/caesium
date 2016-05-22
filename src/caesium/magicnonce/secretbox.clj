@@ -142,7 +142,7 @@
   Analogous to [[caesium.crypto.secretbox/secretbox-open-easy]]."
   [^bytes nonced-ctext ^bytes key]
   (let [out (byte-array (- (alength nonced-ctext) s/noncebytes s/macbytes))]
-    ))
+    (open-to-buf! out nonced-ctext key)))
 
 (defn decrypt-to-buf!
   "Like [[open-to-buf!]], but with different argument order."
