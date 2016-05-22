@@ -123,6 +123,9 @@
   (let [ctext (ms/secretbox-nmr st/ptext st/secret-key)]
     (is-valid-magicnonce-ctext? ctext))
 
+  (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
+    (is (not (repeated-keystream? scheme))))
+
   (with-redefs [ms/random-nonce! constant-nonce]
     (let [c1 (ms/secretbox-nmr st/ptext st/secret-key)
           c2 (ms/secretbox-nmr st/ptext st/secret-key)
@@ -138,5 +141,3 @@
     (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
       (is (not (repeated-keystream? scheme)))))
 
-  (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
-    (is (not (repeated-keystream? example-ptexts)))))
