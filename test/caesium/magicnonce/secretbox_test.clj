@@ -70,6 +70,8 @@
     (is (= (range s/noncebytes) (take s/noncebytes ctext)))
     (is-valid-magicnonce-ctext? ctext)))
 
+(def constant-nonce (constantly (byte-array (range s/noncebytes))))
+
 (deftest secretbox-rnd-test
   (let [ctext (ms/secretbox-rnd st/ptext st/secret-key)]
     (is-valid-magicnonce-ctext? ctext))
@@ -79,7 +81,7 @@
     (is (not (u/array-eq c1 c2)))
     (is (not= (take s/noncebytes c1) (take s/noncebytes c2))))
 
-  (with-redefs [ms/random-nonce! (constantly (byte-array (range s/noncebytes)))]
+  (with-redefs [ms/random-nonce! constant-nonce]
     (let [c1 (ms/secretbox-rnd st/ptext st/secret-key)
           c2 (ms/secretbox-rnd st/ptext st/secret-key)]
       (is (u/array-eq c1 c2))
