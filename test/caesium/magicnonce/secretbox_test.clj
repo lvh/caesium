@@ -87,6 +87,14 @@
       (is (u/array-eq c1 c2))
       (is (= (range s/noncebytes) (take s/noncebytes c1) (take s/noncebytes c2))))))
 
+(deftest synthetic-nonce-test
+  (is (= (alength ^bytes (#'ms/synthetic-nonce (byte-array (range 10))))
+         (s/noncebytes)))
+  (is (= (#'ms/synthetic-nonce (byte-array (range 10)))
+         (#'ms/synthetic-nonce (byte-array (range 10)))))
+  (is (not= (#'ms/synthetic-nonce (byte-array (range 10)))
+            (#'ms/synthetic-nonce (byte-array (range 11))))))
+
 (defn repeated-keystream?
   "Does given scheme repeat the keystream when applied to given
   plaintexts?
