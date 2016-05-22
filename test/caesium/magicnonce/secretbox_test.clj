@@ -4,7 +4,8 @@
             [caesium.crypto.secretbox-test :as st]
             [clojure.test :refer [deftest is]]
             [caesium.randombytes :as r]
-            [caesium.util :as u]))
+            [caesium.util :as u]
+            [caesium.crypto.generichash :as g]))
 
 (deftest xor-test
   (let [one (byte-array [1 0 1])
@@ -88,12 +89,21 @@
       (is (= (range s/noncebytes) (take s/noncebytes c1) (take s/noncebytes c2))))))
 
 (deftest synthetic-nonce-test
-  (is (= (alength ^bytes (#'ms/synthetic-nonce (byte-array (range 10))))
-         (s/noncebytes)))
-  (is (= (#'ms/synthetic-nonce (byte-array (range 10)))
-         (#'ms/synthetic-nonce (byte-array (range 10)))))
-  (is (not= (#'ms/synthetic-nonce (byte-array (range 10)))
-            (#'ms/synthetic-nonce (byte-array (range 11))))))
+  (is (= (alength ^bytes @#'ms/synthetic-personal)
+         g/blake2b-personalbytes))
+  (let [k1 (byte-array (reverse (range 32)))
+        k2 (byte-array (reverse (range 32 64)))
+        sn #'ms/synthetic-nonce
+        m1 (byte-array (range 10))
+        m2 (byte-array (range 10 20))]
+    (is (= s/noncebytes
+           (alength ^bytes (sn k1 m1))
+           (alength ^bytes (sn k1 m2))
+           (alength ^bytes (sn k2 m1))
+           (alength ^bytes (sn k2 m2))))
+    (is (u/array-eq (sn k1 m1) (sn k1 m1)))
+    (is (not (u/array-eq (sn k1 m1) (sn k1 m2))))
+    (is (not (u/array-eq (sn k1 m1) (sn k2 m1))))))
 
 (defn repeated-keystream?
   "Does given scheme repeat the keystream when applied to given
