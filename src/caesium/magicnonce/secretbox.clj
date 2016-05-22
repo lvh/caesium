@@ -63,7 +63,8 @@
 
   To decrypt, use [[decrypt]] or [[open]], depending on which argument
   order you prefer."
-  [msg key])
+  [msg key]
+  (secretbox-pfx msg (random-nonce!) key))
 
 (defn ^:private synthetic-nonce
   "Creates a synthetic nonce from the given plaintext.
