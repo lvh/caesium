@@ -86,3 +86,23 @@
           c2 (ms/secretbox-rnd st/ptext st/secret-key)]
       (is (u/array-eq c1 c2))
       (is (= (range s/noncebytes) (take s/noncebytes c1) (take s/noncebytes c2))))))
+
+(defn repeated-keystream?
+  "Does given scheme repeat the keystream when applied to given
+  plaintexts?
+
+  This compares the XORd ciphertexts to the XORd plaintexts. This will
+  only be the same when the keystream repeats, and should not happen
+  in an NMR scheme, or in a randomized scheme."
+  [ptexts scheme]
+  (let [just-ctext (fn [^bytes ptext]
+                     (->> (scheme ptext)
+                          (drop s/noncebytes)
+                          (take (alength ptext))))
+        ctexts (map just-ctext ptexts)
+        shortest (apply min alength ptexts)
+        xord-ptexts (byte-array shortest)
+        xord-ctexts (byte-array shortest)]
+    (apply #'ms/xor! xord-ptexts ptexts)
+    (apply #'ms/xor! xord-ctexts ctexts)
+    (u/array-eq xord-ptexts xord-ctexts)))
