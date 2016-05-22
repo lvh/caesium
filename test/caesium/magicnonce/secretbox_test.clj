@@ -139,5 +139,5 @@
         (is (not= n3 n1))))
 
     (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
-      (is (not (repeated-keystream? scheme)))))
+      (is (not (repeated-keystream? scheme))))))
 
