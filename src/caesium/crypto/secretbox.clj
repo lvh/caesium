@@ -44,9 +44,29 @@
 
   You only want this to manage the output byte array yourself. Otherwise,
   you want [[secretbox-open-easy]]."
-  [out ctext nonce key]
-  (let [clen (alength ^bytes ctext)
+  [^bytes out ^bytes ctext ^bytes nonce ^bytes key]
+  (let [clen (alength ctext)
         res (.crypto_secretbox_open_easy sodium out ctext clen nonce key)]
+    (if (= res 0)
+      out
+      (throw (RuntimeException. "Ciphertext verification failed")))))
+
+(defn secretbox-open-easy-from-byte-bufs!
+  "**WARNING** low-level API, specialized use!
+
+  This function is probably only useful if you're using ByteBuffers to manage
+  the layout of a byte array that contains both the nonce and the
+  secretbox-easy ciphertext. If you're not sure, this is not the API you want;
+  check out [[secretbox-open-easy]] instead."
+  [out ctext ctextlen nonce key]
+  ;; This takes an ctextlen argument because you can't tell the appropriate
+  ;; length from the ctext ByteBuffer and the caller knows anyway.
+  (let [res (.crypto_secretbox_open_easy sodium
+                                         ^bytes out
+                                         ^java.nio.ByteBuffer ctext
+                                         ^long ctextlen
+                                         ^java.nio.ByteBuffer nonce
+                                         ^bytes key)]
     (if (= res 0)
       out
       (throw (RuntimeException. "Ciphertext verification failed")))))

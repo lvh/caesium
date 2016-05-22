@@ -46,12 +46,17 @@
       ^long ^{LongLong {}} mlen
       ^bytes ^{Pinned {}} n
       ^bytes ^{Pinned {}} k]]
-
     [^int crypto_secretbox_open_easy
      [^bytes ^{Pinned {}} m
       ^bytes ^{Pinned {}} c
       ^long ^{LongLong {}} clen
       ^bytes ^{Pinned {}} n
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_secretbox_open_easy
+     [^bytes ^{Pinned {}} m
+      ^java.nio.ByteBuffer ^{Pinned {}} c
+      ^long ^{LongLong {}} clen
+      ^java.nio.ByteBuffer ^{Pinned {}} n
       ^bytes ^{Pinned {}} k]]
     [^int crypto_secretbox_detached
      [^bytes ^{Pinned {}} c
