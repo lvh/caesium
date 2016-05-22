@@ -134,7 +134,7 @@
   (let [noncebuf (ByteBuffer/wrap nonced-ctext 0 s/noncebytes)
         ctextlen (- (alength nonced-ctext) s/noncebytes)
         ctextbuf (ByteBuffer/wrap nonced-ctext s/noncebytes ctextlen)]
-    (s/decrypt-to-byte-buf! out key noncebuf ctextbuf)))
+    (s/secretbox-open-easy-from-byte-bufs! out ctextbuf ctextlen noncebuf key)))
 
 (defn open
   "Decrypts any secretbox message with a prefix nonce.
