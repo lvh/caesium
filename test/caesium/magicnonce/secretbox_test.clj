@@ -94,21 +94,22 @@
   This compares the XORd ciphertexts to the XORd plaintexts. This will
   only be the same when the keystream repeats, and should not happen
   in an NMR scheme, or in a randomized scheme."
-  [ptexts scheme]
-  (let [just-ctext (fn [^bytes ptext]
-                     (->> (scheme ptext)
-                          (drop s/noncebytes)
-                          (take (alength ptext))))
-        ctexts (map just-ctext ptexts)
-        shortest (apply min alength ptexts)
-        xord-ptexts (byte-array shortest)
-        xord-ctexts (byte-array shortest)]
-    (apply #'ms/xor! xord-ptexts ptexts)
-    (apply #'ms/xor! xord-ctexts ctexts)
-    (u/array-eq xord-ptexts xord-ctexts)))
-
-(def example-ptexts
-  [(.getBytes "four score and ") (.getBytes "seven years ago")])
+  ([scheme]
+   (let [ptexts [(.getBytes "four score and ")
+                 (.getBytes "seven years ago")]]
+     (repeated-keystream? ptexts schems)))
+  ([ptexts scheme]
+   (let [just-ctext (fn [^bytes ptext]
+                      (->> (scheme ptext)
+                           (drop s/noncebytes)
+                           (take (alength ptext))))
+         ctexts (map just-ctext ptexts)
+         shortest (apply min alength ptexts)
+         xord-ptexts (byte-array shortest)
+         xord-ctexts (byte-array shortest)]
+     (apply #'ms/xor! xord-ptexts ptexts)
+     (apply #'ms/xor! xord-ctexts ctexts)
+     (u/array-eq xord-ptexts xord-ctexts))))
 
 (deftest secretbox-nmr-with-implicit-rnd-nonce-test
   (let [ctext (ms/secretbox-nmr st/ptext st/secret-key)]
@@ -127,7 +128,7 @@
         (is (not= n3 n1))))
 
     (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
-      (is (not (repeated-keystream? example-ptexts)))))
+      (is (not (repeated-keystream? scheme)))))
 
   (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
     (is (not (repeated-keystream? example-ptexts)))))
