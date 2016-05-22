@@ -13,7 +13,8 @@
   resistance, use [[secretbox-rnd]]. The other functions are fairly
   limited use."
   (:require [caesium.crypto.secretbox :as s]
-            [caesium.randombytes :as r])
+            [caesium.randombytes :as r]
+            [caesium.crypto.generichash :as g])
   (:import [java.nio ByteBuffer]))
 
 (defn secretbox-pfx
@@ -66,6 +67,9 @@
   [msg key]
   (secretbox-pfx msg (random-nonce!) key))
 
+(def ^:private synthetic-personal
+  (.getBytes "sodium autononce"))
+
 (defn ^:private synthetic-nonce
   "Creates a synthetic nonce from the given plaintext.
 
@@ -73,7 +77,10 @@
   no visible side effects: the same plaintext will always generate the
   same byte array. However, note that the returned nonce will be a
   mutable byte array."
-  [plaintext])
+  [key plaintext]
+  (g/blake2b plaintext {:size s/noncebytes
+                        :key key
+                        :personal synthetic-personal}))
 
 (defn secretbox-det
   "secretbox, with deterministic nonce.
