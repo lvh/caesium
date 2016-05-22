@@ -3,9 +3,7 @@
 ![caesium spectral lines](https://dl.dropboxusercontent.com/u/38476311/Logos/caesium.png)
 
 [![Build Status](https://travis-ci.org/lvh/caesium.svg?branch=master)](https://travis-ci.org/lvh/caesium)
-
 [![codecov](https://codecov.io/gh/lvh/caesium/branch/master/graph/badge.svg)](https://codecov.io/gh/lvh/caesium)
-
 [![Clojars Project](http://clojars.org/caesium/latest-version.svg)](http://clojars.org/caesium)
 
 caesium is a Clojure binding for libsodium.
