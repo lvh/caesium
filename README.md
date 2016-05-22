@@ -32,6 +32,8 @@ outdated, here are a few properties you may care about:
 
 * caesium is written by a cryptographer who has experience binding
   cryptographic libraries.
+* caesium has continuous integration and a fairly extensive test suite with
+  very high form/line coverage.
 * caesium does not provide magic layers on top of libsodium that prevent you
   from writing secure software because of JVM memory semantics, while not
   getting in your way if you want the default good-enough behavior.
