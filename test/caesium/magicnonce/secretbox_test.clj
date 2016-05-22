@@ -97,7 +97,7 @@
   ([scheme]
    (let [ptexts [(.getBytes "four score and ")
                  (.getBytes "seven years ago")]]
-     (repeated-keystream? ptexts schems)))
+     (repeated-keystream? ptexts scheme)))
   ([ptexts scheme]
    (let [just-ctext (fn [^bytes ptext]
                       (->> (scheme ptext)
