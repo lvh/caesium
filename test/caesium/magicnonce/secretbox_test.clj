@@ -106,3 +106,28 @@
     (apply #'ms/xor! xord-ptexts ptexts)
     (apply #'ms/xor! xord-ctexts ctexts)
     (u/array-eq xord-ptexts xord-ctexts)))
+
+(def example-ptexts
+  [(.getBytes "four score and ") (.getBytes "seven years ago")])
+
+(deftest secretbox-nmr-with-implicit-rnd-nonce-test
+  (let [ctext (ms/secretbox-nmr st/ptext st/secret-key)]
+    (is-valid-magicnonce-ctext? ctext))
+
+  (with-redefs [ms/random-nonce! constant-nonce]
+    (let [c1 (ms/secretbox-nmr st/ptext st/secret-key)
+          c2 (ms/secretbox-nmr st/ptext st/secret-key)
+          alt-ptext (.getBytes "yellow submarine")
+          c3 (ms/secretbox-nmr alt-ptext st/secret-key)]
+      (is (u/array-eq c1 c2))
+      (let [n1 (take s/noncebytes c1)
+            n2 (take s/noncebytes c2)
+            n3 (take s/noncebytes c3)]
+        (is (= n1 n2))
+        (is (not= n3 n1))))
+
+    (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
+      (is (not (repeated-keystream? example-ptexts)))))
+
+  (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
+    (is (not (repeated-keystream? example-ptexts)))))
