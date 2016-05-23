@@ -152,3 +152,11 @@
 
     (let [scheme (fn [ptext] (ms/secretbox-nmr ptext st/secret-key))]
       (is (not (repeated-keystream? scheme))))))
+
+(deftest secretbox-nmr-with-explicit-nonce-test
+  (let [ctext (ms/secretbox-nmr st/ptext (byte-array 24) st/secret-key)]
+    (is-valid-magicnonce-ctext? ctext))
+
+  (let [scheme (fn [ptext]
+                 (ms/secretbox-nmr ptext (byte-array 24) st/secret-key))]
+    (is (not (repeated-keystream? scheme)))))
