@@ -28,7 +28,7 @@
   "Does the given ctext decrypt properly?"
   [ctext]
   (let [ptextlen (alength ^bytes st/ptext)]
-    (is (= (+ s/noncebytes ptextlen s/macbytes)
+    (is (= (+ s/noncebytes s/macbytes ptextlen)
            (alength ^bytes ctext)))
 
     (let [out (byte-array ptextlen)]
