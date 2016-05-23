@@ -77,7 +77,7 @@
   no visible side effects: the same plaintext will always generate the
   same byte array. However, note that the returned nonce will be a
   mutable byte array."
-  [key plaintext]
+  [plaintext key]
   (g/blake2b plaintext {:size s/noncebytes
                         :key key
                         :personal synthetic-personal}))

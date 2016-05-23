@@ -123,13 +123,13 @@
         m1 (byte-array (range 10))
         m2 (byte-array (range 10 20))]
     (is (= s/noncebytes
-           (alength ^bytes (sn k1 m1))
-           (alength ^bytes (sn k1 m2))
-           (alength ^bytes (sn k2 m1))
-           (alength ^bytes (sn k2 m2))))
-    (is (u/array-eq (sn k1 m1) (sn k1 m1)))
-    (is (not (u/array-eq (sn k1 m1) (sn k1 m2))))
-    (is (not (u/array-eq (sn k1 m1) (sn k2 m1))))))
+           (alength ^bytes (sn m1 k1))
+           (alength ^bytes (sn m2 k1))
+           (alength ^bytes (sn m1 k2))
+           (alength ^bytes (sn m2 k2))))
+    (is (u/array-eq (sn m1 k1) (sn m1 k1)))
+    (is (not (u/array-eq (sn m1 k1) (sn m2 k1))))
+    (is (not (u/array-eq (sn m1 k1) (sn m1 k2))))))
 
 (deftest secretbox-nmr-with-implicit-rnd-nonce-test
   (let [ctext (ms/secretbox-nmr st/ptext st/secret-key)]
