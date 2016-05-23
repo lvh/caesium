@@ -130,7 +130,8 @@
 
   If no nonce argument is specified, a random nonce is automatically
   selected for you, and the NMR scheme is applied on top of that."
-  ([msg nonce key])
+  ([msg nonce key]
+   (secretbox-pfx msg (xor-inplace! (synthetic-nonce msg key) nonce) key))
   ([msg key]
    (secretbox-nmr msg (random-nonce!) key)))
 
