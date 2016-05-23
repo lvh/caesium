@@ -103,9 +103,11 @@
   messages will not repeat or you can't rely on encryption-time
   randomness, consider [[secrebox-nmr]].
 
-  [msg key])
   To decrypt, use [[decrypt]] or [[open]], depending on which argument
   order you prefer."
+  [msg key]
+  (secretbox-pfx msg (synthetic-nonce msg key) key))
+
 (defn ^:private xor!
   "Populates `out` with the XOR of matching elements in `a`, `b`.
 
