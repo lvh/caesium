@@ -65,6 +65,31 @@
            RuntimeException #"Ciphertext verification failed"
            (ms/open forgery st/secret-key))))))
 
+(defn repeated-keystream?
+  "Does given scheme repeat the keystream when applied to given
+  plaintexts?
+
+  This compares the XORd ciphertexts to the XORd plaintexts. This will
+  only be the same when the keystream repeats, and should not happen
+  in an NMR scheme, or in a randomized scheme."
+  ([scheme]
+   (let [ptexts [(.getBytes "four score and ")
+                 (.getBytes "seven years ago")]]
+     (repeated-keystream? ptexts scheme)))
+  ([ptexts scheme]
+   (let [shortest (apply min (map alength ptexts))
+         just-ctext (fn [^bytes ptext]
+                      (->> (scheme ptext)
+                           (drop (+ s/noncebytes s/macbytes))
+                           (take shortest)
+                           byte-array))
+         ctexts (map just-ctext ptexts)
+         xord-ptexts (byte-array shortest)
+         xord-ctexts (byte-array shortest)]
+     (apply #'ms/xor! xord-ptexts ptexts)
+     (apply #'ms/xor! xord-ctexts ctexts)
+     (u/array-eq xord-ptexts xord-ctexts))))
+
 (deftest secretbox-pfx-test
   (let [nonce (byte-array (range s/noncebytes))
         ctext (ms/secretbox-pfx st/ptext nonce st/secret-key)]
@@ -104,31 +129,6 @@
     (is (u/array-eq (sn k1 m1) (sn k1 m1)))
     (is (not (u/array-eq (sn k1 m1) (sn k1 m2))))
     (is (not (u/array-eq (sn k1 m1) (sn k2 m1))))))
-
-(defn repeated-keystream?
-  "Does given scheme repeat the keystream when applied to given
-  plaintexts?
-
-  This compares the XORd ciphertexts to the XORd plaintexts. This will
-  only be the same when the keystream repeats, and should not happen
-  in an NMR scheme, or in a randomized scheme."
-  ([scheme]
-   (let [ptexts [(.getBytes "four score and ")
-                 (.getBytes "seven years ago")]]
-     (repeated-keystream? ptexts scheme)))
-  ([ptexts scheme]
-   (let [just-ctext (fn [^bytes ptext]
-                      (->> (scheme ptext)
-                           (drop s/noncebytes)
-                           (take (alength ptext))
-                           byte-array))
-         ctexts (map just-ctext ptexts)
-         shortest (apply min (map alength ptexts))
-         xord-ptexts (byte-array shortest)
-         xord-ctexts (byte-array shortest)]
-     (apply #'ms/xor! xord-ptexts ptexts)
-     (apply #'ms/xor! xord-ctexts ctexts)
-     (u/array-eq xord-ptexts xord-ctexts))))
 
 (deftest secretbox-nmr-with-implicit-rnd-nonce-test
   (let [ctext (ms/secretbox-nmr st/ptext st/secret-key)]
