@@ -37,7 +37,7 @@
   you prefer."
   [msg nonce key]
   (let [msglen (alength ^bytes msg)
-        ctextlen (+ msglen s/macbytes)
+        ctextlen (+ s/macbytes msglen)
         outlen (+ s/noncebytes ctextlen)
         out (byte-array outlen)
         ctextbuf (ByteBuffer/wrap out s/noncebytes ctextlen)]
