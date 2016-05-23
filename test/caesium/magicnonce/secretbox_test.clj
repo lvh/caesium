@@ -131,6 +131,17 @@
     (is (not (u/array-eq (sn m1 k1) (sn m2 k1))))
     (is (not (u/array-eq (sn m1 k1) (sn m1 k2))))))
 
+(deftest secretbox-det-test
+  (let [ctext (ms/secretbox-det st/ptext st/secret-key)]
+    (is-valid-magicnonce-ctext? ctext))
+
+  (let [scheme (fn [ptext] (ms/secretbox-det ptext st/secret-key))]
+    (is (not (repeated-keystream? scheme))))
+
+  (let [c1 (ms/secretbox-det st/ptext st/secret-key)
+        c2 (ms/secretbox-det st/ptext st/secret-key)]
+    (is (u/array-eq c1 c2))))
+
 (deftest secretbox-nmr-with-implicit-rnd-nonce-test
   (let [ctext (ms/secretbox-nmr st/ptext st/secret-key)]
     (is-valid-magicnonce-ctext? ctext))
