@@ -103,9 +103,9 @@
   messages will not repeat or you can't rely on encryption-time
   randomness, consider [[secrebox-nmr]].
 
-  To decrypt, use [[decrypt]] or [[open]], depending on which argument order
-  you prefer."
   [msg key])
+  To decrypt, use [[decrypt]] or [[open]], depending on which argument
+  order you prefer."
 (defn ^:private xor!
   "Populates `out` with the XOR of matching elements in `a`, `b`.
 
