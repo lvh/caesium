@@ -94,7 +94,8 @@
   (let [nonce (byte-array (range s/noncebytes))
         ctext (ms/secretbox-pfx st/ptext nonce st/secret-key)]
     (is (= (range s/noncebytes) (take s/noncebytes ctext)))
-    (is-valid-magicnonce-ctext? ctext)))
+    (is-valid-magicnonce-ctext? ctext)
+    (is (repeated-keystream? #(ms/secretbox-pfx % nonce st/secret-key)))))
 
 (def constant-nonce (constantly (byte-array (range s/noncebytes))))
 
