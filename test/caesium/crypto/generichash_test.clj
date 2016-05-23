@@ -45,6 +45,18 @@
      {:size 64}]
     (blake2b-vector "digest-Z-64")))
 
+(deftest hash-to-buf!-test
+  (are [args expected] (let [out (byte-array g/blake2b-bytes)]
+                         (array-eq (apply g/blake2b-to-buf! out args) expected))
+    [(byte-array [])]
+    (blake2b-vector "digest-empty-string-32")
+
+    [(.getBytes "The quick brown fox jumps over the lazy dog")
+     {:key (.getBytes "This is a super secret key. Ssshh!")
+      :salt (.getBytes "0123456789abcdef")
+      :personal (.getBytes "fedcba9876543210")}]
+    (blake2b-vector "digest-with-key-salt-personal-32")))
+
 (deftest blake2b-kat-test
   (are [args expected] (array-eq (apply g/blake2b args) expected)
     [(byte-array [])]
