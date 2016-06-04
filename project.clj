@@ -1,4 +1,4 @@
-(defproject caesium "0.7.0-SNAPSHOT"
+(defproject caesium "0.7.0"
   :description "libsodium for clojure"
   :url "https://github.com/lvh/caesium"
   :deploy-repositories [["releases" :clojars]
@@ -12,6 +12,7 @@
   :main ^:skip-aot caesium.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
+             :dev {:dependencies [[criterium "0.4.4"]]}
              :test {:plugins [[lein-cljfmt "0.3.0"]
                               [lein-kibit "0.1.2"]
                               [jonase/eastwood "0.2.3"]
