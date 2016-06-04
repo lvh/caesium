@@ -1,3 +1,7 @@
+# 0.7.0
+
+Pseudo-availability of magic nonce schemes -- use at your own risk!
+
 # 0.6.0
 
 Pretty much a rewrite. Now binds libsodium directly with jnr-ffi instead of
