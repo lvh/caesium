@@ -1,3 +1,9 @@
+# 0.8.0 (WIP)
+
+Actually removed the kalium dependency. This might be a breaking change if
+your project used kalium directly and counted on caesium to pull it in for
+you. If this affects you, please consider filing a ticket.
+
 # 0.7.0
 
 Pseudo-availability of magic nonce schemes -- use at your own risk!
