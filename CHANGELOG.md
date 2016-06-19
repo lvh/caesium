@@ -4,6 +4,9 @@ Removed the kalium dependency. This might be a breaking change if your project
 used kalium directly and counted on caesium to pull it in for you. If this
 affects you, please consider filing a ticket.
 
+Started work on improving and standardizing the API to deal with the
+different byte APIs exposed by the JVM.
+
 # 0.7.0
 
 Pseudo-availability of magic nonce schemes -- use at your own risk!
