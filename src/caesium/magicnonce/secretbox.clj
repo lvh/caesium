@@ -17,6 +17,8 @@
             [caesium.crypto.generichash :as g])
   (:import [java.nio ByteBuffer]))
 
+(def keybytes s/keybytes)
+
 (defn secretbox-pfx
   "secretbox, with the given nonce embedded in the ciphertext as a prefix.
 
