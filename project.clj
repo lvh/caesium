@@ -7,7 +7,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.github.jnr/jnr-ffi "2.0.9"]
-                 [commons-codec/commons-codec "1.10"]]
+                 [commons-codec/commons-codec "1.10"]
+                 [byte-streams "0.2.2"]]
   :main ^:skip-aot caesium.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
