@@ -17,7 +17,9 @@
                               [lein-kibit "0.1.2"]
                               [jonase/eastwood "0.2.3"]
                               [lein-codox "0.9.4"]
-                              [lein-cloverage "1.0.7-SNAPSHOT"]]}}
+                              [lein-cloverage "1.0.7-SNAPSHOT"]]
+                    :test-selectors {:default (complement :benchmark)
+                                     :benchmark :benchmark}}}
   :codox {:metadata {:doc/format :markdown}
           :output-path "doc"}
   :global-vars {*warn-on-reflection* true})
