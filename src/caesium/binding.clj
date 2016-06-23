@@ -4,10 +4,28 @@
   the [[caesium.crypto.box]], [[caesium.crypto.secretbox]],
   [[caesium.crypto.generichash]], [[caesium.crypto.sign]]  et cetera,
   namespaces."
-  (:require [clojure.string :as s])
+  (:require [clojure.string :as s]
+            [clojure.math.combinatorics :as c])
   (:import [jnr.ffi LibraryLoader]
            [jnr.ffi.annotations In Out Pinned LongLong]
            [jnr.ffi.types size_t]))
+
+(def ^:private bound-byte-type-syms
+  '[bytes java.nio.ByteBuffer])
+
+(defn ^:private permuted-byte-types
+  "Given a method signature, return signatures for all bound byte types.
+
+  Signature should be as per [[bound-fns]], with byte arguments annotated with
+  `{:tag 'bytes}` in their metadata (note: the symbol, not the fn)."
+  [[name args]]
+  (let [byte-args (filter #(= (:tag (meta %)) 'bytes) args)]
+    (for [types (c/selections bound-byte-type-syms (count byte-args))
+          :let [arg->type (zipmap byte-args types)
+                ann (fn [arg]
+                      (let [tag (get arg->type arg (:tag (meta arg)))]
+                        (vary-meta arg assoc :tag tag)))]]
+      [name (mapv ann args)])))
 
 (def ^:private bound-fns
   "A mapping of type- and jnr.ffi-annotated bound method symbols to
