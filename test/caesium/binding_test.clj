@@ -94,4 +94,7 @@
   "Check a method binding a const fn."
   [^Method method]
   (let [rtype (.getGenericReturnType method)]
-    ))
+    (condp = rtype
+        Integer/TYPE (is (= "sodium_init" (.getName method)))
+        Long/TYPE (is (= #{size_t} (annotation-set method)))
+        (is (= String rtype)))))
