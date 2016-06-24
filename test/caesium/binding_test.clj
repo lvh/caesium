@@ -63,9 +63,9 @@
 
 (declare check-method check-const-method)
 
-(deftest byte-pinning-test
   (doseq [method (spy (.getMethods Sodium))]
     (info method)
+(deftest interface-test
     (if-let [params (seq (.getParameters ^Method method))]
       (check-method method params)
       (check-const-method method))))
