@@ -4,7 +4,7 @@
             [taoensso.timbre :refer [info spy]])
   (:import [caesium.binding Sodium]
            [java.lang.annotation Annotation]
-           [java.lang.reflect Method Parameter Type]
+           [java.lang.reflect Method Parameter Type AnnotatedElement]
            [jnr.ffi.annotations In Out Pinned LongLong]
            [jnr.ffi.byref LongLongByReference]
            [java.nio ByteBuffer]
@@ -71,7 +71,7 @@
 
 (defn annotation-set
   [param]
-  (->> (.getAnnotations ^Parameter param)
+  (->> (.getAnnotations ^AnnotatedElement param)
        (map #(.annotationType ^Annotation %))
        set))
 
