@@ -85,7 +85,7 @@
       (condp (fn [x y] (x y)) param-type
         #{ByteArray ByteBuffer} (is (= #{Pinned} annotation-types))
         #{Long/TYPE} (is (= #{size_t} annotation-types))
-        #{LongLongByReference} (is (= #{LongLong} annotation-types))))))
+        #{LongLongByReference} (is (= #{} annotation-types))))))
 
 (defn check-const-method
   "Check a method binding a const fn."
