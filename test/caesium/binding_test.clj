@@ -63,9 +63,9 @@
 
 (declare check-method check-const-method)
 
-  (doseq [method (spy (.getMethods Sodium))]
     (info method)
 (deftest interface-test
+  (doseq [method (.getMethods Sodium)]
     (if-let [params (seq (.getParameters ^Method method))]
       (check-method method params)
       (check-const-method method))))
