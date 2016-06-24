@@ -1,6 +1,14 @@
 (ns caesium.binding-test
   (:require [caesium.binding :as b]
-            [clojure.test :refer [deftest is]]))
+            [clojure.test :refer [deftest is]]
+            [taoensso.timbre :refer [info spy]])
+  (:import [caesium.binding Sodium]
+           [java.lang.annotation Annotation]
+           [java.lang.reflect Method Parameter Type]
+           [jnr.ffi.annotations In Out Pinned LongLong]
+           [jnr.ffi.byref LongLongByReference]
+           [java.nio ByteBuffer]
+           [jnr.ffi.types size_t]))
 
 (deftest permuted-byte-types-test
   (is (= '[[^long ^{size_t {}} crypto_secretbox_keybytes []]]
@@ -50,3 +58,37 @@
                   ^long ^{LongLong {}} mlen
                   ^bytes ^{Pinned {}} n
                   ^bytes ^{Pinned {}} k]])))))
+
+(def ByteArray (Class/forName "[B"))
+
+(declare check-method check-const-method)
+
+(deftest byte-pinning-test
+  (doseq [method (spy (.getMethods Sodium))]
+    (info method)
+    (if-let [params (seq (.getParameters ^Method method))]
+      (check-method method params)
+      (check-const-method method))))
+
+(defn check-method
+  "Check a method binding a non-const fn."
+  [method params]
+  (is (= (if (= "randombytes" (.getName method))
+           Void/TYPE
+           Integer/TYPE)
+         (.getGenericReturnType method)))
+  (doseq [param params]
+    (let [param-type (.getParameterizedType ^Parameter param)
+          annotation-types (->> (.getAnnotations ^Parameter param)
+                                (map #(.annotationType ^Annotation %))
+                                set)]
+      (condp (fn [x y] (x y)) param-type
+        #{ByteArray ByteBuffer} (is (= #{Pinned} annotation-types))
+        #{Long/TYPE} (is (= #{size_t} annotation-types))
+        #{LongLongByReference} (is (= #{LongLong} annotation-types))))))
+
+(defn check-const-method
+  "Check a method binding a const fn."
+  [^Method method]
+  (let [rtype (.getGenericReturnType method)]
+    ))
