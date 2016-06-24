@@ -78,7 +78,6 @@
            Integer/TYPE)
          (.getGenericReturnType method)))
   (doseq [param params]
-    (info param)
     (is (= (condp (fn [x y] (x y)) (.getParameterizedType ^Parameter param)
              #{ByteArray ByteBuffer} #{Pinned}
              #{Long/TYPE}  #{LongLong}
