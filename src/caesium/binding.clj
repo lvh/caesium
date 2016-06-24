@@ -199,20 +199,20 @@
       ^bytes ^{Pinned {}} salt
       ^bytes ^{Pinned {}} personal]]
 
-    [^int crypto_hash_sha256_bytes []]
+    [^long ^{size_t {}} crypto_hash_sha256_bytes []]
     [^int crypto_hash_sha256
      [^bytes ^{Pinned {}} buf
       ^bytes ^{Pinned {}} msg
       ^long ^{LongLong {}} msglen]]
 
-    [^int crypto_hash_sha512_bytes []]
+    [^long ^{size_t {}} crypto_hash_sha512_bytes []]
     [^int crypto_hash_sha512
      [^bytes ^{Pinned {}} buf
       ^bytes ^{Pinned {}} msg
       ^long ^{LongLong {}} msglen]]
 
-    [^int ^{size_t {}} crypto_scalarmult_bytes []]
-    [^int ^{size_t {}} crypto_scalarmult_scalarbytes []]
+    [^long ^{size_t {}} crypto_scalarmult_bytes []]
+    [^long ^{size_t {}} crypto_scalarmult_scalarbytes []]
     [^String crypto_scalarmult_primitive []]
 
     [^int crypto_scalarmult_base
