@@ -72,19 +72,20 @@
 (defn check-method
   "Check a method binding a non-const fn."
   [^Method method params]
+  (info method)
   (is (= (if (= "randombytes" (.getName method))
            Void/TYPE
            Integer/TYPE)
          (.getGenericReturnType method)))
   (doseq [param params]
-    (let [param-type (.getParameterizedType ^Parameter param)
-          annotation-types (->> (.getAnnotations ^Parameter param)
-                                (map #(.annotationType ^Annotation %))
-                                set)]
-      (condp (fn [x y] (x y)) param-type
-        #{ByteArray ByteBuffer} (is (= #{Pinned} annotation-types))
-        #{Long/TYPE} (is (= #{size_t} annotation-types))
-        #{LongLongByReference} (is (= #{} annotation-types))))))
+    (info param)
+    (is (= (condp (fn [x y] (x y)) (.getParameterizedType ^Parameter param)
+             #{ByteArray ByteBuffer} #{Pinned}
+             #{Long/TYPE}  #{LongLong}
+             #{LongLongByReference} #{})
+           (->> (.getAnnotations ^Parameter param)
+                (map #(.annotationType ^Annotation %))
+                set)))))
 
 (defn check-const-method
   "Check a method binding a const fn."
