@@ -1,7 +1,6 @@
 (ns caesium.binding-test
   (:require [caesium.binding :as b]
-            [clojure.test :refer [deftest is]]
-            [taoensso.timbre :refer [info spy]])
+            [clojure.test :refer [deftest is]])
   (:import [caesium.binding Sodium]
            [java.lang.annotation Annotation]
            [java.lang.reflect Method Parameter Type AnnotatedElement]
@@ -78,7 +77,6 @@
 (defn check-method
   "Check a method binding a non-const fn."
   [^Method method params]
-  (info method)
   (is (= (if (= "randombytes" (.getName method))
            Void/TYPE
            Integer/TYPE)
