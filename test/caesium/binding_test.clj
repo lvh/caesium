@@ -71,7 +71,7 @@
 
 (defn check-method
   "Check a method binding a non-const fn."
-  [method params]
+  [^Method method params]
   (is (= (if (= "randombytes" (.getName method))
            Void/TYPE
            Integer/TYPE)
