@@ -69,6 +69,12 @@
       (check-method method params)
       (check-const-method method))))
 
+(defn annotation-set
+  [param]
+  (->> (.getAnnotations ^Parameter param)
+       (map #(.annotationType ^Annotation %))
+       set))
+
 (defn check-method
   "Check a method binding a non-const fn."
   [^Method method params]
@@ -82,9 +88,7 @@
              #{ByteArray ByteBuffer} #{Pinned}
              #{Long/TYPE}  #{LongLong}
              #{LongLongByReference} #{})
-           (->> (.getAnnotations ^Parameter param)
-                (map #(.annotationType ^Annotation %))
-                set)))))
+           (annotation-set param)))))
 
 (defn check-const-method
   "Check a method binding a const fn."
