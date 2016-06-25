@@ -66,6 +66,13 @@ replace underscores with dashes. Exceptions where this doesn't work out:
   also repeated for some functions where there is a small suffix, e.g. the
   function name for the "easy secretbox opener" is `secretbox-easy-open`, not
   `easy-open`.
+* some functions map to the same underlying C functions, but have different
+  Java APIs. For example, one of them might cast to `ByteBuffer`, while others
+  assume byte arrays, while others rely on reflection to call the right
+  thing. Other pairs of functions might expect you to produce the output
+  buffer, or manage the output buffer for you. Since these are only JVM-level
+  differences, these often need different names at the JVM/Clojure
+  level. (This is always done as a fairly descriptive suffix.)
 * functions designed to make a `#define` constant available are accessible as
   values, they don't need to be called. For example, you can access the
   `crypto_generichash_KEYBYTES_MIN` constant via the `libsodium` `size_t
@@ -78,12 +85,6 @@ replace underscores with dashes. Exceptions where this doesn't work out:
 * caesium sometimes takes a little artistic license with some of the exposed
   names when that makes more sense than the original; generally fns will be
   available under both the "official" name and an alias.
-
-The default caesium bindings will allocate the output array for you and raise
-exceptions on failure. There are also often `-to-buf!` variants of a function
-available, which are more direct bindings to libsodium. They give you the
-option of managing your own output buffer. That's more trouble than most
-applications will want to go through, but it's available nonetheless.
 
 ## Compatibility
 
