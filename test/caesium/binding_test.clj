@@ -62,17 +62,23 @@
 
 (declare check-method check-const-method)
 
+(defn ^:private clean-annotations
+  [annotations]
+  (set (map #(.annotationType ^Annotation %) annotations)))
+
+;; These tests do not use the Parameter class anymore, because that
+;; was added in JDK 8 and therefore broke the JDK 7 builder.
+
 (deftest interface-test
-  (doseq [method (.getMethods Sodium)]
-    (if-let [params (seq (.getParameters ^Method method))]
+  (doseq [^Method method (.getMethods Sodium)]
+    (if-let [params (seq (map (fn [t as]
+                                {:method method
+                                 :type t
+                                 :annotations (clean-annotations as)})
+                              (.getParameterTypes method)
+                              (.getParameterAnnotations method)))]
       (check-method method params)
       (check-const-method method))))
-
-(defn annotation-set
-  [param]
-  (->> (.getAnnotations ^AnnotatedElement param)
-       (map #(.annotationType ^Annotation %))
-       set))
 
 (defn check-method
   "Check a method binding a non-const fn."
@@ -81,12 +87,12 @@
            Void/TYPE
            Integer/TYPE)
          (.getGenericReturnType method)))
-  (doseq [param params]
-    (is (= (condp (fn [x y] (x y)) (.getParameterizedType ^Parameter param)
+  (doseq [{:keys [type annotations]} params]
+    (is (= (condp (fn [x y] (x y)) type
              #{ByteArray ByteBuffer} #{Pinned}
              #{Long/TYPE}  #{LongLong}
              #{LongLongByReference} #{})
-           (annotation-set param)))))
+           annotations))))
 
 (defn check-const-method
   "Check a method binding a const fn."
@@ -94,5 +100,6 @@
   (let [rtype (.getGenericReturnType method)]
     (condp = rtype
         Integer/TYPE (is (= "sodium_init" (.getName method)))
-        Long/TYPE (is (= #{size_t} (annotation-set method)))
+        Long/TYPE (is (= #{size_t}
+                         (clean-annotations (.getAnnotations method))))
         (is (= String rtype)))))
