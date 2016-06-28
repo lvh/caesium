@@ -9,27 +9,31 @@
 
 ;; secretbox to-buf! macros vs fn vs no casts with indirect byte bufs
 
+(def random-direct-byte-buf (comp bc/->direct-byte-buf randombytes))
+(def random-indirect-byte-buf (comp bc/->indirect-byte-buf randombytes))
+
 (deftest ^:benchmark to-buf!-benchmarks
-  (let [key (bc/->direct-byte-buf (randombytes s/keybytes))
-        sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24])]
+  (let [sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24])]
     (println "secretbox to-buf! macros vs fn vs no casts with direct bufs")
     (println "these bufs already exist, so there is no allocation")
-    (doseq [[size message] (map (juxt identity randombytes) sizes)
+    (doseq [[size msg] (map (juxt identity random-direct-byte-buf) sizes)
             f [s/secretbox-easy-to-direct-byte-bufs-with-macros!
                s/secretbox-easy-to-direct-byte-bufs!
                s/secretbox-easy-to-byte-bufs-nocast!]]
       (println f (fmt-bytes size))
-      (let [nonce (bc/->direct-byte-buf (randombytes s/noncebytes))
+      (let [key (random-direct-byte-buf s/keybytes)
+            nonce (random-direct-byte-buf s/noncebytes)
             out (ByteBuffer/allocateDirect (+ s/macbytes size))]
-        (bench (f out message nonce key))))
+        (bench (f out msg nonce key))))
 
     (println "secretbox to-buf! macros vs fn vs no casts with indirect bufs")
     (println "these bufs already exist, so there is no allocation")
-    (doseq [[size message] (map (juxt identity randombytes) sizes)
+    (doseq [[size msg] (map (juxt identity random-indirect-byte-buf) sizes)
             f [s/secretbox-easy-to-indirect-byte-bufs-with-macros!
                s/secretbox-easy-to-indirect-byte-bufs!
                s/secretbox-easy-to-byte-bufs-nocast!]]
       (println f (fmt-bytes size))
-      (let [nonce (bc/->indirect-byte-buf (randombytes s/noncebytes))
+      (let [key (random-indirect-byte-buf s/keybytes)
+            nonce (random-indirect-byte-buf s/noncebytes)
             out (ByteBuffer/allocate (+ s/macbytes size))]
-        (bench (f out message nonce key))))))
+        (bench (f out msg nonce key))))))
