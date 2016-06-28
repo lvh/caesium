@@ -10,7 +10,7 @@
 ;; secretbox to-buf! macros vs fn vs no casts with indirect byte bufs
 
 (deftest ^:benchmark to-buf!-benchmarks
-  (let [key (randombytes s/keybytes)
+  (let [key (bc/->direct-byte-buf (randombytes s/keybytes))
         sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24])]
     (println "secretbox to-buf! macros vs fn vs no casts with direct bufs")
     (println "these bufs already exist, so there is no allocation")
