@@ -80,6 +80,11 @@
   (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
   out)
 
+(defn secretbox-easy-refl!
+  [out msg nonce key]
+  (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
+  out)
+
 (defn secretbox-easy-to-buf!
   "Encrypt with `crypto_secretbox_easy` into the given byte array.
 
