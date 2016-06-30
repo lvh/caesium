@@ -24,7 +24,7 @@
       (let [key (random-direct-byte-buf s/keybytes)
             nonce (random-direct-byte-buf s/noncebytes)
             out (ByteBuffer/allocateDirect (+ s/macbytes size))]
-        (println f (fmt-bytes size) (mapv type out msg nonce key))
+        (println f (fmt-bytes size) (mapv type [out msg nonce key]))
         (bench (f out msg nonce key))))
 
     (println "secretbox to-buf! with indirect bufs")
@@ -37,7 +37,7 @@
       (let [key (random-indirect-byte-buf s/keybytes)
             nonce (random-indirect-byte-buf s/noncebytes)
             out (ByteBuffer/allocate (+ s/macbytes size))]
-        (println f (fmt-bytes size) (mapv type out msg nonce key))
+        (println f (fmt-bytes size) (mapv type [out msg nonce key]))
         (bench (f out msg nonce key))))
 
     (println "secretbox to-buf! with byte arrays")
