@@ -48,5 +48,5 @@
       (println f (fmt-bytes size))
       (let [key (randombytes s/keybytes)
             nonce (randombytes s/noncebytes)
-            out (randombytes (+ s/macbytes size))]
+            out (byte-array (+ s/macbytes size))]
         (bench (f out msg nonce key))))))
