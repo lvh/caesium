@@ -47,5 +47,5 @@
       (let [key (randombytes s/keybytes)
             nonce (randombytes s/noncebytes)
             out (byte-array (+ s/macbytes size))]
-        (println f (fmt-bytes size) (mapv type out msg nonce key))
+        (println f (fmt-bytes size) (mapv type [out msg nonce key]))
         (bench (f out msg nonce key))))))
