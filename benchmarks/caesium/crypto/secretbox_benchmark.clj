@@ -21,10 +21,10 @@
                s/secretbox-easy-to-direct-byte-bufs!
                s/secretbox-easy-to-byte-bufs-nocast!
                s/secretbox-easy-refl!]]
-      (println f (fmt-bytes size))
       (let [key (random-direct-byte-buf s/keybytes)
             nonce (random-direct-byte-buf s/noncebytes)
             out (ByteBuffer/allocateDirect (+ s/macbytes size))]
+        (println f (fmt-bytes size) (mapv type out msg nonce key))
         (bench (f out msg nonce key))))
 
     (println "secretbox to-buf! with indirect bufs")
@@ -34,18 +34,18 @@
                s/secretbox-easy-to-indirect-byte-bufs!
                s/secretbox-easy-to-byte-bufs-nocast!
                s/secretbox-easy-refl!]]
-      (println f (fmt-bytes size))
       (let [key (random-indirect-byte-buf s/keybytes)
             nonce (random-indirect-byte-buf s/noncebytes)
             out (ByteBuffer/allocate (+ s/macbytes size))]
+        (println f (fmt-bytes size) (mapv type out msg nonce key))
         (bench (f out msg nonce key))))
 
     (println "secretbox to-buf! with byte arrays")
     (println "these bufs already exist, so there is no allocation")
     (doseq [[size msg] (map (juxt identity randombytes) sizes)
             f [s/secretbox-easy-to-buf!]]
-      (println f (fmt-bytes size))
       (let [key (randombytes s/keybytes)
             nonce (randombytes s/noncebytes)
             out (byte-array (+ s/macbytes size))]
+        (println f (fmt-bytes size) (mapv type out msg nonce key))
         (bench (f out msg nonce key))))))
