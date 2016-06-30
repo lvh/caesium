@@ -43,8 +43,7 @@
     (println "secretbox to-buf! with byte arrays")
     (println "these bufs already exist, so there is no allocation")
     (doseq [[size msg] (map (juxt identity randombytes) sizes)
-            f [s/secretbox-easy-to-buf!
-               s/secretbox-easy-refl!]]
+            f [s/secretbox-easy-to-buf!]]
       (println f (fmt-bytes size))
       (let [key (randombytes s/keybytes)
             nonce (randombytes s/noncebytes)
