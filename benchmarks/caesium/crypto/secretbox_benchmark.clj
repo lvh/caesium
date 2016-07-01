@@ -66,7 +66,7 @@
              nonce# (~rand-buf s/noncebytes)
              out# (~rand-buf (+ s/macbytes size#))]
          (println f# (fmt-bytes size#) (mapv type [out# msg# nonce# key#]))
-         (bench (f out# msg# nonce# key#))))))
+         (bench (f# out# msg# nonce# key#))))))
 
 (deftest ^:benchmark to-buf!-benchmarks
   (println "secretbox to-buf! with direct bufs, pre-allocation")
