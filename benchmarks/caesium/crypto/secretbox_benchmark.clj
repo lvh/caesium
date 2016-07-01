@@ -9,12 +9,20 @@
             [criterium.core :refer [bench]])
   (:import java.nio.ByteBuffer))
 
+(defmacro ->indirect-byte-buf-macro
+  [x]
+  `(bs/convert ~x ByteBuffer {:direct? false}))
+
+(defmacro ->direct-byte-buf-macro
+  [x]
+  `(bs/convert ~x ByteBuffer {:direct? true}))
+
 (defn secretbox-easy-to-direct-byte-bufs-with-macros!
   [out msg nonce key]
-  (let [^ByteBuffer out (bb/->direct-byte-buf-macro out)
-        ^ByteBuffer msg (bb/->direct-byte-buf-macro msg)
-        ^ByteBuffer nonce (bb/->direct-byte-buf-macro nonce)
-        ^ByteBuffer key (bb/->direct-byte-buf-macro key)]
+  (let [^ByteBuffer out (->direct-byte-buf-macro out)
+        ^ByteBuffer msg (->direct-byte-buf-macro msg)
+        ^ByteBuffer nonce (->direct-byte-buf-macro nonce)
+        ^ByteBuffer key (->direct-byte-buf-macro key)]
     (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
     out))
 
@@ -29,10 +37,10 @@
 
 (defn secretbox-easy-to-indirect-byte-bufs-with-macros!
   [out msg nonce key]
-  (let [^ByteBuffer out (bb/->indirect-byte-buf-macro out)
-        ^ByteBuffer msg (bb/->indirect-byte-buf-macro msg)
-        ^ByteBuffer nonce (bb/->indirect-byte-buf-macro nonce)
-        ^ByteBuffer key (bb/->indirect-byte-buf-macro key)]
+  (let [^ByteBuffer out (->indirect-byte-buf-macro out)
+        ^ByteBuffer msg (->indirect-byte-buf-macro msg)
+        ^ByteBuffer nonce (->indirect-byte-buf-macro  nonce)
+        ^ByteBuffer key (->indirect-byte-buf-macro  key)]
     (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
     out))
 
