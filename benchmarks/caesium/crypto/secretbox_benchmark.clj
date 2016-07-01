@@ -11,15 +11,14 @@
 
 (defmacro bench-secretnonce
   [fs converter]
-  `(doseq [[size msg] (map (juxt identity (comp converter randombytes)) sizes)
-           f ~fs]
-     (let [rand-buf (comp converter randombytes)
-           key (rand-buf s/keybytes)
-           nonce (randbuf s/noncebytes)
-           out (randbuf (+ s/macbytes size))]
-       (println f (fmt-bytes size))
-       (spy (mapv type [out msg nonce key]))
-       (bench (f out msg nonce key)))))
+  (let [rand-buf `(comp ~converter ~randombytes)]
+    `(doseq [[size# msg#] (map (juxt identity ~rand-buf) sizes)
+             f# ~fs]
+       (let [key# (~rand-buf s/keybytes)
+             nonce# (~rand-buf s/noncebytes)
+             out# (~rand-buf (+ s/macbytes size#))]
+         (println f# (fmt-bytes size#) (mapv type [out# msg# nonce# key#]))
+         (bench (f out# msg# nonce# key#))))))
 
 (deftest ^:benchmark to-buf!-benchmarks
   (println "secretbox to-buf! with direct bufs, pre-allocation")
