@@ -1,5 +1,5 @@
-(ns caesium.bytes-conv
-  "Utilities for switching between different byte types"
+(ns caesium.byte-bufs
+  "Byte buffer utilities, like conversions and length."
   (:require [byte-streams :as bs])
   (:import [java.nio ByteBuffer]))
 

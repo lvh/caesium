@@ -1,46 +1,47 @@
 (ns caesium.crypto.secretbox-benchmark
-  (:require [caesium.randombytes :refer [randombytes]]
+  (:require [caesium
+             [bench-utils :refer [fmt-bytes]]
+             [binding :refer [sodium]]
+             [byte-bufs :as bb]
+             [randombytes :refer [randombytes]]]
             [caesium.crypto.secretbox :as s]
-            [caesium.bytes-conv :as bc]
             [clojure.test :refer [deftest]]
-            [criterium.core :refer [bench]]
-            [caesium.bench-utils :refer [fmt-bytes]]
-            [caesium.binding :refer [sodium]])
-  (:import [java.nio ByteBuffer]))
+            [criterium.core :refer [bench]])
+  (:import java.nio.ByteBuffer))
 
 (defn secretbox-easy-to-direct-byte-bufs-with-macros!
   [out msg nonce key]
-  (let [^ByteBuffer out (bc/->direct-byte-buf-macro out)
-        ^ByteBuffer msg (bc/->direct-byte-buf-macro msg)
-        ^ByteBuffer nonce (bc/->direct-byte-buf-macro nonce)
-        ^ByteBuffer key (bc/->direct-byte-buf-macro key)]
+  (let [^ByteBuffer out (bb/->direct-byte-buf-macro out)
+        ^ByteBuffer msg (bb/->direct-byte-buf-macro msg)
+        ^ByteBuffer nonce (bb/->direct-byte-buf-macro nonce)
+        ^ByteBuffer key (bb/->direct-byte-buf-macro key)]
     (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
     out))
 
 (defn secretbox-easy-to-direct-byte-bufs!
   [out msg nonce key]
-  (let [^ByteBuffer out (bc/->direct-byte-buf out)
-        ^ByteBuffer msg (bc/->direct-byte-buf msg)
-        ^ByteBuffer nonce (bc/->direct-byte-buf nonce)
-        ^ByteBuffer key (bc/->direct-byte-buf key)]
+  (let [^ByteBuffer out (bb/->direct-byte-buf out)
+        ^ByteBuffer msg (bb/->direct-byte-buf msg)
+        ^ByteBuffer nonce (bb/->direct-byte-buf nonce)
+        ^ByteBuffer key (bb/->direct-byte-buf key)]
     (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
     out))
 
 (defn secretbox-easy-to-indirect-byte-bufs-with-macros!
   [out msg nonce key]
-  (let [^ByteBuffer out (bc/->indirect-byte-buf-macro out)
-        ^ByteBuffer msg (bc/->indirect-byte-buf-macro msg)
-        ^ByteBuffer nonce (bc/->indirect-byte-buf-macro nonce)
-        ^ByteBuffer key (bc/->indirect-byte-buf-macro key)]
+  (let [^ByteBuffer out (bb/->indirect-byte-buf-macro out)
+        ^ByteBuffer msg (bb/->indirect-byte-buf-macro msg)
+        ^ByteBuffer nonce (bb/->indirect-byte-buf-macro nonce)
+        ^ByteBuffer key (bb/->indirect-byte-buf-macro key)]
     (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
     out))
 
 (defn secretbox-easy-to-indirect-byte-bufs!
   [out msg nonce key]
-  (let [^ByteBuffer out (bc/->indirect-byte-buf out)
-        ^ByteBuffer msg (bc/->indirect-byte-buf msg)
-        ^ByteBuffer nonce (bc/->indirect-byte-buf nonce)
-        ^ByteBuffer key (bc/->indirect-byte-buf key)]
+  (let [^ByteBuffer out (bb/->indirect-byte-buf out)
+        ^ByteBuffer msg (bb/->indirect-byte-buf msg)
+        ^ByteBuffer nonce (bb/->indirect-byte-buf nonce)
+        ^ByteBuffer key (bb/->indirect-byte-buf key)]
     (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
     out))
 
@@ -74,14 +75,14 @@
                       secretbox-easy-to-direct-byte-bufs!
                       secretbox-easy-to-byte-bufs-nocast!
                       secretbox-easy-refl!]
-                     bc/->direct-byte-buf)
+                     bb/->direct-byte-buf)
 
   (println "secretbox to-buf! with indirect bufs, pre-allocation")
   (bench-secretnonce [secretbox-easy-to-indirect-byte-bufs-with-macros!
                       secretbox-easy-to-indirect-byte-bufs!
                       secretbox-easy-to-byte-bufs-nocast!
                       secretbox-easy-refl!]
-                     bc/->indirect-byte-buf)
+                     bb/->indirect-byte-buf)
 
   (println "secretbox to-buf! with byte arrays, pre-allocation")
   (bench-secretnonce [s/secretbox-easy-to-buf!] identity))
