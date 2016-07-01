@@ -13,8 +13,7 @@
   :main ^:skip-aot caesium.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
-             :dev {:source-paths ["src/" "benchmarks/"]
-                   :dependencies [[criterium "0.4.4"]]}
+             :dev {:dependencies [[criterium "0.4.4"]]}
              :test {:plugins [[lein-cljfmt "0.3.0"]
                               [lein-kibit "0.1.2"]
                               [jonase/eastwood "0.2.3"]
