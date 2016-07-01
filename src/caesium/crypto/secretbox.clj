@@ -1,8 +1,7 @@
 (ns caesium.crypto.secretbox
   "Bindings to the secretbox secret-key authenticated encryption scheme."
   (:require [caesium.binding :refer [sodium defconsts]]
-            [caesium.util :as u]
-            [caesium.bytes-conv :as bc])
+            [caesium.util :as u])
   (:import [java.nio ByteBuffer]))
 
 (defconsts [keybytes noncebytes macbytes primitive])
