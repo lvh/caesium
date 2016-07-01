@@ -12,10 +12,10 @@
   just want a random nonce and do not care about nonce-misuse
   resistance, use [[secretbox-rnd]]. The other functions are fairly
   limited use."
-  (:import [java.nio ByteBuffer]))
   (:require [caesium.crypto.generichash :as g]
             [caesium.crypto.secretbox :as s]
             [caesium.randombytes :as r])
+  (:import (java.nio ByteBuffer)))
 
 (def keybytes s/keybytes)
 

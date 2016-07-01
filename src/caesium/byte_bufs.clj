@@ -1,7 +1,7 @@
 (ns caesium.byte-bufs
   "Byte buffer utilities, like conversions and length."
   (:require [byte-streams :as bs])
-  (:import [java.nio ByteBuffer]))
+  (:import (java.nio ByteBuffer)))
 
 (defmacro ->indirect-byte-buf-macro
   [x]
