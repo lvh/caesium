@@ -47,7 +47,7 @@
   You only want this to manage the output byte array yourself. Otherwise,
   you want [[secretbox-open-easy]]."
   [^bytes out ^bytes ctext ^bytes nonce ^bytes key]
-  (let [clen (buflen ctext)
+  (let [clen (long (buflen ctext))
         res (.crypto_secretbox_open_easy sodium out ctext clen nonce key)]
     (if (= res 0)
       out
