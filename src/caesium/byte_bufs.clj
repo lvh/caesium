@@ -12,7 +12,7 @@
   (bs/convert x ByteBuffer {:direct? true}))
 
 (defprotocol BufLen
-  (buflen [this]))
+  (^Long buflen [this]))
 
 (extend-protocol BufLen
   (Class/forName "[B")

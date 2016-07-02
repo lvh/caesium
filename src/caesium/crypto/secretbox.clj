@@ -13,7 +13,7 @@
   You only want this to manage the output byte array yourself. Otherwise,
   you want [[secretbox-easy]]."
   [^bytes out ^bytes msg ^bytes nonce ^bytes key]
-  (let [mlen (long (buflen msg))]
+  (let [mlen (buflen msg)]
     (.crypto_secretbox_easy sodium out msg mlen nonce key)))
 
 (defn secretbox-easy-to-byte-buf!
@@ -22,7 +22,7 @@
   Like [[secretbox-easy-to-buf!]], this is only useful if you want to manage
   the output byte buffer yourself. Otherwise, you want [[secretbox-easy]]."
   [^java.nio.ByteBuffer out ^bytes msg ^bytes nonce ^bytes key]
-  (let [mlen (long (buflen msg))]
+  (let [mlen (buflen msg)]
     (.crypto_secretbox_easy sodium out msg mlen nonce key)))
 
 (defn secretbox-easy
