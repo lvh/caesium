@@ -48,7 +48,7 @@
 (defn sign
   "Produces a detached signature for a message m using given secret key."
   [sk m]
-  (let [sig (byte-array ^bytes bytes)]
+  (let [sig (byte-array bytes)]
     (sign-to-buf! sig sk m)))
 
 (defn verify
