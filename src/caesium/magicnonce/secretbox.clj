@@ -116,7 +116,7 @@
 
   All three arrays should be of identical length. Returns `out`."
   [^bytes out ^bytes a ^bytes b]
-  (dotimes [i (alength a)]
+  (dotimes [i (buflen a)]
     (aset-byte out i (bit-xor (aget a i) (aget b i))))
   out)
 
@@ -146,7 +146,7 @@
   Analogous to [[caesium.crypto.secretbox/secretbox-open-easy-to-buf!]]."
   [^bytes out ^bytes nonced-ctext ^bytes key]
   (let [noncebuf (ByteBuffer/wrap nonced-ctext 0 s/noncebytes)
-        ctextlen (- (alength nonced-ctext) s/noncebytes)
+        ctextlen (- (buflen nonced-ctext) s/noncebytes)
         ctextbuf (ByteBuffer/wrap nonced-ctext s/noncebytes ctextlen)]
     (s/secretbox-open-easy-from-byte-bufs! out ctextbuf ctextlen noncebuf key)))
 
@@ -155,7 +155,7 @@
 
   Analogous to [[caesium.crypto.secretbox/secretbox-open-easy]]."
   [^bytes nonced-ctext ^bytes key]
-  (let [out (byte-array (- (alength nonced-ctext) s/noncebytes s/macbytes))]
+  (let [out (byte-array (- (buflen nonced-ctext) s/noncebytes s/macbytes))]
     (open-to-buf! out nonced-ctext key)))
 
 (defn decrypt-to-buf!
