@@ -5,7 +5,8 @@
             [clojure.test :refer [deftest is]]
             [caesium.randombytes :as r]
             [caesium.util :as u]
-            [caesium.crypto.generichash :as g]))
+            [caesium.crypto.generichash :as g]
+            [caesium.byte-bufs :refer [buflen]]))
 
 (deftest xor-test
   (let [one (byte-array [1 0 1])
@@ -22,28 +23,28 @@
   (let [a (#'ms/random-nonce!)
         b (#'ms/random-nonce!)]
     (is (not (u/array-eq a b)))
-    (is (= s/noncebytes (alength ^bytes a) (alength ^bytes b)))))
+    (is (= s/noncebytes (buflen a) (buflen b)))))
 
 (defn is-valid-magicnonce-ctext?
   "Does the given ctext decrypt properly?"
   [ctext]
-  (let [ptextlen (alength ^bytes st/ptext)]
+  (let [ptextlen (buflen st/ptext)]
     (is (= (+ s/noncebytes s/macbytes ptextlen)
-           (alength ^bytes ctext)))
+           (buflen ctext)))
 
     (let [out (byte-array ptextlen)]
       (ms/decrypt-to-buf! out st/secret-key ctext)
       (is (u/array-eq st/ptext out)))
 
     (let [out (byte-array ptextlen)
-          forgery (r/randombytes (alength ^bytes out))]
+          forgery (r/randombytes (buflen out))]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (ms/decrypt-to-buf! out st/secret-key forgery))))
 
     (is (u/array-eq st/ptext (ms/decrypt st/secret-key ctext)))
 
-    (let [forgery (r/randombytes (alength ^bytes ctext))]
+    (let [forgery (r/randombytes (buflen ctext))]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (ms/decrypt st/secret-key forgery))))
@@ -53,14 +54,14 @@
       (is (u/array-eq st/ptext out)))
 
     (let [out (byte-array ptextlen)
-          forgery (r/randombytes (alength ^bytes out))]
+          forgery (r/randombytes (buflen out))]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (ms/open-to-buf! out forgery st/secret-key))))
 
     (is (u/array-eq st/ptext (ms/open ctext st/secret-key)))
 
-    (let [forgery (r/randombytes (alength ^bytes ctext))]
+    (let [forgery (r/randombytes (buflen ctext))]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (ms/open forgery st/secret-key))))))
@@ -115,7 +116,7 @@
       (is (= (range s/noncebytes) (take s/noncebytes c1) (take s/noncebytes c2))))))
 
 (deftest synthetic-nonce-test
-  (is (= (alength ^bytes @#'ms/synthetic-personal)
+  (is (= (buflen @#'ms/synthetic-personal)
          g/blake2b-personalbytes))
   (let [k1 (byte-array (reverse (range 32)))
         k2 (byte-array (reverse (range 32 64)))
@@ -123,10 +124,10 @@
         m1 (byte-array (range 10))
         m2 (byte-array (range 10 20))]
     (is (= s/noncebytes
-           (alength ^bytes (sn m1 k1))
-           (alength ^bytes (sn m2 k1))
-           (alength ^bytes (sn m1 k2))
-           (alength ^bytes (sn m2 k2))))
+           (buflen (sn m1 k1))
+           (buflen (sn m2 k1))
+           (buflen (sn m1 k2))
+           (buflen (sn m2 k2))))
     (is (u/array-eq (sn m1 k1) (sn m1 k1)))
     (is (not (u/array-eq (sn m1 k1) (sn m2 k1))))
     (is (not (u/array-eq (sn m1 k1) (sn m1 k2))))))
