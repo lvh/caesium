@@ -1,6 +1,7 @@
 (ns caesium.crypto.generichash
   (:refer-clojure :exclude [bytes hash])
-  (:require [caesium.binding :refer [sodium defconsts]]))
+  (:require [caesium.binding :refer [sodium defconsts]]
+            [caesium.byte-bufs :refer [buflen]]))
 
 (defconsts [bytes
             bytes-min
@@ -28,10 +29,7 @@
   ([buf msg {:keys [key]
              :or {key (byte-array 0)}}]
    (.crypto_generichash
-    sodium
-    buf (alength ^bytes buf)
-    msg (alength ^bytes msg)
-    key (alength ^bytes key))))
+    sodium buf (buflen buf) msg (buflen msg) key (buflen key))))
 
 (defn hash
   "A friendlier API for generichash.
@@ -59,16 +57,10 @@
      (let [salt (or salt (byte-array blake2b-saltbytes))
            personal (or personal (byte-array blake2b-personalbytes))]
        (.crypto_generichash_blake2b_salt_personal
-        sodium
-        buf (alength ^bytes buf)
-        msg (alength ^bytes msg)
-        key (alength ^bytes key)
+        sodium buf (buflen buf) msg (buflen msg) key (buflen key)
         salt personal))
      (.crypto_generichash_blake2b
-      sodium
-      buf (alength ^bytes buf)
-      msg (alength ^bytes msg)
-      key (alength ^bytes key)))
+      sodium buf (buflen buf) msg (buflen msg) key (buflen key)))
    buf))
 
 (defn blake2b
