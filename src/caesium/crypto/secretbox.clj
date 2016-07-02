@@ -1,7 +1,8 @@
 (ns caesium.crypto.secretbox
   "Bindings to the secretbox secret-key authenticated encryption scheme."
   (:require [caesium.binding :refer [sodium defconsts]]
-            [caesium.util :as u])
+            [caesium.util :as u]
+            [caesium.byte-bufs :refer [buflen]])
   (:import [java.nio ByteBuffer]))
 
 (defconsts [keybytes noncebytes macbytes primitive])
@@ -46,7 +47,7 @@
   You only want this to manage the output byte array yourself. Otherwise,
   you want [[secretbox-open-easy]]."
   [^bytes out ^bytes ctext ^bytes nonce ^bytes key]
-  (let [clen (alength ctext)
+  (let [clen (buflen ctext)
         res (.crypto_secretbox_open_easy sodium out ctext clen nonce key)]
     (if (= res 0)
       out
