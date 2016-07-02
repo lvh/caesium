@@ -14,7 +14,8 @@
   limited use."
   (:require [caesium.crypto.generichash :as g]
             [caesium.crypto.secretbox :as s]
-            [caesium.randombytes :as r])
+            [caesium.randombytes :as r]
+            [caesium.byte-bufs :refer [buflen]])
   (:import (java.nio ByteBuffer)))
 
 (def keybytes s/keybytes)
@@ -38,7 +39,7 @@
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
   [msg nonce key]
-  (let [msglen (alength ^bytes msg)
+  (let [msglen (buflen msg)
         ctextlen (+ s/macbytes msglen)
         outlen (+ s/noncebytes ctextlen)
         out (byte-array outlen)
