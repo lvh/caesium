@@ -63,7 +63,6 @@
   (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
   out)
 
-
 (def sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24]))
 
 (defmacro bench-secretnonce
