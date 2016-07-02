@@ -10,3 +10,13 @@
 (defn ->direct-byte-buf
   [x]
   (bs/convert x ByteBuffer {:direct? true}))
+
+(defprotocol BufLen
+  (buflen [this]))
+
+(extend-protocol BufLen
+  (Class/forName "[B")
+  (buflen [this] (alength ^bytes this))
+
+  ByteBuffer
+  (buflen [this] (.remaining ^ByteBuffer this)))
