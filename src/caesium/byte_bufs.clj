@@ -7,7 +7,7 @@
   [x]
   (bs/convert x ByteBuffer {:direct? false}))
 
-(defn ->direct-byte-buf
+(defn ^ByteBuffer ->direct-byte-buf
   [x]
   (bs/convert x ByteBuffer {:direct? true}))
 
