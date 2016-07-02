@@ -14,24 +14,27 @@
 
 (defspec buflen-spec
   1000
-  (prop'/for-all [n gen/pos-int
-                  g (gen/elements ways-of-getting-a-buf-of-len-n)]
-                 (= n (bb/buflen (g n)))))
+  (prop'/for-all
+   [n gen/pos-int
+    g (gen/elements ways-of-getting-a-buf-of-len-n)]
+   (= n (bb/buflen (g n)))))
 
 (defspec slice-buflen-spec
   1000
-  (prop'/for-all [n gen/pos-int
-                  start (gen/choose 0 n)
-                  end (gen/choose start n)
-                  g (gen/elements ways-of-getting-a-buf-of-len-n)]
-                 (= n (bb/buflen (g n)))))
+  (prop'/for-all
+   [n gen/pos-int
+    start (gen/choose 0 n)
+    end (gen/choose start n)
+    g (gen/elements ways-of-getting-a-buf-of-len-n)]
+   (= n (bb/buflen (g n)))))
 
 (defspec wrapped-array-buflen-spec
   1000
-  (prop'/for-all [n gen/pos-int
-                  start (gen/choose 0 n)
-                  slicelen (gen/choose 0 (- n start))]
-                 (= slicelen
-                    (-> (byte-array n)
-                        (ByteBuffer/wrap start slicelen)
-                        (bb/buflen)))))
+  (prop'/for-all
+   [n gen/pos-int
+    start (gen/choose 0 n)
+    slicelen (gen/choose 0 (- n start))]
+   (= slicelen
+      (-> (byte-array n)
+          (ByteBuffer/wrap start slicelen)
+          (bb/buflen)))))
