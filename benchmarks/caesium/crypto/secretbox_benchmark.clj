@@ -46,10 +46,10 @@
 
 (defn secretbox-easy-to-indirect-byte-bufs!
   [out msg nonce key]
-  (let [^ByteBuffer out (bb/->indirect-byte-buf out)
-        ^ByteBuffer msg (bb/->indirect-byte-buf msg)
-        ^ByteBuffer nonce (bb/->indirect-byte-buf nonce)
-        ^ByteBuffer key (bb/->indirect-byte-buf key)]
+  (let [out (bb/->indirect-byte-buf out)
+        msg (bb/->indirect-byte-buf msg)
+        nonce (bb/->indirect-byte-buf nonce)
+        key (bb/->indirect-byte-buf key)]
     (.crypto_secretbox_easy sodium out msg (.remaining msg) nonce key)
     out))
 

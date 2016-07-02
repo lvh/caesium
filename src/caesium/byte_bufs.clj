@@ -3,7 +3,7 @@
   (:require [byte-streams :as bs])
   (:import (java.nio ByteBuffer)))
 
-(defn ->indirect-byte-buf
+(defn ^ByteBuffer ->indirect-byte-buf
   [x]
   (bs/convert x ByteBuffer {:direct? false}))
 
