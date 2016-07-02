@@ -1,7 +1,8 @@
 (ns caesium.crypto.box
   "Bindings to the public key authenticated encryption scheme."
   (:require [caesium.binding :refer [defconsts sodium]]
-            [caesium.crypto.scalarmult :as s]))
+            [caesium.crypto.scalarmult :as s]
+            [caesium.byte-bufs :refer [buflen]]))
 
 (defconsts [seedbytes
             publickeybytes
@@ -77,7 +78,7 @@
   buffer, which includes in-place encryption. You probably
   want [[box-easy]]."
   [out ptext nonce pk sk]
-  (let [plen (alength ^bytes ptext)]
+  (let [plen (buflen ptext)]
     (.crypto_box_easy sodium out ptext plen nonce pk sk)
     out))
 
@@ -89,7 +90,7 @@
   buffer, which includes in-place decryption. You probably
   want [[box-open-easy]]."
   [out ctext nonce pk sk]
-  (let [clen (alength ^bytes ctext)
+  (let [clen (buflen ctext)
         res (.crypto_box_open_easy sodium out ctext clen nonce pk sk)]
     (if (zero? res)
       out
@@ -119,7 +120,7 @@
   probably what you want. If you would like to manage the array
   yourself, or do in-place encryption, see [[box-easy-to-buf!]]."
   [ptext nonce pk sk]
-  (let [out (byte-array (mlen->clen (alength ^bytes ptext)))]
+  (let [out (byte-array (mlen->clen (buflen ptext)))]
     (box-easy-to-buf! out ptext nonce pk sk)))
 
 (defn box-open-easy
@@ -130,7 +131,7 @@
   you want. If you would like to manage the array yourself, or do in-place
   decryption, see [[box-open-easy-to-buf!]]."
   [ctext nonce pk sk]
-  (let [out (byte-array (clen->mlen (alength ^bytes ctext)))]
+  (let [out (byte-array (clen->mlen (buflen ctext)))]
     (box-open-easy-to-buf! out ctext nonce pk sk)))
 
 (defn encrypt

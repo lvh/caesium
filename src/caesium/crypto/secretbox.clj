@@ -12,7 +12,7 @@
   You only want this to manage the output byte array yourself. Otherwise,
   you want [[secretbox-easy]]."
   [^bytes out ^bytes msg ^bytes nonce ^bytes key]
-  (let [mlen (long (alength ^bytes msg))]
+  (let [mlen (long (buflen msg))]
     (.crypto_secretbox_easy sodium out msg mlen nonce key)))
 
 (defn secretbox-easy-to-byte-buf!
@@ -21,7 +21,7 @@
   Like [[secretbox-easy-to-buf!]], this is only useful if you want to manage
   the output byte buffer yourself. Otherwise, you want [[secretbox-easy]]."
   [^java.nio.ByteBuffer out ^bytes msg ^bytes nonce ^bytes key]
-  (let [mlen (long (alength ^bytes msg))]
+  (let [mlen (long (buflen msg))]
     (.crypto_secretbox_easy sodium out msg mlen nonce key)))
 
 (defn secretbox-easy
@@ -36,7 +36,7 @@
   that the encryption succeeded, and strip them from the returned
   ciphertext."
   [msg nonce key]
-  (let [out (byte-array (+ macbytes (alength ^bytes msg)))]
+  (let [out (byte-array (+ macbytes (buflen msg)))]
     (secretbox-easy-to-buf! out msg nonce key)
     out))
 
@@ -84,7 +84,7 @@
   that the decryption succeeded, and strip them from the returned
   plaintext."
   [ctext nonce key]
-  (let [out (byte-array (- (alength ^bytes ctext) macbytes))]
+  (let [out (byte-array (- (buflen ctext) macbytes))]
     (secretbox-open-easy-to-buf! out ctext nonce key)))
 
 (defn encrypt
