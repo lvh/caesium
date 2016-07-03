@@ -31,7 +31,7 @@
 
 (extend-protocol BufLen
   (Class/forName "[B")
-  (buflen [this] (alength ^bytes this))
+  (buflen [this] (long (alength ^bytes this)))
 
   ByteBuffer
-  (buflen [this] (.remaining ^ByteBuffer this)))
+  (buflen [this] (long (.remaining ^ByteBuffer this))))
