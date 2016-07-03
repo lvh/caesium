@@ -29,7 +29,8 @@
   ([buf msg {:keys [key]
              :or {key (byte-array 0)}}]
    (.crypto_generichash
-    sodium buf (buflen buf) msg (buflen msg) key (buflen key))))
+    sodium buf (buflen buf) msg (buflen msg) key (buflen key))
+   buf))
 
 (defn hash
   "A friendlier API for generichash.
@@ -42,8 +43,7 @@
                 :or {size bytes}
                 :as opts}]
    (let [buf (byte-array size)]
-     (hash-to-buf! buf msg opts)
-     buf)))
+     (hash-to-buf! buf msg opts))))
 
 (defn blake2b-to-buf!
   ([buf msg]
