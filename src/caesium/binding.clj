@@ -41,7 +41,8 @@
   This has to be a vec and not a map, because the same key (symbol,
   method name) might occur with multiple values (e.g. when binding the
   same char* fn with different JVM byte types)."
-  (concat
+  (mapcat
+   permuted-byte-types
    '[[^int sodium_init []]
      [^String sodium_version_string []]
 
@@ -52,25 +53,18 @@
      [^long ^{size_t {}} crypto_secretbox_keybytes []]
      [^long ^{size_t {}} crypto_secretbox_noncebytes []]
      [^long ^{size_t {}} crypto_secretbox_macbytes []]
-     [^String crypto_secretbox_primitive []]]
-   (permuted-byte-types
-    '[^int crypto_secretbox_easy
+     [^String crypto_secretbox_primitive []]
+     [^int crypto_secretbox_easy
       [^bytes ^{Pinned {}} c
        ^bytes ^{Pinned {}} m
        ^long ^{LongLong {}} mlen
        ^bytes ^{Pinned {}} n
-       ^bytes ^{Pinned {}} k]])
-   '[[^int crypto_secretbox_open_easy
+       ^bytes ^{Pinned {}} k]]
+     [^int crypto_secretbox_open_easy
       [^bytes ^{Pinned {}} m
        ^bytes ^{Pinned {}} c
        ^long ^{LongLong {}} clen
        ^bytes ^{Pinned {}} n
-       ^bytes ^{Pinned {}} k]]
-     [^int crypto_secretbox_open_easy
-      [^bytes ^{Pinned {}} m
-       ^java.nio.ByteBuffer ^{Pinned {}} c
-       ^long ^{LongLong {}} clen
-       ^java.nio.ByteBuffer ^{Pinned {}} n
        ^bytes ^{Pinned {}} k]]
      [^int crypto_secretbox_detached
       [^bytes ^{Pinned {}} c

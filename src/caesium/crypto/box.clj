@@ -17,9 +17,9 @@
 
   This API matches libsodium's `crypto_box_keypair` and
   `crpyto_box_seed_keypair`."
-  ([pk sk]
+  ([^bytes pk ^bytes sk]
    (.crypto_box_keypair sodium pk sk))
-  ([pk sk seed]
+  ([^bytes pk ^bytes sk ^bytes seed]
    (.crypto_box_seed_keypair sodium pk sk seed)))
 
 (defn keypair!
@@ -77,8 +77,8 @@
   This function is only useful if you're managing your own output
   buffer, which includes in-place encryption. You probably
   want [[box-easy]]."
-  [out ptext nonce pk sk]
-  (let [plen (buflen ptext)]
+  [^bytes out ^bytes ptext ^bytes nonce ^bytes pk ^bytes sk]
+  (let [plen (long (buflen ptext))]
     (.crypto_box_easy sodium out ptext plen nonce pk sk)
     out))
 
@@ -89,8 +89,8 @@
   This function is only useful if you're managing your own output
   buffer, which includes in-place decryption. You probably
   want [[box-open-easy]]."
-  [out ctext nonce pk sk]
-  (let [clen (buflen ctext)
+  [^bytes out ^bytes ctext ^bytes nonce ^bytes pk ^bytes sk]
+  (let [clen (long (buflen ctext))
         res (.crypto_box_open_easy sodium out ctext clen nonce pk sk)]
     (if (zero? res)
       out
