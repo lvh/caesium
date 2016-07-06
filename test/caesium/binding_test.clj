@@ -50,13 +50,13 @@
             java.nio.ByteBuffer
             java.nio.ByteBuffer]]
          (mapv (fn [[_ args]] (mapv (comp :tag meta) args))
-              (#'b/permuted-byte-types
-               '[^int crypto_secretbox_easy
-                 [^bytes ^{Pinned {}} c
-                  ^bytes ^{Pinned {}} m
-                  ^long ^{LongLong {}} mlen
-                  ^bytes ^{Pinned {}} n
-                  ^bytes ^{Pinned {}} k]])))))
+               (#'b/permuted-byte-types
+                '[^int crypto_secretbox_easy
+                  [^bytes ^{Pinned {}} c
+                   ^bytes ^{Pinned {}} m
+                   ^long ^{LongLong {}} mlen
+                   ^bytes ^{Pinned {}} n
+                   ^bytes ^{Pinned {}} k]])))))
 
 (def ByteArray (Class/forName "[B"))
 
@@ -99,7 +99,7 @@
   [^Method method]
   (let [rtype (.getGenericReturnType method)]
     (condp = rtype
-        Integer/TYPE (is (= "sodium_init" (.getName method)))
-        Long/TYPE (is (= #{size_t}
-                         (clean-annotations (.getAnnotations method))))
-        (is (= String rtype)))))
+      Integer/TYPE (is (= "sodium_init" (.getName method)))
+      Long/TYPE (is (= #{size_t}
+                       (clean-annotations (.getAnnotations method))))
+      (is (= String rtype)))))
