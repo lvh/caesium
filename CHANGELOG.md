@@ -5,7 +5,9 @@ used kalium directly and counted on caesium to pull it in for you. If this
 affects you, please consider filing a ticket.
 
 Started work on improving and standardizing the API to deal with the
-different byte APIs exposed by the JVM.
+different byte APIs exposed by the JVM. This has mostly caused
+internal changes so far, but will result in much better features for
+users of future versions.
 
 # 0.7.0
 
