@@ -27,23 +27,9 @@
                         (vary-meta arg assoc :tag tag)))]]
       [name (mapv ann args)])))
 
-(def ^:private bound-fns
-  "A mapping of type- and jnr.ffi-annotated bound method symbols to
-  respective argspec.
-
-  This exists so that tooling (like magic macro helpers) can easily
-  inspect caesium allegedly binds. That can be done by reflecting on
-  the interface too, but that's significantly less convenient;
-  Clojure's reflection tools don't show annotations, and we always use
-  the data in metadata-annotated form anyway (both to create the
-  interface and to bind fns to vars).
-
-  This has to be a vec and not a map, because the same key (symbol,
-  method name) might occur with multiple values (e.g. when binding the
-  same char* fn with different JVM byte types)."
-  (mapcat
-   permuted-byte-types
-   '[[^int sodium_init []]
+(def ^:private raw-bound-fns
+  "See [[bound-fns]], but without the permutations."
+  '[[^int sodium_init []]
      [^String sodium_version_string []]
 
      [^void randombytes
@@ -210,7 +196,23 @@
      [^int crypto_scalarmult
       [^bytes ^{Pinned {}} q
        ^bytes ^{Pinned {}} n
-       ^bytes ^{Pinned {}} p]]]))
+       ^bytes ^{Pinned {}} p]]])
+
+(def ^:private bound-fns
+  "A mapping of type- and jnr.ffi-annotated bound method symbols to
+  respective argspec.
+
+  This exists so that tooling (like magic macro helpers) can easily
+  inspect caesium allegedly binds. That can be done by reflecting on
+  the interface too, but that's significantly less convenient;
+  Clojure's reflection tools don't show annotations, and we always use
+  the data in metadata-annotated form anyway (both to create the
+  interface and to bind fns to vars).
+
+  This has to be a vec and not a map, because the same key (symbol,
+  method name) might occur with multiple values (e.g. when binding the
+  same char* fn with different JVM byte types)."
+  (mapcat permuted-byte-types raw-bound-fns))
 
 (defmacro ^:private defsodium
   []
