@@ -15,7 +15,8 @@
   :profiles {:uberjar {:aot :all}
              :dev {:dependencies [[criterium "0.4.4"]
                                   [org.clojure/test.check "0.9.0"]
-                                  [com.gfredericks/test.chuck "0.2.6"]]}
+                                  [com.gfredericks/test.chuck "0.2.6"]
+                                  [com.taoensso/timbre "4.7.3"]]}
              :test {:plugins [[lein-cljfmt "0.3.0"]
                               [lein-kibit "0.1.2"]
                               [jonase/eastwood "0.2.3"]
