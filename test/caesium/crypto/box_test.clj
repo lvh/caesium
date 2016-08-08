@@ -1,6 +1,7 @@
 (ns caesium.crypto.box-test
   (:require [caesium.crypto.box :as b]
             [caesium.crypto.scalarmult :as s]
+            [caesium.byte-bufs :as bb]
             [caesium.randombytes :as r]
             [caesium.test-utils :refer [const-test]]
             [caesium.util :as u]
@@ -22,7 +23,7 @@
           (and (not (u/array-eq (:public kp1) (:public kp2)))
                (not (u/array-eq (:secret kp1) (:secret kp2)))))))
   (testing "generate public key from seed"
-    (let [seed (s/int->scalar 1)
+    (let [seed (bb/->indirect-byte-buf (s/int->scalar 1))
           kp1 (b/generate-keypair seed)
           kp2 (b/generate-keypair seed)]
       (is (u/array-eq (:public kp1) (:public kp2)))
@@ -46,9 +47,6 @@
         alice-sk (box-vector "alice-secret-key")]
     (is (u/array-eq ctext (b/encrypt alice-pk bob-sk nonce ptext)))
     (is (u/array-eq ptext (b/decrypt bob-pk alice-sk nonce ctext)))
-    (let [pk (u/hexify alice-pk)
-          sk (u/hexify bob-sk)]
-      (is (thrown? ClassCastException (b/encrypt pk sk nonce ptext))))
     (let [forgery (r/randombytes (alength ^bytes ctext))]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"

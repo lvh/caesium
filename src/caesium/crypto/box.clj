@@ -2,7 +2,8 @@
   "Bindings to the public key authenticated encryption scheme."
   (:require [caesium.binding :refer [defconsts sodium]]
             [caesium.crypto.scalarmult :as s]
-            [caesium.byte-bufs :refer [buflen]]))
+            [caesium.byte-bufs :as bb])
+  (:import [java.nio ByteBuffer]))
 
 (defconsts [seedbytes
             publickeybytes
@@ -17,9 +18,9 @@
 
   This API matches libsodium's `crypto_box_keypair` and
   `crpyto_box_seed_keypair`."
-  ([^bytes pk ^bytes sk]
+  ([^ByteBuffer pk ^ByteBuffer sk]
    (.crypto_box_keypair sodium pk sk))
-  ([^bytes pk ^bytes sk ^bytes seed]
+  ([^ByteBuffer pk ^ByteBuffer sk ^ByteBuffer seed]
    (.crypto_box_seed_keypair sodium pk sk seed)))
 
 (defn keypair!
@@ -40,13 +41,13 @@
   Returns a map containing the public and private key bytes (mutable
   arrays)."
   ([]
-   (let [pk (byte-array publickeybytes)
-         sk (byte-array secretkeybytes)]
+   (let [pk (ByteBuffer/allocate publickeybytes)
+         sk (ByteBuffer/allocate secretkeybytes)]
      (keypair-to-buf! pk sk)
      {:public pk :secret sk}))
   ([seed]
-   (let [pk (byte-array publickeybytes)
-         sk (byte-array secretkeybytes)]
+   (let [pk (ByteBuffer/allocate publickeybytes)
+         sk (ByteBuffer/allocate secretkeybytes)]
      (keypair-to-buf! pk sk seed)
      {:public pk :secret sk})))
 
@@ -66,7 +67,7 @@
   precise: it will use the secret key as a scalar to perform the
   Curve25519 scalar mult."
   [sk]
-  (let [pk (byte-array publickeybytes)]
+  (let [pk (ByteBuffer/allocate publickeybytes)]
     (s/scalarmult-to-buf! sk pk)
     {:public pk :secret sk}))
 
@@ -77,8 +78,9 @@
   This function is only useful if you're managing your own output
   buffer, which includes in-place encryption. You probably
   want [[box-easy]]."
-  [^bytes out ^bytes ptext ^bytes nonce ^bytes pk ^bytes sk]
-  (let [plen (long (buflen ptext))]
+  [^ByteBuffer out ^ByteBuffer ptext ^ByteBuffer nonce
+   ^ByteBuffer pk ^ByteBuffer sk]
+  (let [plen (long (bb/buflen ptext))]
     (.crypto_box_easy sodium out ptext plen nonce pk sk)
     out))
 
@@ -89,8 +91,9 @@
   This function is only useful if you're managing your own output
   buffer, which includes in-place decryption. You probably
   want [[box-open-easy]]."
-  [^bytes out ^bytes ctext ^bytes nonce ^bytes pk ^bytes sk]
-  (let [clen (long (buflen ctext))
+  [^ByteBuffer out ^ByteBuffer ctext ^ByteBuffer nonce
+   ^ByteBuffer pk ^ByteBuffer sk]
+  (let [clen (long (bb/buflen ctext))
         res (.crypto_box_open_easy sodium out ctext clen nonce pk sk)]
     (if (zero? res)
       out
@@ -120,8 +123,14 @@
   probably what you want. If you would like to manage the array
   yourself, or do in-place encryption, see [[box-easy-to-buf!]]."
   [ptext nonce pk sk]
-  (let [out (byte-array (mlen->clen (buflen ptext)))]
-    (box-easy-to-buf! out ptext nonce pk sk)))
+  (let [out (ByteBuffer/allocate (mlen->clen (bb/buflen ptext)))]
+    (box-easy-to-buf!
+     out
+     (bb/->indirect-byte-buf ptext)
+     (bb/->indirect-byte-buf nonce)
+     (bb/->indirect-byte-buf pk)
+     (bb/->indirect-byte-buf sk))
+    (bb/->bytes out)))
 
 (defn box-open-easy
   "Decrypts ptext with `crypto_box_open_easy` using given nonce, public
@@ -131,8 +140,14 @@
   you want. If you would like to manage the array yourself, or do in-place
   decryption, see [[box-open-easy-to-buf!]]."
   [ctext nonce pk sk]
-  (let [out (byte-array (clen->mlen (buflen ctext)))]
-    (box-open-easy-to-buf! out ctext nonce pk sk)))
+  (let [out (ByteBuffer/allocate (clen->mlen (bb/buflen ctext)))]
+    (box-open-easy-to-buf!
+     out
+     (bb/->indirect-byte-buf ctext)
+     (bb/->indirect-byte-buf nonce)
+     (bb/->indirect-byte-buf pk)
+     (bb/->indirect-byte-buf sk))
+    (bb/->bytes out)))
 
 (defn encrypt
   "Encrypt with `crypto_box_easy`.

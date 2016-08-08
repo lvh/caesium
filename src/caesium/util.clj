@@ -1,14 +1,16 @@
 (ns caesium.util
   "Internal utilities."
+  (:require [caesium.byte-bufs :as bb])
   (:import (java.util Arrays)
            (org.apache.commons.codec.binary Hex)))
 
 (defn array-eq
   "Compares two byte arrays for equality.
 
-  Please note that this is not constant time!"
-  [^bytes a ^bytes b]
-  (Arrays/equals a b))
+  Inputs will be converted to bytes as required. Please note that this
+  is not constant time!"
+  [a b]
+  (Arrays/equals (bb/->bytes a) (bb/->bytes b)))
 
 (defn unhexify
   [^String s]

@@ -26,7 +26,9 @@
   [x]
   (bs/convert x ByteBuffer {:direct? true}))
 
-(def ->bytes bs/to-byte-array)
+(defn ->bytes
+  [x]
+  (bs/to-byte-array x))
 
 (defprotocol BufLen
   (^Long buflen [this]))
