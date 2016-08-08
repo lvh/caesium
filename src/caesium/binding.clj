@@ -5,7 +5,9 @@
   [[caesium.crypto.generichash]], [[caesium.crypto.sign]]  et cetera,
   namespaces."
   (:require [clojure.string :as s]
-            [clojure.math.combinatorics :as c])
+            [clojure.math.combinatorics :as c]
+            [medley.core :as m]
+            [clojure.string :as str])
   (:import [jnr.ffi LibraryLoader]
            [jnr.ffi.annotations In Out Pinned LongLong]
            [jnr.ffi.types size_t]))
@@ -255,3 +257,31 @@
            `(def ~(with-meta const {:const true})
               ~docstring
               (~(java-call-sym c-name) sodium)))))
+
+(defmacro ✨
+  "Produces a form for calling named fn with lots of magic:
+
+  * The fn-name is specified using its short name, which is resolved
+    against the ns as per [[defconsts]].
+  * All bufs are annotated as ByteBuffers.
+  * Buffer lengths are automatically added.
+
+  The emoji name of this macro accurately reflects how easy I want it
+  to be for third parties to call it."
+  [fn-name & args]
+  (let [c-name (c-name *ns* fn-name)
+        call-sym (java-call-sym c-name)
+        [_ argdefs] (m/find-first
+                     (fn [[name _]] (= name c-name))
+                     raw-bound-fns)
+        real-tag {'bytes 'java.nio.ByteBuffer}
+        tag (fn [arg] (-> (m/find-first (partial = arg) argdefs)
+                          meta :tag real-tag))
+        hinted (fn [sym] (with-meta sym {:tag (tag sym)}))
+        len-of (fn [sym]
+                 (let [obj-sym (symbol (str/replace (name sym) #"len$" ""))]
+                   `(long (caesium.byte-bufs/buflen ~obj-sym))))
+        computed-args (for [arg argdefs
+                            :let [f (if (some #{arg} args) hinted len-of)]]
+                        (f arg))]
+    `(~call-sym sodium ~@computed-args)))
