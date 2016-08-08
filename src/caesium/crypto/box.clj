@@ -18,10 +18,10 @@
 
   This API matches libsodium's `crypto_box_keypair` and
   `crpyto_box_seed_keypair`."
-  ([^ByteBuffer pk ^ByteBuffer sk]
-   (.crypto_box_keypair sodium pk sk))
-  ([^ByteBuffer pk ^ByteBuffer sk ^ByteBuffer seed]
-   (.crypto_box_seed_keypair sodium pk sk seed)))
+  ([pk sk]
+   (b/✨ keypair pk sk))
+  ([pk sk seed]
+   (b/✨ seed-keypair pk sk seed)))
 
 (defn keypair!
   "Create a `crypto_box` keypair.
