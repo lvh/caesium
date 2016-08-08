@@ -1,6 +1,7 @@
 (ns caesium.binding-test
   (:require [caesium.binding :as b]
-            [clojure.test :refer [deftest is]])
+            [caesium.byte-bufs :as bb]
+            [clojure.test :refer [deftest is are]])
   (:import [caesium.binding Sodium]
            [java.lang.annotation Annotation]
            [java.lang.reflect Method Type AnnotatedElement]
@@ -103,3 +104,34 @@
       Long/TYPE (is (= #{size_t}
                        (clean-annotations (.getAnnotations method))))
       (is (= String rtype)))))
+
+(defmacro with-ns
+  [ns & body]
+  `(let [old-ns# *ns*
+         result# (volatile! nil)]
+     (try
+       (in-ns ~ns)
+       (vreset! result# ~@body)
+       (finally
+         (in-ns (ns-name old-ns#))
+         @result#))))
+
+(def buf-tag
+  {:tag 'java.nio.ByteBuffer})
+
+(deftest magic-sparkles-test
+  (are [ns expr expected-form expected-metas]
+      (with-ns ns
+        (let [[_ _ & args :as expanded] (macroexpand-1 expr)]
+          (and (is (= expected-form expanded))
+               (is (= expected-metas (map meta args))))))
+    'caesium.crypto.box
+    '(b/✨ keypair sk pk)
+    `(.crypto_box_keypair b/sodium ~'pk ~'sk)
+    [buf-tag buf-tag]
+
+    'caesium.crypto.box
+    '(b/✨ open-easy m c n pk sk)
+    `(.crypto_box_open_easy
+      b/sodium ~'m ~'c (long (bb/buflen ~'c)) ~'n ~'pk ~'sk)
+    [buf-tag buf-tag nil buf-tag buf-tag buf-tag]))
