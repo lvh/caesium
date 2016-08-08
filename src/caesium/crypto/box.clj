@@ -1,16 +1,16 @@
 (ns caesium.crypto.box
   "Bindings to the public key authenticated encryption scheme."
-  (:require [caesium.binding :refer [defconsts sodium]]
+  (:require [caesium.binding :as b]
             [caesium.crypto.scalarmult :as s]
             [caesium.byte-bufs :as bb])
   (:import [java.nio ByteBuffer]))
 
-(defconsts [seedbytes
-            publickeybytes
-            secretkeybytes
-            noncebytes
-            macbytes
-            primitive])
+(b/defconsts [seedbytes
+              publickeybytes
+              secretkeybytes
+              noncebytes
+              macbytes
+              primitive])
 
 (defn keypair-to-buf!
   "Generate a key pair into provided pk (public key) and sk (secret
@@ -81,7 +81,7 @@
   [^ByteBuffer out ^ByteBuffer ptext ^ByteBuffer nonce
    ^ByteBuffer pk ^ByteBuffer sk]
   (let [plen (long (bb/buflen ptext))]
-    (.crypto_box_easy sodium out ptext plen nonce pk sk)
+    (.crypto_box_easy b/sodium out ptext plen nonce pk sk)
     out))
 
 (defn box-open-easy-to-buf!
@@ -94,7 +94,7 @@
   [^ByteBuffer out ^ByteBuffer ctext ^ByteBuffer nonce
    ^ByteBuffer pk ^ByteBuffer sk]
   (let [clen (long (bb/buflen ctext))
-        res (.crypto_box_open_easy sodium out ctext clen nonce pk sk)]
+        res (.crypto_box_open_easy b/sodium out ctext clen nonce pk sk)]
     (if (zero? res)
       out
       (throw (RuntimeException. "Ciphertext verification failed")))))
