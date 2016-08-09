@@ -33,7 +33,7 @@
    buf))
 
 (defn hash
-  "A friendlier API for generichash.
+  "Hashes a message with optional key using libsodium's generichash primitive.
 
   This is higher-level than [[hash-to-buf!]] because you don't have to
   allocate your own output buffer."
@@ -46,6 +46,11 @@
      (hash-to-buf! buf msg opts))))
 
 (defn blake2b-to-buf!
+  "Hashes a message using BLAKE2b into the given buffer. Optionally
+  takes key, salt and personal.
+
+  You only want this to manage the output byte array yourself. Otherwise, you
+  want [[blake2b]]."
   ([buf msg]
    (blake2b-to-buf! buf msg {}))
   ([buf msg {:keys [key salt personal]
@@ -64,6 +69,10 @@
    buf))
 
 (defn blake2b
+  "Hashes a message using BLAKE2b. Optionally takes key, salt and personal.
+
+  This is higher-level than [[blake2b-to-buf!]] because you don't have to
+  allocate your own output buffer."
   ([msg]
    (blake2b msg {}))
   ([msg {:keys [size] :or {size blake2b-bytes} :as opts}]
