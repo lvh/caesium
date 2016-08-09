@@ -75,14 +75,14 @@
   "Encrypts ptext into out with `crypto_box_easy` using given nonce,
   public key and secret key.
 
+  All arguments must be `java.nio.ByteBuffer`.
+
   This function is only useful if you're managing your own output
   buffer, which includes in-place encryption. You probably
   want [[box-easy]]."
-  [^ByteBuffer out ^ByteBuffer ptext ^ByteBuffer nonce
-   ^ByteBuffer pk ^ByteBuffer sk]
-  (let [plen (long (bb/buflen ptext))]
-    (.crypto_box_easy b/sodium out ptext plen nonce pk sk)
-    out))
+  [c m n pk sk]
+  (b/✨ easy c m plen n pk sk)
+  c)
 
 (defn box-open-easy-to-buf!
   "Decrypts ptext into out with `crypto_box_open_easy` using given
