@@ -234,10 +234,10 @@
   "Resolves the fn name in the current ns to the fn name in the equivalent
   libsodium C pseudo-namespace."
   [^clojure.lang.Namespace namespace ^clojure.lang.Symbol fn-name]
-  (let [adjusted-name (-> (name fn-name) (s/replace "-" "_"))
+  (let [fn-name (-> (name fn-name) (s/replace "-" "_"))
         prefix (-> namespace ns-name str (s/split #"\.") rest vec)
-        full-path (conj prefix adjusted-name)]
-    (symbol (s/join "_" full-path))))
+        path (into prefix (when-not (= (last prefix) fn-name) [fn-name]))]
+    (symbol (s/join "_" path))))
 
 (defn ^:private java-call-sym
   "Creates the Clojure Java method call syntax to call a method on the
