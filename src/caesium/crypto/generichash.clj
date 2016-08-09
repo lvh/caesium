@@ -1,22 +1,22 @@
 (ns caesium.crypto.generichash
   (:refer-clojure :exclude [bytes hash])
-  (:require [caesium.binding :refer [sodium defconsts]]
+  (:require [caesium.binding :as b]
             [caesium.byte-bufs :refer [buflen]]))
 
-(defconsts [bytes
-            bytes-min
-            bytes-max
-            keybytes
-            keybytes-min
-            keybytes-max
-            blake2b-bytes
-            blake2b-bytes-min
-            blake2b-bytes-max
-            blake2b-keybytes
-            blake2b-keybytes-min
-            blake2b-keybytes-max
-            blake2b-saltbytes
-            blake2b-personalbytes])
+(b/defconsts [bytes
+              bytes-min
+              bytes-max
+              keybytes
+              keybytes-min
+              keybytes-max
+              blake2b-bytes
+              blake2b-bytes-min
+              blake2b-bytes-max
+              blake2b-keybytes
+              blake2b-keybytes-min
+              blake2b-keybytes-max
+              blake2b-saltbytes
+              blake2b-personalbytes])
 
 (defn hash-to-buf!
   "Hashes a message with optional key into a given output buffer using
@@ -57,10 +57,10 @@
      (let [salt (or salt (byte-array blake2b-saltbytes))
            personal (or personal (byte-array blake2b-personalbytes))]
        (.crypto_generichash_blake2b_salt_personal
-        sodium buf (buflen buf) msg (buflen msg) key (buflen key)
+        b/sodium buf (buflen buf) msg (buflen msg) key (buflen key)
         salt personal))
      (.crypto_generichash_blake2b
-      sodium buf (buflen buf) msg (buflen msg) key (buflen key)))
+      b/sodium buf (buflen buf) msg (buflen msg) key (buflen key)))
    buf))
 
 (defn blake2b
