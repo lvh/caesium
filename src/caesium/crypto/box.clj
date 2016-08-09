@@ -41,13 +41,13 @@
   Returns a map containing the public and private key bytes (mutable
   arrays)."
   ([]
-   (let [pk (ByteBuffer/allocate publickeybytes)
-         sk (ByteBuffer/allocate secretkeybytes)]
+   (let [pk (bb/alloc publickeybytes)
+         sk (bb/alloc secretkeybytes)]
      (keypair-to-buf! pk sk)
      {:public pk :secret sk}))
   ([seed]
-   (let [pk (ByteBuffer/allocate publickeybytes)
-         sk (ByteBuffer/allocate secretkeybytes)]
+   (let [pk (bb/alloc publickeybytes)
+         sk (bb/alloc secretkeybytes)]
      (keypair-to-buf! pk sk seed)
      {:public pk :secret sk})))
 
@@ -67,7 +67,7 @@
   precise: it will use the secret key as a scalar to perform the
   Curve25519 scalar mult."
   [sk]
-  (let [pk (ByteBuffer/allocate publickeybytes)]
+  (let [pk (bb/alloc publickeybytes)]
     (s/scalarmult-to-buf! sk pk)
     {:public pk :secret sk}))
 
@@ -123,7 +123,7 @@
   probably what you want. If you would like to manage the array
   yourself, or do in-place encryption, see [[box-easy-to-buf!]]."
   [ptext nonce pk sk]
-  (let [out (ByteBuffer/allocate (mlen->clen (bb/buflen ptext)))]
+  (let [out (bb/alloc (mlen->clen (bb/buflen ptext)))]
     (box-easy-to-buf!
      out
      (bb/->indirect-byte-buf ptext)
@@ -140,7 +140,7 @@
   you want. If you would like to manage the array yourself, or do in-place
   decryption, see [[box-open-easy-to-buf!]]."
   [ctext nonce pk sk]
-  (let [out (ByteBuffer/allocate (clen->mlen (bb/buflen ctext)))]
+  (let [out (bb/alloc (clen->mlen (bb/buflen ctext)))]
     (box-open-easy-to-buf!
      out
      (bb/->indirect-byte-buf ctext)

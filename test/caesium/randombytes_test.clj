@@ -18,7 +18,7 @@
       (is (= (repeat 10 0) tail)))))
 
 (deftest random-to-byte-buffer!
-  (let [some-bytes (ByteBuffer/allocate 20)]
+  (let [some-bytes (bb/alloc 20)]
     (r/random-to-byte-buffer! some-bytes 10)
     (let [s (seq (bb/->bytes some-bytes))
           head (take 10 s)
