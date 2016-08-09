@@ -88,15 +88,15 @@
   "Decrypts ptext into out with `crypto_box_open_easy` using given
   nonce, public key and secret key.
 
+  All arguments must be `java.nio.ByteBuffer`.
+
   This function is only useful if you're managing your own output
   buffer, which includes in-place decryption. You probably
   want [[box-open-easy]]."
-  [^ByteBuffer out ^ByteBuffer ctext ^ByteBuffer nonce
-   ^ByteBuffer pk ^ByteBuffer sk]
-  (let [clen (long (bb/buflen ctext))
-        res (.crypto_box_open_easy b/sodium out ctext clen nonce pk sk)]
+  [m c n pk sk]
+  (let [res (b/✨ open-easy m c n pk sk)]
     (if (zero? res)
-      out
+      m
       (throw (RuntimeException. "Ciphertext verification failed")))))
 
 (defn mlen->clen
