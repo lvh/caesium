@@ -9,6 +9,7 @@
 
 (def ways-of-getting-a-buf-of-len-n
   [byte-array
+   bb/alloc
    (fn [n] (ByteBuffer/allocate n))
    (fn [n] (ByteBuffer/allocateDirect n))
    (fn [n] (ByteBuffer/wrap (byte-array n)))])
@@ -65,3 +66,9 @@
       (-> (byte-array n)
           (ByteBuffer/wrap start slicelen)
           (bb/buflen)))))
+
+(defspec alloc-spec
+  1000
+  (prop'/for-all
+   [n gen/pos-int]
+   (= n (bb/buflen (bb/alloc n)))))

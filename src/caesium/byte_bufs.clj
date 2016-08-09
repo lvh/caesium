@@ -30,6 +30,10 @@
   [x]
   (bs/to-byte-array x))
 
+(defn alloc
+  [n]
+  (ByteBuffer/allocate n))
+
 (defprotocol BufLen
   (^Long buflen [this]))
 
