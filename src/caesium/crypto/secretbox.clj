@@ -1,11 +1,11 @@
 (ns caesium.crypto.secretbox
   "Bindings to the secretbox secret-key authenticated encryption scheme."
-  (:require [caesium.binding :refer [sodium defconsts]]
+  (:require [caesium.binding :as b]
             [caesium.util :as u]
             [caesium.byte-bufs :refer [buflen]])
   (:import [java.nio ByteBuffer]))
 
-(defconsts [keybytes noncebytes macbytes primitive])
+(b/defconsts [keybytes noncebytes macbytes primitive])
 
 (defn secretbox-easy-to-buf!
   "Encrypt with `crypto_secretbox_easy` into the given byte array.
@@ -14,7 +14,7 @@
   you want [[secretbox-easy]]."
   [^bytes out ^bytes msg ^bytes nonce ^bytes key]
   (let [mlen (buflen msg)]
-    (.crypto_secretbox_easy sodium out msg mlen nonce key)))
+    (.crypto_secretbox_easy b/sodium out msg mlen nonce key)))
 
 (defn secretbox-easy-to-byte-buf!
   "Like [[secretbox-easy-to-buf!]], but with a ByteBuffer output.
@@ -23,7 +23,7 @@
   the output byte buffer yourself. Otherwise, you want [[secretbox-easy]]."
   [^java.nio.ByteBuffer out ^bytes msg ^bytes nonce ^bytes key]
   (let [mlen (buflen msg)]
-    (.crypto_secretbox_easy sodium out msg mlen nonce key)))
+    (.crypto_secretbox_easy b/sodium out msg mlen nonce key)))
 
 (defn secretbox-easy
   "Encrypt with `crypto_secretbox_easy`.
@@ -48,7 +48,7 @@
   you want [[secretbox-open-easy]]."
   [^bytes out ^bytes ctext ^bytes nonce ^bytes key]
   (let [clen (long (buflen ctext))
-        res (.crypto_secretbox_open_easy sodium out ctext clen nonce key)]
+        res (.crypto_secretbox_open_easy b/sodium out ctext clen nonce key)]
     (if (= res 0)
       out
       (throw (RuntimeException. "Ciphertext verification failed")))))
@@ -63,7 +63,7 @@
   [out ctext ctextlen nonce key]
   ;; This takes an ctextlen argument because you can't tell the appropriate
   ;; length from the ctext ByteBuffer and the caller knows anyway.
-  (let [res (.crypto_secretbox_open_easy sodium
+  (let [res (.crypto_secretbox_open_easy b/sodium
                                          ^bytes out
                                          ^java.nio.ByteBuffer ctext
                                          ^long ctextlen
