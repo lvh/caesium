@@ -60,10 +60,11 @@
   "secretbox, with randomized prefix nonce.
 
   This is useful if you don't have an obvious nonce in your protocol
-  you can use. However, it does rely on having a cryptographically
-  secure CSPRNG available during encryption. It is *not* nonce-misuse
-  resistant. Unless you can't afford the minor performance penalty for
-  a nonce-misuse resistant scheme, consider using [[secretbox-nmr]].
+  you can use. However, it does rely on having cryptographically
+  strong randomness available during encryption. It is *not*
+  nonce-misuse resistant. Unless you can't afford the minor
+  performance penalty for a nonce-misuse resistant scheme, consider
+  using [[secretbox-nmr]].
 
   To decrypt, use [[decrypt]] or [[open]], depending on which argument
   order you prefer."
