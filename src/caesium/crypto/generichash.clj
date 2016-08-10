@@ -50,7 +50,7 @@
 
   All arguments must be `java.nio.ByteBuffer`.
 
-  You only want this to manage the output byte array yourself. Otherwise, you
+  You only want this to manage the output byte buffer yourself. Otherwise, you
   want [[blake2b]]."
   ([buf msg]
    (blake2b-to-buf! buf msg {}))
