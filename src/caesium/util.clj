@@ -3,17 +3,17 @@
 
   This ns is not considered public API, and may break without semver
   major version increments."
-  (:require [caesium.byte-bufs :as bb])
+  (:require [caesium.byte-bufs :as bb]
+            [byte-streams :as bs])
   (:import (java.util Arrays)
            (org.apache.commons.codec.binary Hex)))
 
-(defn array-eq
+(def array-eq
   "Compares two byte arrays for equality.
 
   Inputs will be converted to bytes as required. Please note that this
   is not constant time!"
-  [a b]
-  (Arrays/equals (bb/->bytes a) (bb/->bytes b)))
+  bs/bytes=)
 
 (defn unhexify
   [^String s]
