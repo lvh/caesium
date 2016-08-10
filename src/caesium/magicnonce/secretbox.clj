@@ -72,6 +72,10 @@
   (secretbox-pfx msg (random-nonce!) key))
 
 (def ^:private synthetic-personal
+  "The BLAKE2b personal used for synthetic nonce generation.
+
+  This says sodium, not caesium, in a vain hope that this ciphersuite gets
+  picked up by other libsodium bindings."
   (.getBytes "sodium autononce"))
 
 (defn ^:private synthetic-nonce
