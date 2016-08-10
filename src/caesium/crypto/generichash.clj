@@ -48,6 +48,8 @@
   "Hashes a message using BLAKE2b into the given buffer. Optionally
   takes key, salt and personal.
 
+  All buffers must be `ByteArray`.
+
   You only want this to manage the output byte array yourself. Otherwise, you
   want [[blake2b]]."
   ([buf msg]
