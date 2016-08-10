@@ -1,5 +1,8 @@
 (ns caesium.util
-  "Internal utilities."
+  "Internal utilities.
+
+  This ns is not considered public API, and may break without semver
+  major version increments."
   (:require [caesium.byte-bufs :as bb])
   (:import (java.util Arrays)
            (org.apache.commons.codec.binary Hex)))
