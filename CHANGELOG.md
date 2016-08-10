@@ -1,9 +1,12 @@
 # 0.8.0 (WIP)
 
-Started work on improving and standardizing the API to deal with the
-different byte APIs exposed by the JVM. This is not a breaking change
-if you use the convenience functions that manage buffers for
-you. However, all `*-to-buf!` fns now take `ByteBuffer`, never `[B`.
+Started work on improving and standardizing the API to deal with the different
+byte APIs exposed by the JVM. This is not a breaking change if you use the
+convenience functions that manage buffers for you. However, all `*-to-buf!`
+fns now take `ByteBuffer`, never byte arrays. The good news is that the
+convenience functions now take anything that can be converted to ByteBuffer
+(potentially with copying). See the following blog post for full rationale and
+details: https://www.lvh.io/posts/crypto-apis-and-jvm-byte-types.html
 
 Removed the kalium dependency. This might be a breaking change if your project
 used kalium directly and counted on caesium to pull it in for you.
