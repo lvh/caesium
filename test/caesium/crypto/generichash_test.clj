@@ -1,5 +1,6 @@
 (ns caesium.crypto.generichash-test
   (:require [caesium.crypto.generichash :as g]
+            [caesium.byte-bufs :as bb]
             [caesium.test-utils :refer [const-test]]
             [caesium.util :refer [array-eq]]
             [caesium.vectors :as v]
@@ -46,13 +47,12 @@
     (blake2b-vector "digest-Z-64")))
 
 (deftest hash-to-buf!-test
-  (are [args expected] (let [out (byte-array g/bytes)]
+  (are [args expected] (let [out (bb/alloc g/bytes)]
                          (array-eq (apply g/hash-to-buf! out args) expected))
-    [(byte-array [])]
+    [(bb/alloc 0)]
     (blake2b-vector "digest-empty-string-32")
 
-    [(byte-array [])
-     {:key (byte-array 0)}]
+    [(bb/alloc 0) {:key (bb/alloc 0)}]
     (blake2b-vector "digest-empty-string-32")))
 
 (deftest blake2b-kat-test
