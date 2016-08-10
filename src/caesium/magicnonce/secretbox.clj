@@ -43,7 +43,7 @@
         clen (+ s/macbytes mlen)
         outlen (+ s/noncebytes clen)
         out (byte-array outlen)
-        cbuf (ByteBuffer/wrap out s/noncebytes ctextlen)]
+        cbuf (ByteBuffer/wrap out s/noncebytes clen)]
     (System/arraycopy n 0 out 0 s/noncebytes)
     (s/secretbox-easy-to-buf! cbuf m n k)
     out))
