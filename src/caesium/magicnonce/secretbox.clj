@@ -38,14 +38,14 @@
 
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
-  [msg nonce key]
-  (let [msglen (buflen msg)
-        ctextlen (+ s/macbytes msglen)
-        outlen (+ s/noncebytes ctextlen)
+  [m n k]
+  (let [mlen (buflen m)
+        clen (+ s/macbytes mlen)
+        outlen (+ s/noncebytes clen)
         out (byte-array outlen)
-        ctextbuf (ByteBuffer/wrap out s/noncebytes ctextlen)]
-    (System/arraycopy nonce 0 out 0 s/noncebytes)
-    (s/secretbox-easy-to-byte-buf! ctextbuf msg nonce key)
+        cbuf (ByteBuffer/wrap out s/noncebytes ctextlen)]
+    (System/arraycopy n 0 out 0 s/noncebytes)
+    (s/secretbox-easy-to-buf! cbuf m n k)
     out))
 
 (defn ^:private random-nonce!
