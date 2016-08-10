@@ -22,7 +22,7 @@
   "Hashes a message with optional key into a given output buffer using
   libsodium's generichash primitive.
 
-  All buffers must be `ByteArray`.
+  All arguments must be `java.nio.ByteBuffer`.
 
   You only want this to manage the output buffer yourself. Otherwise,
   you want [[hash]]."
@@ -48,7 +48,7 @@
   "Hashes a message using BLAKE2b into the given buffer. Optionally
   takes key, salt and personal.
 
-  All buffers must be `ByteArray`.
+  All arguments must be `java.nio.ByteBuffer`.
 
   You only want this to manage the output byte array yourself. Otherwise, you
   want [[blake2b]]."
