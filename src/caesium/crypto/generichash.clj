@@ -37,13 +37,12 @@
 
   This is higher-level than [[hash-to-buf!]] because you don't have to
   allocate your own output buffer."
-  ([^bytes msg]
+  ([msg]
    (hash msg {}))
-  ([^bytes msg {:keys [size]
-                :or {size bytes}
-                :as opts}]
-   (let [buf (byte-array size)]
-     (hash-to-buf! buf msg opts))))
+  ([msg {:keys [size] :or {size bytes} :as opts}]
+   (let [buf (bb/alloc size)]
+     (hash-to-buf! buf msg opts)
+     (bb/->bytes buf))))
 
 (defn blake2b-to-buf!
   "Hashes a message using BLAKE2b into the given buffer. Optionally
