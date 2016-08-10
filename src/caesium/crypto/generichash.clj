@@ -26,10 +26,8 @@
   want [[hash]]."
   ([buf msg]
    (hash-to-buf! buf msg {}))
-  ([buf msg {:keys [key]
-             :or {key (byte-array 0)}}]
-   (.crypto_generichash
-    sodium buf (buflen buf) msg (buflen msg) key (buflen key))
+  ([buf msg {:keys [key] :or {key (bb/alloc 0)}}]
+   (b/✨ generichash buf msg key)
    buf))
 
 (defn hash
