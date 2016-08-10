@@ -22,8 +22,10 @@
   "Hashes a message with optional key into a given output buffer using
   libsodium's generichash primitive.
 
-  You only want this to manage the output byte array yourself. Otherwise, you
-  want [[hash]]."
+  All buffers must be `ByteArray`.
+
+  You only want this to manage the output buffer yourself. Otherwise,
+  you want [[hash]]."
   ([buf msg]
    (hash-to-buf! buf msg {}))
   ([buf msg {:keys [key] :or {key (bb/alloc 0)}}]
