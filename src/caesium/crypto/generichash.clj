@@ -52,19 +52,15 @@
   want [[blake2b]]."
   ([buf msg]
    (blake2b-to-buf! buf msg {}))
-  ([buf msg {:keys [key salt personal]
-             :or {key (byte-array 0)}}]
+  ([buf msg {:keys [key salt personal] :or {key (bb/alloc 0)}}]
    (if (or salt personal)
      ;; You can't set the defaults in the argspec's destructuring form,
      ;; because you want to be able to differentiate between a salt that
      ;; wasn't passed and an empty salt, to call a different fn.
-     (let [salt (or salt (byte-array blake2b-saltbytes))
-           personal (or personal (byte-array blake2b-personalbytes))]
-       (.crypto_generichash_blake2b_salt_personal
-        b/sodium buf (bb/buflen buf) msg (bb/buflen msg) key (bb/buflen key)
-        salt personal))
-     (.crypto_generichash_blake2b
-      b/sodium buf (bb/buflen buf) msg (bb/buflen msg) key (bb/buflen key)))
+     (let [salt (or salt (bb/alloc blake2b-saltbytes))
+           personal (or personal (bb/alloc blake2b-personalbytes))]
+       (b/✨ blake2b-salt-personal buf msg key salt personal))
+     (b/✨ blake2b buf msg key))
    buf))
 
 (defn blake2b
