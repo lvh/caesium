@@ -8,22 +8,14 @@
 (b/defconsts [keybytes noncebytes macbytes primitive])
 
 (defn secretbox-easy-to-buf!
-  "Encrypt with `crypto_secretbox_easy` into the given byte array.
+  "Encrypt with `crypto_secretbox_easy` into the given byte buffer.
 
-  You only want this to manage the output byte array yourself. Otherwise,
+  All arguments must be `java.nio.ByteBuffer`.
+
+  You only want this to manage the output byte buffer yourself. Otherwise,
   you want [[secretbox-easy]]."
-  [^bytes out ^bytes msg ^bytes nonce ^bytes key]
-  (let [mlen (buflen msg)]
-    (.crypto_secretbox_easy b/sodium out msg mlen nonce key)))
-
-(defn secretbox-easy-to-byte-buf!
-  "Like [[secretbox-easy-to-buf!]], but with a ByteBuffer output.
-
-  Like [[secretbox-easy-to-buf!]], this is only useful if you want to manage
-  the output byte buffer yourself. Otherwise, you want [[secretbox-easy]]."
-  [^java.nio.ByteBuffer out ^bytes msg ^bytes nonce ^bytes key]
-  (let [mlen (buflen msg)]
-    (.crypto_secretbox_easy b/sodium out msg mlen nonce key)))
+  [c m n k]
+  (b/✨ easy m n k))
 
 (defn secretbox-easy
   "Encrypt with `crypto_secretbox_easy`.
