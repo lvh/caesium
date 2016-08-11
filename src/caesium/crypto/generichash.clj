@@ -78,6 +78,10 @@
   ([msg]
    (blake2b msg {}))
   ([msg {:keys [size] :or {size blake2b-bytes} :as opts}]
-   (let [buf (bb/alloc size)]
-     (blake2b-to-buf! buf (bb/->indirect-byte-buf msg) opts)
+   (let [buf (bb/alloc size)
+         opts (dissoc opts :size)]
+     (blake2b-to-buf!
+      buf
+      (bb/->indirect-byte-buf msg)
+      (m/map-vals bb/->indirect-byte-buf opts))
      (bb/->bytes buf))))
