@@ -1,7 +1,8 @@
 (ns caesium.crypto.generichash
   (:refer-clojure :exclude [bytes hash])
   (:require [caesium.binding :as b]
-            [caesium.byte-bufs :as bb]))
+            [caesium.byte-bufs :as bb]
+            [medley.core :as m]))
 
 (b/defconsts [bytes
               bytes-min
@@ -40,8 +41,12 @@
   ([msg]
    (hash msg {}))
   ([msg {:keys [size] :or {size bytes} :as opts}]
-   (let [buf (bb/alloc size)]
-     (hash-to-buf! buf msg opts)
+   (let [buf (bb/alloc size)
+         opts (dissoc opts :size)]
+     (hash-to-buf!
+      buf
+      (bb/->indirect-byte-buf msg)
+      (m/map-vals bb/->indirect-byte-buf opts))
      (bb/->bytes buf))))
 
 (defn blake2b-to-buf!
