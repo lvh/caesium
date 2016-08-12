@@ -5,19 +5,19 @@
 
   Scalar multiplication."
   (:refer-clojure :exclude [bytes])
-  (:require [caesium.binding :refer [defconsts sodium]]
+  (:require [caesium.binding :as b]
             [caesium.util :as u]))
 
-(defconsts [bytes scalarbytes primitive])
+(b/defconsts [bytes scalarbytes primitive])
 
 (defn scalarmult-to-buf!
   "Performs scalar multiplication into the given out buffer against a
   given point using `crypto_scalarmult`, or against the fixed base
   point with `crypto_scalarmult_base` when no point is passed."
   ([n out]
-   (.crypto_scalarmult_base sodium out n))
+   (.crypto_scalarmult_base b/sodium out n))
   ([n p out]
-   (.crypto_scalarmult sodium out n p)))
+   (.crypto_scalarmult b/sodium out n p)))
 
 (defn scalarmult
   "Performs scalar multiplication against a given point, using"
