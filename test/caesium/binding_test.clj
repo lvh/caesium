@@ -134,4 +134,18 @@
     '(b/✨ open-easy m c n pk sk)
     `(.crypto_box_open_easy
       b/sodium ~'m ~'c (long (bb/buflen ~'c)) ~'n ~'pk ~'sk)
-    [buf-tag buf-tag nil buf-tag buf-tag buf-tag]))
+    [buf-tag buf-tag nil buf-tag buf-tag buf-tag]
+
+    'caesium.crypto.generichash
+    `(b/✨ generichash buf msg key)
+    `(.crypto_generichash
+      b/sodium
+      ~'buf (long (bb/buflen ~'buf))
+      ~'msg (long (bb/buflen ~'msg))
+      ~'key (long (bb/buflen ~'key)))
+    [buf-tag nil buf-tag nil buf-tag nil]
+
+    'caesium.crypto.scalarmult
+    '(b/✨ scalarmult-base q n)
+    `(.crypto_scalarmult_base b/sodium ~'q ~'n)
+    [buf-tag buf-tag]))
