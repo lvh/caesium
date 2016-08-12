@@ -165,10 +165,10 @@
 
 (defn decrypt-to-buf!
   "Like [[open-to-buf!]], but with different argument order."
-  [out key nonced-ctext]
-  (open-to-buf! out nonced-ctext key))
+  [m k c]
+  (open-to-buf! m c k))
 
 (defn decrypt
   "Like [[open]], but with different argument order."
-  [key nonced-ctext]
-  (open nonced-ctext key))
+  [k c]
+  (open c k))
