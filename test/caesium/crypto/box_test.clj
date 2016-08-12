@@ -1,6 +1,5 @@
 (ns caesium.crypto.box-test
   (:require [caesium.crypto.box :as b]
-            [caesium.crypto.scalarmult :as s]
             [caesium.byte-bufs :as bb]
             [caesium.randombytes :as r]
             [caesium.test-utils :refer [const-test]]
@@ -23,7 +22,7 @@
           (and (not (u/array-eq (:public kp1) (:public kp2)))
                (not (u/array-eq (:secret kp1) (:secret kp2)))))))
   (testing "generate public key from seed"
-    (let [seed (bb/->indirect-byte-buf (s/int->scalar 1))
+    (let [seed (bb/->indirect-byte-buf (r/randombytes b/seedbytes))
           kp1 (b/generate-keypair seed)
           kp2 (b/generate-keypair seed)]
       (is (u/array-eq (:public kp1) (:public kp2)))
