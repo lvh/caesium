@@ -18,10 +18,10 @@
 
 (deftest scalarmult-tests
   (testing "-to-buf! and regular API work identically"
-    (let [out (byte-array s/bytes)
+    (let [q (byte-array s/bytes)
           r (s/scalarmult scalar-1)]
-      (s/scalarmult-to-buf! scalar-1 out)
-      (is (u/array-eq r out))))
+      (s/scalarmult-to-buf! scalar-1 q)
+      (is (u/array-eq r q))))
   (testing "base point mult uses the base point"
     (is (u/array-eq
          (s/scalarmult scalar-1)
