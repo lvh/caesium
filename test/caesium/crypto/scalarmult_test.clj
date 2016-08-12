@@ -2,6 +2,7 @@
   (:require [caesium.crypto.scalarmult :as s]
             [caesium.test-utils :refer [const-test]]
             [caesium.util :as u]
+            [caesium.byte-bufs :as bb]
             [clojure.test :refer [are deftest is testing]]))
 
 (const-test
@@ -39,7 +40,7 @@
 
 (deftest scalarmult-tests
   (testing "-to-buf! and regular API work identically"
-    (let [q (byte-array s/bytes)
+    (let [q (bb/alloc s/bytes)
           r (s/scalarmult scalar-1)]
       (s/scalarmult-to-buf! scalar-1 q)
       (is (u/array-eq r q))))
