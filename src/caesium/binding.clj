@@ -232,11 +232,16 @@
 
 (defn ^:private c-name
   "Resolves the fn name in the current ns to the fn name in the equivalent
-  libsodium C pseudo-namespace."
+  libsodium C pseudo-namespace.
+
+  This understands problems like e.g. generichash in the generichash
+  namespace meaning crypto_generichash, not the (nonexistant)
+  crypto_generichash_generichash."
   [^clojure.lang.Namespace namespace ^clojure.lang.Symbol fn-name]
   (let [fn-name (-> (name fn-name) (s/replace "-" "_"))
+        fn-name-parts (set (str/split fn-name #"_"))
         prefix (-> namespace ns-name str (s/split #"\.") rest vec)
-        path (into prefix (when-not (= (last prefix) fn-name) [fn-name]))]
+        path (concat (remove fn-name-parts prefix) [fn-name])]
     (symbol (s/join "_" path))))
 
 (defn ^:private java-call-sym
