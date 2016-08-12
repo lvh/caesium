@@ -29,17 +29,3 @@
    (let [out (byte-array bytes)]
      (scalarmult-to-buf! n p out)
      out)))
-
-(def ^bytes int->scalar
-  "**DANGER** This fn is typically only used for demos, not secure
-  cryptosystems; see rest of docstring for details. Turns an integral
-  type (int, bigint, biginteger) into a byte array suitable for use as
-  a scalar for scalarmult.
-
-  The resulting byte array will be `scalarbytes` wide.
-
-  Note that int is generally only 32 bits wide (see `Integer/SIZE`),
-  whereas scalars here are 32 bytes wide (see `scalarbytes`). An
-  attacker can simply exhaust all 32-bit options, so points generated
-  this way should not be considered secure."
-  (partial u/n->bytes scalarbytes))

@@ -12,9 +12,30 @@
 (def basepoint
   (byte-array (into [9] (repeat (dec s/bytes) 0))))
 
+(def ^bytes ^:private int->scalar
+  "**DANGER** This fn is typically only used for demos, not secure
+  cryptosystems; see rest of docstring for details. Turns an integral
+  type (int, bigint, biginteger) into a byte array suitable for use as
+  a scalar for scalarmult.
+
+  The resulting byte array will be `scalarbytes` wide.
+
+  Note that int is generally only 32 bits wide (see `Integer/SIZE`),
+  whereas scalars here are 32 bytes wide (see `scalarbytes`). An
+  attacker can simply exhaust all 32-bit options, so points generated
+  this way should not be considered secure."
+  (partial u/n->bytes s/scalarbytes))
+
+(deftest int->scalar-test
+  (are [n expected] (u/array-eq expected (int->scalar n))
+    0 (byte-array 32)
+    0M (byte-array 32)
+    1000000000000 (byte-array (into (vec (repeat 27 0))
+                                    [-24 -44 -91 16 0]))))
+
 (def scalar-1
   "The number 1, as a curve25519 scalar."
-  (s/int->scalar 1))
+  (int->scalar 1))
 
 (deftest scalarmult-tests
   (testing "-to-buf! and regular API work identically"
@@ -26,10 +47,3 @@
     (is (u/array-eq
          (s/scalarmult scalar-1)
          (s/scalarmult scalar-1 basepoint)))))
-
-(deftest int->scalar-test
-  (are [n expected] (u/array-eq expected (s/int->scalar n))
-    0 (byte-array 32)
-    0M (byte-array 32)
-    1000000000000 (byte-array (into (vec (repeat 27 0))
-                                    [-24 -44 -91 16 0]))))
