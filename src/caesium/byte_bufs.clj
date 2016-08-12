@@ -26,11 +26,11 @@
   [x]
   (bs/convert x ByteBuffer {:direct? true}))
 
-(defn ->bytes
+(defn ^bytes ->bytes
   [x]
   (bs/to-byte-array x))
 
-(defn alloc
+(defn ^ByteBuffer alloc
   [n]
   (ByteBuffer/allocate n))
 
