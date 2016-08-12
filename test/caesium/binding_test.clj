@@ -146,6 +146,11 @@
     [buf-tag nil buf-tag nil buf-tag nil]
 
     'caesium.crypto.scalarmult
+    '(caesium.binding/✨ scalarmult q n p)
+    `(.crypto_scalarmult b/sodium ~'q ~'n ~'p)
+    [buf-tag buf-tag buf-tag]
+
+    'caesium.crypto.scalarmult
     '(caesium.binding/✨ scalarmult-base q n)
     `(.crypto_scalarmult_base b/sodium ~'q ~'n)
     [buf-tag buf-tag]))
