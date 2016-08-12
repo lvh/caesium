@@ -23,18 +23,16 @@
 (defn secretbox-pfx
   "secretbox, with the given nonce embedded in the ciphertext as a prefix.
 
-  This is only useful if there is an obvious nonce in your protocol
-  that can not repeat, you have ways of detecting when your peer
-  epeats nonces, your nonce is not implicitly part of your protocol so
-  you have to specify it as part of the ciphertext, and you can not
-  afford to use a nonce-misuse resistant scheme. As you can see,
-  that's a fairly rare circumstance; this function is mainly used
-  internally by other, easier to use schemes in this namespace. Check
-  out [[secretbox-nmr]] instead.
+  This takes an explicit nonce, and is therefore only useful for protocols
+  where you need an explicit nonce (you don't have something like a record
+  counter) but you can not afford to use a randomized nonce or nonce-misuse
+  resistant scheme. That is a rare set of circumstances. Therefore, this
+  function is mainly used internally by other, easier to use schemes in this
+  namespace: check out [[secretbox-nmr]] instead.
 
-  The resulting layout will be 24 bytes of nonce, followed by the
-  secretbox ciphertext (which itself consists of the encryption of the
-  plaintext, followed by a 16 byte MAC).
+  The resulting layout will be 24 bytes of nonce, followed by the secretbox
+  ciphertext (which itself consists of the encryption of the plaintext,
+  followed by a 16 byte MAC).
 
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
