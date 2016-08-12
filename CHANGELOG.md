@@ -9,7 +9,8 @@ full rationale and details:
 https://www.lvh.io/posts/crypto-apis-and-jvm-byte-types.html
 
 Removed the kalium dependency. This might be a breaking change if your project
-used kalium directly and counted on caesium to pull it in for you.
+used kalium directly and counted on caesium to pull it in for you; kalium has
+not been used since before 0.6.0.
 
 # 0.7.0
 
