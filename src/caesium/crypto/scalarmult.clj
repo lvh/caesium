@@ -15,9 +15,9 @@
   given point using `crypto_scalarmult`, or against the fixed base
   point with `crypto_scalarmult_base` when no point is passed."
   ([n out]
-   (.crypto_scalarmult_base b/sodium out n))
+   (b/✨ scalarmult-base out n))
   ([n p out]
-   (.crypto_scalarmult b/sodium out n p)))
+   (b/✨ scalarmult out n p)))
 
 (defn scalarmult
   "Performs scalar multiplication against a given point, using"
