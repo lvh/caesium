@@ -42,7 +42,7 @@
   (testing "-to-buf! and regular API work identically"
     (let [q (bb/alloc s/bytes)
           r (s/scalarmult scalar-1)]
-      (s/scalarmult-to-buf! scalar-1 q)
+      (s/scalarmult-to-buf! q scalar-1 )
       (is (u/array-eq r q))))
   (testing "base point mult uses the base point"
     (is (u/array-eq
