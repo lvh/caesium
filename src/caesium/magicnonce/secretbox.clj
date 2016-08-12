@@ -15,7 +15,7 @@
   (:require [caesium.crypto.generichash :as g]
             [caesium.crypto.secretbox :as s]
             [caesium.randombytes :as r]
-            [caesium.byte-bufs :refer [buflen]])
+            [caesium.byte-bufs :as bb])
   (:import (java.nio ByteBuffer)))
 
 (def keybytes s/keybytes)
@@ -39,7 +39,7 @@
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
   [m n k]
-  (let [mlen (buflen m)
+  (let [mlen (bb/buflen m)
         clen (+ s/macbytes mlen)
         outlen (+ s/noncebytes clen)
         out (byte-array outlen)
@@ -121,7 +121,7 @@
 
   All three arrays should be of identical length. Returns `out`."
   [^bytes out ^bytes a ^bytes b]
-  (dotimes [i (buflen a)]
+  (dotimes [i (bb/buflen a)]
     (aset-byte out i (bit-xor (aget a i) (aget b i))))
   out)
 
