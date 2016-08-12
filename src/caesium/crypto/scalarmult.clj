@@ -14,18 +14,18 @@
   "Performs scalar multiplication into the given out buffer against a
   given point using `crypto_scalarmult`, or against the fixed base
   point with `crypto_scalarmult_base` when no point is passed."
-  ([n out]
-   (b/✨ scalarmult-base out n))
-  ([n p out]
-   (b/✨ scalarmult out n p)))
+  ([n q]
+   (b/✨ scalarmult-base q n))
+  ([n p q]
+   (b/✨ scalarmult q n p)))
 
 (defn scalarmult
   "Performs scalar multiplication against a given point, using"
   ([n]
-   (let [out (byte-array bytes)]
-     (scalarmult-to-buf! n out)
-     out))
+   (let [q (byte-array bytes)]
+     (scalarmult-to-buf! n q)
+     q))
   ([n p]
-   (let [out (byte-array bytes)]
-     (scalarmult-to-buf! n p out)
-     out)))
+   (let [q (byte-array bytes)]
+     (scalarmult-to-buf! n p q)
+     q)))
