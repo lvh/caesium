@@ -271,17 +271,17 @@
   [fn-name & args]
   (let [c-name (c-name *ns* fn-name)
         call-sym (java-call-sym c-name)
-        [_ argdefs] (m/find-first
-                     (fn [[name _]] (= name c-name))
-                     raw-bound-fns)
+        [_ c-args] (m/find-first
+                    (fn [[name _]] (= name c-name))
+                    raw-bound-fns)
         real-tag {'bytes 'java.nio.ByteBuffer}
-        tag (fn [arg] (-> (m/find-first (partial = arg) argdefs)
+        tag (fn [arg] (-> (m/find-first (partial = arg) c-args)
                           meta :tag real-tag))
         hinted (fn [sym] (with-meta sym {:tag (tag sym)}))
         len-of (fn [sym]
                  (let [obj-sym (symbol (str/replace (name sym) #"len$" ""))]
                    `(long (caesium.byte-bufs/buflen ~obj-sym))))
-        computed-args (for [arg argdefs
+        computed-args (for [arg c-args
                             :let [f (if (some #{arg} args) hinted len-of)]]
                         (f arg))]
     `(~call-sym sodium ~@computed-args)))
