@@ -6,7 +6,7 @@
   Scalar multiplication."
   (:refer-clojure :exclude [bytes])
   (:require [caesium.binding :as b]
-            [caesium.util :as u]))
+            [caesium.byte-bufs :as bb]))
 
 (b/defconsts [bytes scalarbytes primitive])
 
@@ -22,10 +22,10 @@
 (defn scalarmult
   "Performs scalar multiplication against a given point, using"
   ([n]
-   (let [q (byte-array bytes)]
+   (let [q (bb/alloc bytes)]
      (scalarmult-to-buf! q n)
-     q))
+     (bb/->bytes q)))
   ([n p]
-   (let [q (byte-array bytes)]
+   (let [q (bb/alloc bytes)]
      (scalarmult-to-buf! q n p)
-     q)))
+     (bb/->bytes q))))
