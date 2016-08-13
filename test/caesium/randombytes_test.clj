@@ -9,6 +9,10 @@
     (is (= 10 (bb/buflen buf)))))
 
 (deftest random-to-buf!-test
+  (let [buf (bb/alloc 30)]
+    (is (= #{0} (set (seq (bb/->bytes buf)))))
+    (r/random-to-buf! buf)
+    (is (not= #{0} (set (seq (bb/->bytes buf))))))
   (let [buf (bb/alloc 20)]
     (r/random-to-buf! buf 10)
     (let [s (seq (bb/->bytes buf))
