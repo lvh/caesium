@@ -22,7 +22,7 @@
 (defn random-to-byte-buffer!
   "**DANGER** This function is low-level, you only want to use it if you are
   managing your own buffers. See [[randombytes]] for a high level API that
-  creates the byte array buffer for you.
+  creates the buffer for you.
 
   Given a byte buffer, populate it with n random bytes.
 
