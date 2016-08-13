@@ -8,6 +8,13 @@ arrays. Only the latter is a breaking change. See the following blog post for
 full rationale and details:
 https://www.lvh.io/posts/crypto-apis-and-jvm-byte-types.html
 
+As a part of this change, `random-to-byte-array!` is gone, and
+`random-to-byte-buffer!` has been renamed to `random-to-buf!` for consistency
+with other APIs. `secretbox-open-easy-from-byte-bufs!` is similarly gone. All
+of these removed APIs were marked as being for highly specialized use, so if
+you were already using them successfully you can probably use the new API
+pretty painlessly (if not, please file an issue).
+
 The signature for `scalarmult-to-buf!` was inconsistent with other signatures;
 this has been changed. In the same namespace, `int->scalar` fn has been moved
 to the test namespace since it was a security footgun (this was already
