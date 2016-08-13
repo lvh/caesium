@@ -15,10 +15,23 @@
   (:require [caesium.crypto.generichash :as g]
             [caesium.crypto.secretbox :as s]
             [caesium.randombytes :as r]
-            [caesium.byte-bufs :as bb])
+            [caesium.byte-bufs :as bb]
+            [caesium.util :as u]
+            [taoensso.timbre :refer [spy info]])
   (:import (java.nio ByteBuffer)))
 
 (def keybytes s/keybytes)
+
+(defn secretbox-pfx-to-buf!
+  "Like [[secretbox-pfx]], but you manage the output buffer. See that fn for
+  details.
+
+  All buffers must be `java.nio.ByteBuffer`.
+
+  Buffer `c` must be of length of `m` + [[s/noncebytes]] + [[s/macbytes]]."
+  [^ByteBuffer c ^ByteBuffer m ^ByteBuffer n ^ByteBuffer k]
+  (.put c n)
+  (s/secretbox-easy-to-buf! c m n k))
 
 (defn secretbox-pfx
   "secretbox, with the given nonce embedded in the ciphertext as a prefix.
@@ -37,13 +50,13 @@
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
   [m n k]
-  (let [mlen (bb/buflen m)
-        clen (+ s/macbytes mlen)
-        outlen (+ s/noncebytes clen)
-        out (byte-array outlen)
-        cbuf (ByteBuffer/wrap out s/noncebytes clen)]
-    (System/arraycopy n 0 out 0 s/noncebytes)
-    (s/secretbox-easy-to-buf! cbuf m n k)
+  (let [outlen (+ s/noncebytes (bb/buflen m) s/macbytes)
+        out (byte-array outlen)]
+    (secretbox-pfx-to-buf!
+     (ByteBuffer/wrap out)
+     (bb/->indirect-byte-buf m)
+     (bb/->indirect-byte-buf n)
+     (bb/->indirect-byte-buf k))
     out))
 
 (defn ^:private random-nonce!
@@ -146,20 +159,29 @@
 (defn open-to-buf!
   "Decrypts any secretbox message with a prefix nonce into the given buffer.
 
+  This splits the given ciphertext buffer into the nonce and the
+  resulting ciphertext and then defers to [[s/secretbox-open-easy-to-buf!]].
+
+  All arguments must be `java.nio.ByteBuffer`.
+
   Analogous to [[caesium.crypto.secretbox/secretbox-open-easy-to-buf!]]."
-  [^bytes out ^bytes nonced-ctext ^bytes key]
-  (let [noncebuf (ByteBuffer/wrap nonced-ctext 0 s/noncebytes)
-        ctextlen (- (buflen nonced-ctext) s/noncebytes)
-        ctextbuf (ByteBuffer/wrap nonced-ctext s/noncebytes ctextlen)]
-    (s/secretbox-open-easy-from-byte-bufs! out ctextbuf ctextlen noncebuf key)))
+  [m ^ByteBuffer c k]
+  (info "c before dup" c)
+  (info "c contents" (u/hexify (bb/->bytes c)))
+  (let [n (-> c (.duplicate) (.limit s/noncebytes))
+        c (-> c (.duplicate) (.position s/noncebytes))]
+    (spy (u/hexify (bb/->bytes n)))
+    (spy (u/hexify (bb/->bytes c)))
+    (s/secretbox-open-easy-to-buf! m (spy c) (spy n) k)))
 
 (defn open
   "Decrypts any secretbox message with a prefix nonce.
 
   Analogous to [[caesium.crypto.secretbox/secretbox-open-easy]]."
-  [^bytes nonced-ctext ^bytes key]
-  (let [out (byte-array (- (buflen nonced-ctext) s/noncebytes s/macbytes))]
-    (open-to-buf! out nonced-ctext key)))
+  [c k]
+  (let [m (bb/alloc (- (bb/buflen c) s/noncebytes s/macbytes))]
+    (open-to-buf! m (bb/->indirect-byte-buf c) (bb/->indirect-byte-buf k))
+    (bb/->bytes m)))
 
 (defn decrypt-to-buf!
   "Like [[open-to-buf!]], but with different argument order."
