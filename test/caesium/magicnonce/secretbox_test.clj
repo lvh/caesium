@@ -32,8 +32,11 @@
     (is (= (+ s/noncebytes s/macbytes ptextlen)
            (bb/buflen ctext)))
 
-    (let [out (byte-array ptextlen)]
-      (ms/decrypt-to-buf! out st/secret-key ctext)
+    (let [out (bb/alloc ptextlen)]
+      (ms/decrypt-to-buf!
+       out
+       (bb/->indirect-byte-buf st/secret-key)
+       (bb/->indirect-byte-buf ctext))
       (is (u/array-eq st/ptext out)))
 
     (let [out (bb/alloc ptextlen)
