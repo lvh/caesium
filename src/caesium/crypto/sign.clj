@@ -24,7 +24,7 @@
      {:public pk
       :secret sk})))
 
-(def ^:deprecated generate-keypair
+(def ^:deprecated generate-signing-keys
   "Deprecated alias for [[keypair!]]."
   keypair!)
 
