@@ -17,18 +17,18 @@
 
 (deftest keypair-generation-test
   (testing "generates new keypairs"
-    (is (let [kp1 (b/generate-keypair)
-              kp2 (b/generate-keypair)]
+    (is (let [kp1 (b/keypair!)
+              kp2 (b/keypair!)]
           (and (not (u/array-eq (:public kp1) (:public kp2)))
                (not (u/array-eq (:secret kp1) (:secret kp2)))))))
   (testing "generate public key from seed"
     (let [seed (bb/->indirect-byte-buf (r/randombytes b/seedbytes))
-          kp1 (b/generate-keypair seed)
-          kp2 (b/generate-keypair seed)]
+          kp1 (b/keypair! seed)
+          kp2 (b/keypair! seed)]
       (is (u/array-eq (:public kp1) (:public kp2)))
       (is (u/array-eq (:secret kp1) (:secret kp2)))))
   (testing "generate public key from secret key"
-    (let [kp1 (b/generate-keypair)
+    (let [kp1 (b/keypair!)
           kp2 (b/sk->keypair (:secret kp1))]
       (is (u/array-eq (:public kp1) (:public kp2)))
       (is (u/array-eq (:secret kp1) (:secret kp2))))))
