@@ -21,6 +21,9 @@ to the test namespace since it was a security footgun (this was already
 documented in the docstring, but there is really no good reason to use it, so
 it's simply been removed from the scalarmult namespace instead).
 
+caesium.crypto.sign/generate-keypair is deprecated in favor of keypair! in the
+same ns for consistency with libsodium (and caesium.crypto.box). (#7)
+
 Removed the kalium dependency. This might be a breaking change if your project
 used kalium directly and counted on caesium to pull it in for you; kalium has
 not been used since before 0.6.0.

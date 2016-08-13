@@ -5,7 +5,7 @@
 
 (defconsts [bytes seedbytes publickeybytes secretkeybytes primitive])
 
-(defn generate-signing-keys
+(defn keypair!
   "Generate a public-key and secret-key for signing with
   `crypto_sign_ed25519_seed_keypair`. If a seed is not provided, one
   is taken from `randombytes`.
@@ -23,6 +23,10 @@
      (.crypto_sign_seed_keypair sodium pk sk seed)
      {:public pk
       :secret sk})))
+
+(def ^:deprecated generate-keypair
+  "Deprecated alias for [[keypair!]]."
+  keypair!)
 
 (defn signed-to-buf!
   "Puts a signed version of the given message using given secret key into the
