@@ -50,7 +50,7 @@
 
     (is (u/array-eq st/ptext (ms/decrypt st/secret-key ctext)))
 
-    (let [forgery (bb/->indirect-byte-buf (r/randombytes (bb/buflen ctext)))]
+    (let [forgery (r/randombytes (bb/buflen ctext))]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (ms/decrypt st/secret-key forgery))))
