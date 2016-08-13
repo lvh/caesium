@@ -48,7 +48,7 @@
   ([seed]
    (let [pk (bb/alloc publickeybytes)
          sk (bb/alloc secretkeybytes)]
-     (keypair-to-buf! pk sk seed)
+     (keypair-to-buf! pk sk (bb/->indirect-byte-buf seed))
      {:public pk :secret sk})))
 
 (def ^:deprecated generate-keypair
