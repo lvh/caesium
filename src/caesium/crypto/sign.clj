@@ -1,9 +1,9 @@
 (ns caesium.crypto.sign
   (:refer-clojure :exclude [bytes])
-  (:require [caesium.binding :refer [defconsts sodium]]
+  (:require [caesium.binding :as b]
             [caesium.byte-bufs :refer [buflen]]))
 
-(defconsts [bytes seedbytes publickeybytes secretkeybytes primitive])
+(b/defconsts [bytes seedbytes publickeybytes secretkeybytes primitive])
 
 (defn keypair!
   "Generate a public-key and secret-key for signing with
@@ -14,13 +14,13 @@
   ([]
    (let [pk (byte-array publickeybytes)
          sk (byte-array secretkeybytes)]
-     (.crypto_sign_keypair sodium pk sk)
+     (.crypto_sign_keypair b/sodium pk sk)
      {:public pk
       :secret sk}))
   ([seed]
    (let [pk (byte-array publickeybytes)
          sk (byte-array secretkeybytes)]
-     (.crypto_sign_seed_keypair sodium pk sk seed)
+     (.crypto_sign_seed_keypair b/sodium pk sk seed)
      {:public pk
       :secret sk})))
 
@@ -32,7 +32,7 @@
   "Puts a signed version of the given message using given secret key into the
   given out buffer."
   [out sk m]
-  (.crypto_sign sodium out nil m (buflen m) sk)
+  (.crypto_sign b/sodium out nil m (buflen m) sk)
   out)
 
 (defn signed
@@ -45,7 +45,7 @@
   "Puts a signature of the given message using given secret key into the given
   out buffer."
   [out sk m]
-  (.crypto_sign_detached sodium out nil m (buflen m) sk)
+  (.crypto_sign_detached b/sodium out nil m (buflen m) sk)
   out)
 
 (defn sign
@@ -63,12 +63,12 @@
   ([pk sm]
    (let [smlen (buflen sm)
          m (byte-array (- smlen bytes))
-         res (.crypto_sign_open sodium m nil sm smlen pk)]
+         res (.crypto_sign_open b/sodium m nil sm smlen pk)]
      (if (zero? res)
        m
        (throw (RuntimeException. "Signature validation failed")))))
   ([pk msg sig]
    (let [mlen (buflen msg)
-         res (.crypto_sign_verify_detached sodium sig msg mlen pk)]
+         res (.crypto_sign_verify_detached b/sodium sig msg mlen pk)]
      (when-not (zero? res)
        (throw (RuntimeException. "Signature validation failed"))))))
