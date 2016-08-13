@@ -16,11 +16,16 @@
             [caesium.crypto.secretbox :as s]
             [caesium.randombytes :as r]
             [caesium.byte-bufs :as bb]
-            [caesium.util :as u]
-            [taoensso.timbre :refer [spy info]])
+            [caesium.util :as u])
   (:import (java.nio ByteBuffer)))
 
 (def keybytes s/keybytes)
+
+(defn ^:private split-pfx
+  [^ByteBuffer out]
+  (let [n (-> out (.duplicate) (.limit s/noncebytes))
+        c (-> out (.duplicate) (.position s/noncebytes))]
+    [n c]))
 
 (defn secretbox-pfx-to-buf!
   "Like [[secretbox-pfx]], but you manage the output buffer. See that fn for
@@ -29,9 +34,10 @@
   All buffers must be `java.nio.ByteBuffer`.
 
   Buffer `c` must be of length of `m` + [[s/noncebytes]] + [[s/macbytes]]."
-  [^ByteBuffer c ^ByteBuffer m ^ByteBuffer n ^ByteBuffer k]
-  (.put c n)
-  (s/secretbox-easy-to-buf! c m n k))
+  [c m n k]
+  (let [[n' c'] (split-pfx c)]
+    (s/secretbox-easy-to-buf! c' m n k)
+    (.put ^ByteBuffer n' ^ByteBuffer n)))
 
 (defn secretbox-pfx
   "secretbox, with the given nonce embedded in the ciphertext as a prefix.
@@ -50,14 +56,13 @@
   To decrypt, use [[decrypt]] or [[open]], depending on which argument order
   you prefer."
   [m n k]
-  (let [outlen (+ s/noncebytes (bb/buflen m) s/macbytes)
-        out (byte-array outlen)]
+  (let [out (bb/alloc (+ s/noncebytes (bb/buflen m) s/macbytes))]
     (secretbox-pfx-to-buf!
-     (ByteBuffer/wrap out)
+     out
      (bb/->indirect-byte-buf m)
      (bb/->indirect-byte-buf n)
      (bb/->indirect-byte-buf k))
-    out))
+    (bb/->bytes out)))
 
 (defn ^:private random-nonce!
   "Creates a random nonce suitable for use in secretbox.
@@ -165,14 +170,9 @@
   All arguments must be `java.nio.ByteBuffer`.
 
   Analogous to [[caesium.crypto.secretbox/secretbox-open-easy-to-buf!]]."
-  [m ^ByteBuffer c k]
-  (info "c before dup" c)
-  (info "c contents" (u/hexify (bb/->bytes c)))
-  (let [n (-> c (.duplicate) (.limit s/noncebytes))
-        c (-> c (.duplicate) (.position s/noncebytes))]
-    (spy (u/hexify (bb/->bytes n)))
-    (spy (u/hexify (bb/->bytes c)))
-    (s/secretbox-open-easy-to-buf! m (spy c) (spy n) k)))
+  [m c k]
+  (let [[n' c'] (split-pfx c)]
+    (s/secretbox-open-easy-to-buf! m c' n' k)))
 
 (defn open
   "Decrypts any secretbox message with a prefix nonce.
