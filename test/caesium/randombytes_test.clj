@@ -8,11 +8,15 @@
   (let [buf (r/randombytes 10)]
     (is (= 10 (bb/buflen buf)))))
 
+(defn all-zero?
+  [buf]
+  (every? #{0} (bb/->bytes buf)))
+
 (deftest random-to-buf!-test
   (let [buf (bb/alloc 30)]
-    (is (= #{0} (set (seq (bb/->bytes buf)))))
+    (is (all-zero? buf))
     (r/random-to-buf! buf)
-    (is (not= #{0} (set (seq (bb/->bytes buf))))))
+    (is (not (all-zero? buf))))
   (let [buf (bb/alloc 20)]
     (r/random-to-buf! buf 10)
     (let [s (seq (bb/->bytes buf))
