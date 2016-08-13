@@ -23,9 +23,10 @@
   "Performs scalar multiplication against a given point, using"
   ([n]
    (let [q (bb/alloc bytes)]
-     (scalarmult-to-buf! q n)
+     (scalarmult-to-buf! q (bb/->indirect-byte-buf n))
      (bb/->bytes q)))
   ([n p]
    (let [q (bb/alloc bytes)]
-     (scalarmult-to-buf! q n p)
+     (scalarmult-to-buf!
+      q (bb/->indirect-byte-buf n) (bb/->indirect-byte-buf p))
      (bb/->bytes q))))
