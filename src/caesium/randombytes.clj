@@ -1,8 +1,8 @@
 (ns caesium.randombytes
   "Utilities for producing cryptographically random bytes, suitable
   for use as a key or other input entropy."
-  (:require [caesium.binding :refer [sodium]]
-            [caesium.byte-bufs :refer [buflen]])
+  (:require [caesium.binding :as b]
+            [caesium.byte-bufs :as bb])
   (:import (java.nio ByteBuffer)))
 
 (defn random-to-byte-array!
@@ -14,9 +14,9 @@
 
   If n is not given, populates the entire array."
   ([^bytes arr]
-   (random-to-byte-array! arr (buflen arr)))
+   (random-to-byte-array! arr (bb/buflen arr)))
   ([^bytes arr n]
-   (.randombytes sodium arr (long n))
+   (.randombytes b/sodium arr (long n))
    arr))
 
 (defn random-to-byte-buffer!
@@ -30,7 +30,7 @@
   ([^ByteBuffer buf]
    (random-to-byte-buffer! buf (.remaining buf)))
   ([^ByteBuffer buf n]
-   (.randombytes sodium buf (long n))
+   (.randombytes b/sodium buf (long n))
    buf))
 
 (defn randombytes
