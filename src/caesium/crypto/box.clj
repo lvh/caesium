@@ -68,7 +68,7 @@
   Curve25519 scalar mult."
   [sk]
   (let [pk (bb/alloc publickeybytes)]
-    (s/scalarmult-to-buf! sk pk)
+    (s/scalarmult-to-buf! pk sk)
     {:public pk :secret sk}))
 
 (defn box-easy-to-buf!
