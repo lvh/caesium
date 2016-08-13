@@ -25,7 +25,7 @@
    (is (instance? ByteBuffer buf))
    (when-not (instance? ByteBuffer src)
      ;; when the input is a byte buffer, don't convert
-     (is (not (.isDirect buf))))))
+     (is (not (.isDirect ^ByteBuffer buf))))))
 
 (defspec ->direct-byte-buf-spec
   1000
@@ -38,7 +38,7 @@
    (is (instance? ByteBuffer buf))
    (when-not (instance? ByteBuffer src)
      ;; when the input is a byte buffer, don't convert
-     (is (.isDirect buf)))))
+     (is (.isDirect ^ByteBuffer buf)))))
 
 (defspec buflen-spec
   1000
