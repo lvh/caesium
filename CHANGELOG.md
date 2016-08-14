@@ -15,11 +15,13 @@ of these removed APIs were marked as being for highly specialized use, so if
 you were already using them successfully you can probably use the new API
 pretty painlessly (if not, please file an issue).
 
-The signature for `scalarmult-to-buf!` was inconsistent with other signatures;
-this has been changed. In the same namespace, `int->scalar` fn has been moved
-to the test namespace since it was a security footgun (this was already
-documented in the docstring, but there is really no good reason to use it, so
-it's simply been removed from the scalarmult namespace instead).
+The argument order for signing functions was inconsistent with libsodium and
+therefore also other APIs in caesium. This has been changed. The signature for
+`scalarmult-to-buf!` was inconsistent with other signatures; this has been
+changed. In the same namespace, `int->scalar` fn has been moved to the test
+namespace since it was a security footgun (this was already documented in the
+docstring, but there is really no good reason to use it, so it's simply been
+removed from the scalarmult namespace instead).
 
 caesium.crypto.sign/generate-keypair is deprecated in favor of keypair! in the
 same ns for consistency with libsodium (and caesium.crypto.box). (#7)

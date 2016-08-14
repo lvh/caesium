@@ -30,35 +30,35 @@
 (defn signed-to-buf!
   "Puts a signed version of the given message using given secret key into the
   given out buffer."
-  [sm sk m]
+  [sm m sk]
   (b/✨ sign sm m sk)
   sm)
 
 (defn signed
   "Produces a signed version of the given message m using given secret key."
-  [sk m]
+  [m sk]
   (let [sm (bb/alloc (+ bytes (bb/buflen m)))]
     (signed-to-buf!
      sm
-     (bb/->indirect-byte-buf sk)
-     (bb/->indirect-byte-buf m))
+     (bb/->indirect-byte-buf m)
+     (bb/->indirect-byte-buf sk))
     (bb/->bytes sm)))
 
 (defn sign-to-buf!
   "Puts a signature of the given message using given secret key into the given
   out buffer."
-  [sig sk m]
+  [sig m sk]
   (b/✨ sign-detached sig m sk)
   sig)
 
 (defn sign
   "Produces a detached signature for a message m using given secret key."
-  [sk m]
+  [m sk]
   (let [sig (bb/alloc bytes)]
     (sign-to-buf!
      sig
-     (bb/->indirect-byte-buf sk)
-     (bb/->indirect-byte-buf m))
+     (bb/->indirect-byte-buf m)
+     (bb/->indirect-byte-buf sk))
     (bb/->bytes sig)))
 
 (defn verify
@@ -67,7 +67,7 @@
   When given a valid signed message, returns the unsigned
   message. When given a valid signature, returns nil. When given an
   invalid signed message or signature, raises RuntimeException."
-  ([pk sm]
+  ([sm pk]
    (let [m (bb/alloc (- (bb/buflen sm) bytes))
          sm (bb/->indirect-byte-buf sm)
          pk (bb/->indirect-byte-buf pk)
@@ -75,7 +75,7 @@
      (if (zero? res)
        (bb/->bytes m)
        (throw (RuntimeException. "Signature validation failed")))))
-  ([pk m sig]
+  ([sig m pk]
    (let [sig (bb/->indirect-byte-buf sig)
          m (bb/->indirect-byte-buf m)
          pk (bb/->indirect-byte-buf pk)
