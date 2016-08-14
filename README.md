@@ -6,10 +6,9 @@
 [![Build Status](https://travis-ci.org/lvh/caesium.svg?branch=master)](https://travis-ci.org/lvh/caesium)
 [![codecov](https://codecov.io/gh/lvh/caesium/branch/master/graph/badge.svg)](https://codecov.io/gh/lvh/caesium)
 
-caesium is a Clojure binding for libsodium.
-
-It is a direct [jnr-ffi][jnr-ffi] binding to [libsodium][libsodium], which in
-turn is a more convenient fork of the original [NaCl][nacl] library by
+caesium is a modern cryptography library for Clojure. It is a direct
+[jnr-ffi][jnr-ffi] binding to [libsodium][libsodium], which in turn is
+a more convenient fork of the original [NaCl][nacl] library by
 [djb][djb].
 
 [jnr-ffi]: https://github.com/jnr/jnr-ffi
