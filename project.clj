@@ -10,13 +10,13 @@
                  [commons-codec/commons-codec "1.10"]
                  [byte-streams "0.2.2"]
                  [org.clojure/math.combinatorics "0.1.3"]
-                 [medley "0.8.2"]]
+                 [medley "0.8.3"]]
   :main ^:skip-aot caesium.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
              :dev {:dependencies [[criterium "0.4.4"]
                                   [org.clojure/test.check "0.9.0"]
-                                  [com.gfredericks/test.chuck "0.2.6"]
+                                  [com.gfredericks/test.chuck "0.2.7"]
                                   [com.taoensso/timbre "4.7.3"]]}
              :test {:plugins [[lein-cljfmt "0.3.0"]
                               [lein-kibit "0.1.2"]
