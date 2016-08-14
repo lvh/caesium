@@ -26,7 +26,9 @@
     (bb/->bytes c)))
 
 (deftest ^:benchmark wrap-byte-array
+  (println "byte array allocation, wrapped to byte buf")
   (bench (secretbox-easy-wrap-byte-array st/ptext st/n0 st/secret-key)))
 
 (deftest ^:benchmark unwrap-byte-buf
+  (println "byte buf allocation, unwrapped to byte array")
   (bench (secretbox-easy-unwrap-byte-buf st/ptext st/n0 st/secret-key)))
