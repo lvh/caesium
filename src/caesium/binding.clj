@@ -275,18 +275,18 @@
   to be for third parties to call it."
   [fn-name & args]
   (let [c-name (c-name *ns* fn-name)
-        call-sym (java-call-sym c-name)
-        [_ c-args] (m/find-first
-                    (fn [[name _]] (= name c-name))
-                    raw-bound-fns)
-        real-tag {'bytes 'java.nio.ByteBuffer}
-        tag (fn [arg] (-> (m/find-first (partial = arg) c-args)
-                          meta :tag real-tag))
-        hinted (fn [sym] (with-meta sym {:tag (tag sym)}))
-        len-of (fn [sym]
-                 (let [obj-sym (symbol (str/replace (name sym) #"len$" ""))]
-                   `(long (caesium.byte-bufs/buflen ~obj-sym))))
-        computed-args (for [arg c-args
-                            :let [f (if (some #{arg} args) hinted len-of)]]
-                        (f arg))]
-    `(~call-sym sodium ~@computed-args)))
+        [_ c-args] (m/find-first (comp #{c-name} first) raw-bound-fns)
+        normalize-tag (fn [k] (get {'bytes 'java.nio.ByteBuffer} k k))
+        tag (fn [arg] (-> (m/find-first #{arg} c-args) meta :tag normalize-tag))
+        call-args (for [arg c-args]
+                    (cond
+                      (some #{arg} args)
+                      (with-meta arg {:tag (tag arg)})
+
+                      (= 'long (tag arg))
+                      (let [arg-sym (symbol (str/replace (name arg) #"len$" ""))]
+                        `(long (caesium.byte-bufs/buflen ~arg-sym)))
+
+                      (= 'jnr.ffi.byref.LongLongByReference (tag arg))
+                      nil))]
+    `(~(java-call-sym c-name) sodium ~@call-args)))
