@@ -1,9 +1,9 @@
 (ns caesium.crypto.hash-test
   (:require [caesium.crypto.hash :as h]
             [caesium.test-utils :refer [const-test]]
-            [caesium.util :refer [array-eq]]
             [caesium.vectors :as v]
-            [clojure.test :refer [are deftest]]))
+            [clojure.test :refer [are deftest]]
+            [caesium.byte-bufs :as bb]))
 
 (const-test
  h/sha256-bytes 32
@@ -21,7 +21,7 @@
   (.getBytes "My Bonnie lies over the ocean, my Bonnie lies over the sea"))
 
 (deftest sha-256-test
-  (are [f message expected] (array-eq expected (f message))
+  (are [f message expected] (bb/bytes= expected (f message))
     h/sha256 sha256-message (sha256-vector "digest-0")
     h/sha256 empty-string (sha256-vector "digest-empty-string")))
 
@@ -32,6 +32,6 @@
   (.getBytes "My Bonnie lies over the ocean, Oh bring back my Bonnie to me"))
 
 (deftest sha-512-test
-  (are [f message expected] (array-eq expected (f message))
+  (are [f message expected] (bb/bytes= expected (f message))
     h/sha512 sha512-message (sha512-vector "digest-0")
     h/sha512 empty-string (sha512-vector "digest-empty-string")))
