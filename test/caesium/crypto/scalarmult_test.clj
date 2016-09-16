@@ -28,7 +28,7 @@
   (partial u/n->bytes s/scalarbytes))
 
 (deftest int->scalar-test
-  (are [n expected] (u/array-eq expected (int->scalar n))
+  (are [n expected] (bb/bytes= expected (int->scalar n))
     0 (byte-array 32)
     0M (byte-array 32)
     1000000000000 (byte-array (into (vec (repeat 27 0))
@@ -43,8 +43,8 @@
     (let [q (bb/alloc s/bytes)
           r (s/scalarmult scalar-1)]
       (s/scalarmult-to-buf! q (bb/->indirect-byte-buf scalar-1))
-      (is (u/array-eq r q))))
+      (is (bb/bytes= r q))))
   (testing "base point mult uses the base point"
-    (is (u/array-eq
+    (is (bb/bytes=
          (s/scalarmult scalar-1)
          (s/scalarmult scalar-1 basepoint)))))
