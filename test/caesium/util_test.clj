@@ -2,16 +2,6 @@
   (:require [caesium.byte-bufs :as bb]
             [clojure.test :refer [are deftest testing]]))
 
-(deftest array-eq-test
-  (testing "array equality works"
-    (are [a] (bb/bytes= a a)
-      (byte-array [])
-      (byte-array [90])))
-  (testing "array inequality works"
-    (are [a b] (not (bb/bytes= a b))
-      (byte-array []) (byte-array [90])
-      (byte-array [90]) (byte-array []))))
-
 (deftest unhexify-test
   (testing "unhexify works"
     (are [hex raw] (= raw (vec (u/unhexify hex)))
