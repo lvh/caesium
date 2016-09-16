@@ -13,16 +13,16 @@
         two (byte-array [0 1 0])
         out (byte-array [0 0 0])]
     (is (identical? (#'ms/xor! out one two) out))
-    (is (u/array-eq (byte-array [1 1 1]) out)))
+    (is (bb/bytes= (byte-array [1 1 1]) out)))
   (let [one (byte-array [1 0 1])
         two (byte-array [0 1 0])]
     (is (identical? (#'ms/xor-inplace! one two) one))
-    (is (u/array-eq (byte-array [1 1 1]) one))))
+    (is (bb/bytes= (byte-array [1 1 1]) one))))
 
 (deftest random-nonce!-test
   (let [a (#'ms/random-nonce!)
         b (#'ms/random-nonce!)]
-    (is (not (u/array-eq a b)))
+    (is (not (bb/bytes= a b)))
     (is (= s/noncebytes (bb/buflen a) (bb/buflen b)))))
 
 (defn is-valid-magicnonce-ctext?
@@ -37,7 +37,7 @@
        out
        (bb/->indirect-byte-buf st/secret-key)
        (bb/->indirect-byte-buf ctext))
-      (is (u/array-eq st/ptext out)))
+      (is (bb/bytes= st/ptext out)))
 
     (let [out (bb/alloc ptextlen)
           forgery (bb/->indirect-byte-buf (r/randombytes (bb/buflen out)))]
@@ -48,7 +48,7 @@
             (bb/->indirect-byte-buf st/secret-key)
             forgery))))
 
-    (is (u/array-eq st/ptext (ms/decrypt st/secret-key ctext)))
+    (is (bb/bytes= st/ptext (ms/decrypt st/secret-key ctext)))
 
     (let [forgery (r/randombytes (bb/buflen ctext))]
       (is (thrown-with-msg?
@@ -60,7 +60,7 @@
        out
        (bb/->indirect-byte-buf ctext)
        (bb/->indirect-byte-buf st/secret-key))
-      (is (u/array-eq st/ptext out)))
+      (is (bb/bytes= st/ptext out)))
 
     (let [out (bb/alloc ptextlen)
           forgery (bb/->indirect-byte-buf (r/randombytes (bb/buflen out)))]
@@ -71,7 +71,7 @@
             forgery
             (bb/->indirect-byte-buf st/secret-key)))))
 
-    (is (u/array-eq st/ptext (ms/open ctext st/secret-key)))
+    (is (bb/bytes= st/ptext (ms/open ctext st/secret-key)))
 
     (let [forgery (r/randombytes (bb/buflen ctext))]
       (is (thrown-with-msg?
@@ -101,7 +101,7 @@
          xord-ctexts (byte-array shortest)]
      (apply #'ms/xor! xord-ptexts ptexts)
      (apply #'ms/xor! xord-ctexts ctexts)
-     (u/array-eq xord-ptexts xord-ctexts))))
+     (bb/bytes= xord-ptexts xord-ctexts))))
 
 (deftest secretbox-pfx-test
   (let [nonce (byte-array (range s/noncebytes))
@@ -118,13 +118,13 @@
 
   (let [c1 (ms/secretbox-rnd st/ptext st/secret-key)
         c2 (ms/secretbox-rnd st/ptext st/secret-key)]
-    (is (not (u/array-eq c1 c2)))
+    (is (not (bb/bytes= c1 c2)))
     (is (not= (take s/noncebytes c1) (take s/noncebytes c2))))
 
   (with-redefs [ms/random-nonce! constant-nonce]
     (let [c1 (ms/secretbox-rnd st/ptext st/secret-key)
           c2 (ms/secretbox-rnd st/ptext st/secret-key)]
-      (is (u/array-eq c1 c2))
+      (is (bb/bytes= c1 c2))
       (is (= (range s/noncebytes) (take s/noncebytes c1) (take s/noncebytes c2))))))
 
 (deftest synthetic-nonce-test
@@ -140,9 +140,9 @@
            (bb/buflen (sn m2 k1))
            (bb/buflen (sn m1 k2))
            (bb/buflen (sn m2 k2))))
-    (is (u/array-eq (sn m1 k1) (sn m1 k1)))
-    (is (not (u/array-eq (sn m1 k1) (sn m2 k1))))
-    (is (not (u/array-eq (sn m1 k1) (sn m1 k2))))))
+    (is (bb/bytes= (sn m1 k1) (sn m1 k1)))
+    (is (not (bb/bytes= (sn m1 k1) (sn m2 k1))))
+    (is (not (bb/bytes= (sn m1 k1) (sn m1 k2))))))
 
 (deftest secretbox-det-test
   (let [ctext (ms/secretbox-det st/ptext st/secret-key)]
@@ -153,7 +153,7 @@
 
   (let [c1 (ms/secretbox-det st/ptext st/secret-key)
         c2 (ms/secretbox-det st/ptext st/secret-key)]
-    (is (u/array-eq c1 c2))))
+    (is (bb/bytes= c1 c2))))
 
 (deftest secretbox-nmr-with-implicit-rnd-nonce-test
   (let [ctext (ms/secretbox-nmr st/ptext st/secret-key)]
@@ -167,7 +167,7 @@
           c2 (ms/secretbox-nmr st/ptext st/secret-key)
           alt-ptext (.getBytes "yellow submarine")
           c3 (ms/secretbox-nmr alt-ptext st/secret-key)]
-      (is (u/array-eq c1 c2))
+      (is (bb/bytes= c1 c2))
       (let [n1 (take s/noncebytes c1)
             n2 (take s/noncebytes c2)
             n3 (take s/noncebytes c3)]
