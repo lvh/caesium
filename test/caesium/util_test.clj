@@ -1,14 +1,14 @@
 (ns caesium.util-test
-  (:require [caesium.util :as u]
+  (:require [caesium.byte-bufs :as bb]
             [clojure.test :refer [are deftest testing]]))
 
 (deftest array-eq-test
   (testing "array equality works"
-    (are [a] (u/array-eq a a)
+    (are [a] (bb/bytes= a a)
       (byte-array [])
       (byte-array [90])))
   (testing "array inequality works"
-    (are [a b] (not (u/array-eq a b))
+    (are [a b] (not (bb/bytes= a b))
       (byte-array []) (byte-array [90])
       (byte-array [90]) (byte-array []))))
 
@@ -31,12 +31,12 @@
       "010203" [1 2 3])))
 
 (deftest n->bytes-test
-  (are [n expected] (u/array-eq expected (u/n->bytes 24 n))
+  (are [n expected] (bb/bytes= expected (u/n->bytes 24 n))
     0 (byte-array 24)
     0M (byte-array 24)
     1000000000000 (byte-array (into (vec (repeat 19 0))
                                     [-24 -44 -91 16 0])))
-  (are [n expected] (u/array-eq expected (u/n->bytes 16 n))
+  (are [n expected] (bb/bytes= expected (u/n->bytes 16 n))
     0 (byte-array 16)
     0M (byte-array 16)
     1000000000000 (byte-array (into (vec (repeat 11 0))
