@@ -15,8 +15,8 @@
 (deftest generate-signing-keys-test
   (let [kp1 (s/generate-signing-keys)
         kp2 (s/generate-signing-keys)]
-    (is (not (u/array-eq (:public kp1) (:public kp2))))
-    (is (not (u/array-eq (:secret kp1) (:secret kp2))))))
+    (is (not (bb/bytes= (:public kp1) (:public kp2))))
+    (is (not (bb/bytes= (:secret kp1) (:secret kp2))))))
 
 (def sign-resource (comp hex-resource (partial str "vectors/sign/")))
 (def seed (sign-resource "seed"))
@@ -28,11 +28,11 @@
 
 (deftest pair-from-secret-test
   (let [kp (s/generate-signing-keys seed)]
-    (is (u/array-eq public (:public kp)))
-    (is (u/array-eq secret (:secret kp)))))
+    (is (bb/bytes= public (:public kp)))
+    (is (bb/bytes= secret (:secret kp)))))
 
 (deftest detached-sign-test
-  (is (u/array-eq signature (s/sign message secret))))
+  (is (bb/bytes= signature (s/sign message secret))))
 
 (deftest detached-verify-test
   (is (nil? (s/verify signature message public)))
@@ -45,10 +45,10 @@
          (s/verify other-sig message public)))))
 
 (deftest signed-test
-  (is (u/array-eq signed (s/signed message secret))))
+  (is (bb/bytes= signed (s/signed message secret))))
 
 (deftest signed-verify-test
-  (is (u/array-eq message (s/verify signed public)))
+  (is (bb/bytes= message (s/verify signed public)))
   (is (thrown-with-msg?
        RuntimeException #"^Signature validation failed$"
        (let [{pk :public sk :secret} (s/generate-signing-keys)
