@@ -21,7 +21,7 @@
   Signature should be as per [[bound-fns]], with byte arguments annotated with
   `{:tag 'bytes}` in their metadata (note: the symbol, not the fn)."
   [[name args]]
-  (let [byte-args (filter #(= (:tag (meta %)) 'bytes) args)]
+  (let [byte-args (filter (comp #{'bytes} :tag meta) args)]
     (for [types (c/selections bound-byte-type-syms (count byte-args))
           :let [arg->type (zipmap byte-args types)
                 ann (fn [arg]
