@@ -3,7 +3,8 @@
             [caesium.test-utils :refer [const-test]]
             [caesium.util :as u]
             [caesium.vectors :as v]
-            [clojure.test :refer [are deftest testing]]))
+            [clojure.test :refer [are deftest testing]]
+            [caesium.byte-bufs :as bb]))
 
 (const-test
  s/keybytes 32
