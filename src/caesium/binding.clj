@@ -8,7 +8,7 @@
             [clojure.math.combinatorics :as c]
             [medley.core :as m]
             [clojure.string :as str])
-  (:import [jnr.ffi LibraryLoader]
+  (:import [jnr.ffi LibraryLoader LibraryOption]
            [jnr.ffi.annotations In Out Pinned LongLong]
            [jnr.ffi.types size_t]))
 
@@ -224,8 +224,9 @@
 
 (def ^Sodium sodium
   "The sodium library singleton instance."
-  (let [loader (LibraryLoader/create Sodium)]
-    (.load loader "sodium")))
+  (-> (LibraryLoader/create Sodium)
+      (.option LibraryOption/IgnoreError true)
+      (.load "sodium")))
 
 (assert (#{0 1} (.sodium_init sodium)))
 ;; TODO When does this get called? Guaranteed from 1 thread?
