@@ -20,8 +20,8 @@
 (deftest secretbox-kat-test
   (are [nonce ctext] (let [encrypted (s/encrypt secret-key nonce ptext)
                            decrypted (s/decrypt secret-key nonce ctext)]
-                       (and (u/array-eq encrypted ctext)
-                            (u/array-eq decrypted ptext)))
+                       (and (bb/bytes= encrypted ctext)
+                            (bb/bytes= decrypted ptext)))
     n0 (v/hex-resource "vectors/secretbox/ciphertext0")
     n1 (v/hex-resource "vectors/secretbox/ciphertext1"))
   (are [nonce ciphertext]
@@ -32,7 +32,7 @@
 
 (deftest int->nonce-test
   (testing "Turning numbers into nonces works"
-    (are [n expected] (u/array-eq expected (s/int->nonce n))
+    (are [n expected] (bb/bytes= expected (s/int->nonce n))
       0 (byte-array 24)
       0M (byte-array 24)
       1000000000000 (byte-array (into (vec (repeat 19 0))
