@@ -1,6 +1,6 @@
 (ns caesium.crypto.sign-test
   (:require [caesium.crypto.sign :as s]
-            [caesium.util :as u]
+            [caesium.byte-bufs :as bb]
             [caesium.vectors :refer [hex-resource]]
             [clojure.test :refer [deftest is testing]]
             [caesium.test-utils :refer [const-test]]))

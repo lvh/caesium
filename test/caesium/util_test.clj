@@ -1,5 +1,6 @@
 (ns caesium.util-test
-  (:require [caesium.byte-bufs :as bb]
+  (:require [caesium.util :as u]
+            [caesium.byte-bufs :as bb]
             [clojure.test :refer [are deftest testing]]))
 
 (deftest unhexify-test
