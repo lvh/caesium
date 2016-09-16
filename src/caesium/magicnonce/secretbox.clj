@@ -15,8 +15,7 @@
   (:require [caesium.crypto.generichash :as g]
             [caesium.crypto.secretbox :as s]
             [caesium.randombytes :as r]
-            [caesium.byte-bufs :as bb]
-            [caesium.util :as u])
+            [caesium.byte-bufs :as bb])
   (:import (java.nio ByteBuffer)))
 
 (def keybytes s/keybytes)
