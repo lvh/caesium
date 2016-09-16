@@ -2,7 +2,6 @@
   (:require [caesium.crypto.generichash :as g]
             [caesium.byte-bufs :as bb]
             [caesium.test-utils :refer [const-test]]
-            [caesium.util :refer [array-eq]]
             [caesium.vectors :as v]
             [clojure.test :refer [are deftest is]]))
 
@@ -30,7 +29,7 @@
   (comp v/hex-resource (partial str "vectors/generichash/blake2b/")))
 
 (deftest generichash-kat-test
-  (are [args expected] (array-eq (apply g/hash args) expected)
+  (are [args expected] (bb/bytes= (apply g/hash args) expected)
     [(byte-array [])]
     (blake2b-vector "digest-empty-string-32")
 
@@ -48,7 +47,7 @@
 
 (deftest hash-to-buf!-test
   (are [args expected] (let [out (bb/alloc g/bytes)]
-                         (array-eq (apply g/hash-to-buf! out args) expected))
+                         (bb/bytes= (apply g/hash-to-buf! out args) expected))
     [(bb/alloc 0)]
     (blake2b-vector "digest-empty-string-32")
 
@@ -56,7 +55,7 @@
     (blake2b-vector "digest-empty-string-32")))
 
 (deftest blake2b-kat-test
-  (are [args expected] (array-eq (apply g/blake2b args) expected)
+  (are [args expected] (bb/bytes= (apply g/blake2b args) expected)
     [(byte-array [])]
     (blake2b-vector "digest-empty-string-32")
 
@@ -106,6 +105,6 @@
 
 (deftest blake2b-empty-args-variations-tests
   (doseq [args blake2b-empty-args-variations]
-    (is (array-eq (apply g/blake2b args)
-                  (blake2b-vector "digest-empty-string-32"))
+    (is (bb/bytes= (apply g/blake2b args)
+                   (blake2b-vector "digest-empty-string-32"))
         (str "args: " args))))

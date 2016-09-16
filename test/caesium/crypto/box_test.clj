@@ -19,19 +19,19 @@
   (testing "generates new keypairs"
     (is (let [kp1 (b/keypair!)
               kp2 (b/keypair!)]
-          (and (not (u/array-eq (:public kp1) (:public kp2)))
-               (not (u/array-eq (:secret kp1) (:secret kp2)))))))
+          (and (not (bb/bytes= (:public kp1) (:public kp2)))
+               (not (bb/bytes= (:secret kp1) (:secret kp2)))))))
   (testing "generate public key from seed"
     (let [seed (bb/->indirect-byte-buf (r/randombytes b/seedbytes))
           kp1 (b/keypair! seed)
           kp2 (b/keypair! seed)]
-      (is (u/array-eq (:public kp1) (:public kp2)))
-      (is (u/array-eq (:secret kp1) (:secret kp2)))))
+      (is (bb/bytes= (:public kp1) (:public kp2)))
+      (is (bb/bytes= (:secret kp1) (:secret kp2)))))
   (testing "generate public key from secret key"
     (let [kp1 (b/keypair!)
           kp2 (b/sk->keypair (:secret kp1))]
-      (is (u/array-eq (:public kp1) (:public kp2)))
-      (is (u/array-eq (:secret kp1) (:secret kp2))))))
+      (is (bb/bytes= (:public kp1) (:public kp2)))
+      (is (bb/bytes= (:secret kp1) (:secret kp2))))))
 
 (def box-vector
   (comp v/hex-resource (partial str "vectors/box/")))
@@ -44,8 +44,8 @@
         bob-sk (box-vector "bob-secret-key")
         alice-pk (box-vector "alice-public-key")
         alice-sk (box-vector "alice-secret-key")]
-    (is (u/array-eq ctext (b/encrypt alice-pk bob-sk nonce ptext)))
-    (is (u/array-eq ptext (b/decrypt bob-pk alice-sk nonce ctext)))
+    (is (bb/bytes= ctext (b/encrypt alice-pk bob-sk nonce ptext)))
+    (is (bb/bytes= ptext (b/decrypt bob-pk alice-sk nonce ctext)))
     (let [forgery (r/randombytes (alength ^bytes ctext))]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
