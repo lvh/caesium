@@ -3,6 +3,8 @@
   (:require [byte-streams :as bs])
   (:import (java.nio ByteBuffer)))
 
+(def bytes= bs/bytes=)
+
 (defn ^ByteBuffer ->indirect-byte-buf
   "Convert buffer to a [[ByteBuffer]].
 
