@@ -11,16 +11,17 @@
 (b/defconsts [bytes scalarbytes primitive])
 
 (defn scalarmult-to-buf!
-  "Performs scalar multiplication into the given out buffer against a
-  given point using `crypto_scalarmult`, or against the fixed base
-  point with `crypto_scalarmult_base` when no point is passed."
+  "Computes the scalar multiplication of a point into the given output
+  buffer. If no point is specified, the standard base point of the
+  curve is used."
   ([q n]
    (b/✨ scalarmult-base q n))
   ([q n p]
    (b/✨ scalarmult q n p)))
 
 (defn scalarmult
-  "Performs scalar multiplication against a given point, using"
+  "Computes the scalar multiplication of a point. If no point is
+  specified, the standard base point of the curve is used."
   ([n]
    (let [q (bb/alloc bytes)]
      (scalarmult-to-buf! q (bb/->indirect-byte-buf n))
