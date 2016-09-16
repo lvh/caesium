@@ -4,6 +4,7 @@
              [binding :refer [sodium]]
              [byte-bufs :as bb]
              [randombytes :refer [randombytes]]]
+            [byte-streams :as bs]
             [caesium.crypto.secretbox :as s]
             [clojure.test :refer [deftest]]
             [criterium.core :refer [bench]])
