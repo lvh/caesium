@@ -225,7 +225,7 @@
 (def ^Sodium sodium
   "The sodium library singleton instance."
   (-> (LibraryLoader/create Sodium)
-      (.option LibraryOption/IgnoreError true)
+      (.option LibraryOption/IgnoreError Boolean/TRUE)
       (.load "sodium")))
 
 (assert (#{0 1} (.sodium_init sodium)))
