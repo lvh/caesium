@@ -211,7 +211,7 @@
   the data in metadata-annotated form anyway (both to create the
   interface and to bind fns to vars).
 
-  This has to be a vec and not a map, because the same key (symbol,
+  This has to be a seq and not a map, because the same key (symbol,
   method name) might occur with multiple values (e.g. when binding the
   same char* fn with different JVM byte types)."
   (mapcat permuted-byte-types raw-bound-fns))
