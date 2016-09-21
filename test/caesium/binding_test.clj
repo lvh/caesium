@@ -64,6 +64,7 @@
 (declare check-method check-const-method)
 
 (defn ^:private clean-annotations
+  "Given some annotation instances, return the set of their types."
   [annotations]
   (set (map #(.annotationType ^Annotation %) annotations)))
 
