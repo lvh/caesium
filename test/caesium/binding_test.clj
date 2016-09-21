@@ -90,10 +90,11 @@
            Integer/TYPE)
          (.getGenericReturnType method)))
   (doseq [{:keys [type annotations]} params]
-    (is (= (condp (fn [x y] (x y)) type
-             #{ByteArray ByteBuffer} #{Pinned}
-             #{Long/TYPE}  #{LongLong}
-             #{LongLongByReference} #{})
+    (is (= (condp = type
+             ByteArray #{Pinned}
+             ByteBuffer #{Pinned}
+             Long/TYPE  #{LongLong}
+             LongLongByReference #{})
            annotations))))
 
 (defn check-const-method
