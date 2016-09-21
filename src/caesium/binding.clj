@@ -8,8 +8,8 @@
             [clojure.math.combinatorics :as c]
             [medley.core :as m]
             [clojure.string :as str])
-  (:import [jnr.ffi LibraryLoader LibraryOption]
-           [jnr.ffi.annotations In Out Pinned LongLong]
+  (:import [jnr.ffi LibraryLoader]
+           [jnr.ffi.annotations In Out Pinned LongLong IgnoreError]
            [jnr.ffi.types size_t]))
 
 (def ^:private bound-byte-type-syms
@@ -214,7 +214,9 @@
   This has to be a seq and not a map, because the same key (symbol,
   method name) might occur with multiple values (e.g. when binding the
   same char* fn with different JVM byte types)."
-  (mapcat permuted-byte-types raw-bound-fns))
+  (->> raw-bound-fns
+       (mapcat permuted-byte-types)
+       (map (fn [[s args]] [(vary-meta s #(assoc % `IgnoreError {})) args]))))
 
 (defmacro ^:private defsodium
   []
@@ -224,9 +226,7 @@
 
 (def ^Sodium sodium
   "The sodium library singleton instance."
-  (-> (LibraryLoader/create Sodium)
-;;      (.option LibraryOption/IgnoreError Boolean/TRUE)
-      (.load "sodium")))
+  (.load (LibraryLoader/create Sodium) "sodium"))
 
 (assert (#{0 1} (.sodium_init sodium)))
 ;; TODO When does this get called? Guaranteed from 1 thread?
