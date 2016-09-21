@@ -1,4 +1,4 @@
-# 0.8.0 (WIP)
+# 0.8.0
 
 Standardized and improved way APIs deal with the different byte APIs exposed
 by the JVM. In short: convenience fns (which manage buffers for you) always
