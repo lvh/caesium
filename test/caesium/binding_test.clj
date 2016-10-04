@@ -14,42 +14,25 @@
   (is (= '[[^long ^{size_t {}} crypto_secretbox_keybytes []]]
          (#'b/permuted-byte-types
           '[^long ^{size_t {}} crypto_secretbox_keybytes []])))
-  (is (= '[[bytes bytes long bytes bytes]
-           [bytes bytes long bytes java.nio.ByteBuffer]
-           [bytes bytes long java.nio.ByteBuffer bytes]
-           [bytes bytes long java.nio.ByteBuffer java.nio.ByteBuffer]
-           [bytes java.nio.ByteBuffer long bytes bytes]
-           [bytes java.nio.ByteBuffer long bytes java.nio.ByteBuffer]
-           [bytes java.nio.ByteBuffer long java.nio.ByteBuffer bytes]
-           [bytes
-            java.nio.ByteBuffer
-            long
-            java.nio.ByteBuffer
-            java.nio.ByteBuffer]
-           [java.nio.ByteBuffer bytes long bytes bytes]
-           [java.nio.ByteBuffer bytes long bytes java.nio.ByteBuffer]
-           [java.nio.ByteBuffer bytes long java.nio.ByteBuffer bytes]
-           [java.nio.ByteBuffer
-            bytes
-            long
-            java.nio.ByteBuffer
-            java.nio.ByteBuffer]
-           [java.nio.ByteBuffer java.nio.ByteBuffer long bytes bytes]
-           [java.nio.ByteBuffer
-            java.nio.ByteBuffer
-            long
-            bytes
-            java.nio.ByteBuffer]
-           [java.nio.ByteBuffer
-            java.nio.ByteBuffer
-            long
-            java.nio.ByteBuffer
-            bytes]
-           [java.nio.ByteBuffer
-            java.nio.ByteBuffer
-            long
-            java.nio.ByteBuffer
-            java.nio.ByteBuffer]]
+  (is (= (let [b 'bytes
+               l 'long
+               B 'java.nio.ByteBuffer]
+           [[b b l b b]
+            [b b l b B]
+            [b b l B b]
+            [b b l B B]
+            [b B l b b]
+            [b B l b B]
+            [b B l B b]
+            [b B l B B]
+            [B b l b b]
+            [B b l b B]
+            [B b l B b]
+            [B b l B B]
+            [B B l b b]
+            [B B l b B]
+            [B B l B b]
+            [B B l B B]])
          (mapv (fn [[_ args]] (mapv (comp :tag meta) args))
                (#'b/permuted-byte-types
                 '[^int crypto_secretbox_easy
