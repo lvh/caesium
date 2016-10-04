@@ -28,7 +28,7 @@
   [x]
   (bs/convert x ByteBuffer {:direct? true}))
 
-(defn ^bytes ->bytes
+(defn ^{:tag 'bytes} ->bytes
   [x]
   (bs/to-byte-array x))
 
