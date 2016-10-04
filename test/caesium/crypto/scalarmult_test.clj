@@ -13,7 +13,7 @@
 (def basepoint
   (byte-array (into [9] (repeat (dec s/bytes) 0))))
 
-(def ^bytes ^:private int->scalar
+(def ^{:tag 'bytes} ^:private int->scalar
   "**DANGER** This fn is typically only used for demos, not secure
   cryptosystems; see rest of docstring for details. Turns an integral
   type (int, bigint, biginteger) into a byte array suitable for use as
