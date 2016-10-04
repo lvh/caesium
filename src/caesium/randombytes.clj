@@ -2,8 +2,7 @@
   "Utilities for producing cryptographically random bytes, suitable
   for use as a key or other input entropy."
   (:require [caesium.binding :as b]
-            [caesium.byte-bufs :as bb])
-  (:import (java.nio ByteBuffer)))
+            [caesium.byte-bufs :as bb]))
 
 (defn random-to-buf!
   "**DANGER** This function is low-level, you only want to use it if you are
@@ -13,9 +12,9 @@
   Given a byte buffer, populate it with n random bytes.
 
   If n is not given, populates the entire buffer."
-  ([^ByteBuffer buf]
+  ([^java.nio.ByteBuffer buf]
    (random-to-buf! buf (.remaining buf)))
-  ([^ByteBuffer buf n]
+  ([^java.nio.ByteBuffer buf n]
    (.randombytes b/sodium buf (long n))
    buf))
 
