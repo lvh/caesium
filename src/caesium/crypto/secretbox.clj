@@ -21,7 +21,7 @@
   "Encrypt with `crypto_secretbox_easy`.
 
   Please note that this returns a (mutable!) byte array. This is a
-  higher level API than [[secretbox-easy-to-buf!]] because it create
+  higher level API than [[secretbox-easy-to-buf!]] because it creates
   that output byte array for you.
 
   This API is marginally higher level than `secretbox`: it will
