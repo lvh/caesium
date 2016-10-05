@@ -107,10 +107,10 @@
 
 (deftest magic-sparkles-test
   (are [ns expr expected-form expected-metas]
-      (with-ns ns
-        (let [[_ _ & args :as expanded] (macroexpand-1 expr)]
-          (and (is (= expected-form expanded))
-               (is (= expected-metas (map meta args))))))
+       (with-ns ns
+         (let [[_ _ & args :as expanded] (macroexpand-1 expr)]
+           (and (is (= expected-form expanded))
+                (is (= expected-metas (map meta args))))))
     'caesium.crypto.box
     '(caesium.binding/✨ keypair sk pk)
     `(.crypto_box_keypair b/sodium ~'pk ~'sk)
