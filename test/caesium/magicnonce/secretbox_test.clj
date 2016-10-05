@@ -89,18 +89,18 @@
    (let [ptexts [(.getBytes "four score and ")
                  (.getBytes "seven years ago")]]
      (repeated-keystream? ptexts scheme)))
-  ([ptexts scheme]
+  ([[p1 p2 :as ptexts] scheme]
    (let [shortest (apply min (map alength ptexts))
          just-ctext (fn [^bytes ptext]
                       (->> (scheme ptext)
                            (drop (+ s/noncebytes s/macbytes))
                            (take shortest)
                            byte-array))
-         ctexts (map just-ctext ptexts)
+         [c1 c2] (map just-ctext ptexts)
          xord-ptexts (byte-array shortest)
          xord-ctexts (byte-array shortest)]
-     (apply #'ms/xor! xord-ptexts ptexts)
-     (apply #'ms/xor! xord-ctexts ctexts)
+     (#'ms/xor! xord-ptexts p1 p2)
+     (#'ms/xor! xord-ctexts c1 c2)
      (bb/bytes= xord-ptexts xord-ctexts))))
 
 (deftest secretbox-pfx-test
