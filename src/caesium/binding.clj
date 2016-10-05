@@ -239,7 +239,7 @@
   namespace meaning crypto_generichash, not the (nonexistant)
   crypto_generichash_generichash."
   [^clojure.lang.Namespace namespace ^clojure.lang.Symbol fn-name]
-  (let [fn-name (-> (name fn-name) (s/replace "-" "_"))
+  (let [fn-name (s/replace (name fn-name) "-" "_")
         fn-name-parts (set (str/split fn-name #"_"))
         prefix (-> namespace ns-name str (s/split #"\.") rest vec)
         path (concat (remove fn-name-parts prefix) [fn-name])]

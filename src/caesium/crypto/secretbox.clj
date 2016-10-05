@@ -46,7 +46,7 @@
   you want [[secretbox-open-easy]]."
   [m c n k]
   (let [res (b/✨ open-easy m c n k)]
-    (if (= res 0)
+    (if (zero? res)
       m
       (throw (RuntimeException. "Ciphertext verification failed")))))
 
