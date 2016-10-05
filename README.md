@@ -16,6 +16,22 @@ a more convenient fork of the original [NaCl][nacl] library by
 [djb]: http://cr.yp.to/djb.html
 [libsodium]: https://github.com/jedisct1/libsodium
 
+## Minimum viable snippet
+
+Here's a sample of how you can use secretbox:
+
+``` clojure
+(ns minimum-viable-secretbox
+  (:require [caesium.crypto.secretbox :as sb]))
+
+(def key (sb/new-key!))
+(def plaintext "Hello caesium!")
+(def nonce (sb/int->nonce 0))
+(def ciphertext (sb/encrypt key nonce (.getBytes plaintext)))
+(def roundtrip (String. (sb/decrypt key nonce ciphertext)))
+(assert (= plaintext roundtrip))
+```
+
 ## Documentation
 
 The most important documentation for caesium is actually the
