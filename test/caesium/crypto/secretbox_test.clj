@@ -3,7 +3,7 @@
             [caesium.test-utils :refer [const-test]]
             [caesium.util :as u]
             [caesium.vectors :as v]
-            [clojure.test :refer [are deftest testing]]
+            [clojure.test :refer [is are deftest testing]]
             [caesium.byte-bufs :as bb]))
 
 (const-test
@@ -30,6 +30,11 @@
         RuntimeException #"Ciphertext verification failed"
         (s/decrypt secret-key nonce ciphertext))
     n1 (v/hex-resource "vectors/secretbox/forgery1")))
+
+(deftest new-key!-test
+  (let [[f & rs] (repeatedly 10 s/new-key!)]
+    (doseq [r rs]
+      (is (not (bb/bytes= f r))))))
 
 (deftest int->nonce-test
   (testing "Turning numbers into nonces works"

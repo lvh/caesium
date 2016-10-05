@@ -2,7 +2,8 @@
   "Bindings to the secretbox secret-key authenticated encryption scheme."
   (:require [caesium.binding :as b]
             [caesium.util :as u]
-            [caesium.byte-bufs :as bb])
+            [caesium.byte-bufs :as bb]
+            [caesium.randombytes :as r])
   (:import [java.nio ByteBuffer]))
 
 (b/defconsts [keybytes noncebytes macbytes primitive])
@@ -94,3 +95,8 @@
 
   The return value is a mutable byte array."
   (partial u/n->bytes noncebytes))
+
+(defn new-key!
+  "Generates a new random key."
+  []
+  (r/randombytes keybytes))
