@@ -74,6 +74,7 @@
     [^long ^{size_t {}} crypto_box_secretkeybytes []]
     [^long ^{size_t {}} crypto_box_noncebytes []]
     [^long ^{size_t {}} crypto_box_macbytes []]
+    [^long ^{size_t {}} crypto_box_sealbytes []]
     [^String ^{size_t {}} crypto_box_primitive []]
 
     [^int crypto_box_seed_keypair
@@ -95,6 +96,18 @@
       ^bytes ^{Pinned {}} c
       ^long ^{LongLong {}} clen
       ^bytes ^{Pinned {}} n
+      ^bytes ^{Pinned {}} pk
+      ^bytes ^{Pinned {}} sk]]
+
+    [^int crypto_box_seal
+     [^bytes ^{Pinned {}} c
+      ^bytes ^{Pinned {}} m
+      ^long ^{LongLong {}} mlen
+      ^bytes ^{Pinned {}} pk]]
+    [^int crypto_box_seal_open
+     [^bytes ^{Pinned {}} m
+      ^bytes ^{Pinned {}} c
+      ^long ^{LongLong {}} clen
       ^bytes ^{Pinned {}} pk
       ^bytes ^{Pinned {}} sk]]
 
