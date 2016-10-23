@@ -1,3 +1,20 @@
+# 0.9.0 (WIP)
+
+Exposed libsodium's sealing APIs for anonymous, asymmetric
+encryption. Thanks to @notnoopci for contributing this feature!
+
+`secretbox` and its magicnonce cousin now have a `new-key!` function
+that just generates a new random key for you. This is a convenience
+function preventing you from having to call `(randombytes keybytes)`
+yourself.
+
+Added a performance optimization: jnr-ffi was doing `errno.h`
+save/check/restore. This is pointless, because libsodium doesn't use
+`errno.h`. Now, the methods are annotated to avoid that penalty.
+
+Some minor internal cleanup and type hint fixes, but nothing that
+should affect end users.
+
 # 0.8.0
 
 Standardized and improved way APIs deal with the different byte APIs exposed
