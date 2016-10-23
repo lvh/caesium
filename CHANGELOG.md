@@ -1,4 +1,8 @@
-# 0.9.0 (WIP)
+# 0.10.0 (WIP)
+
+Nothing yet!
+
+# 0.9.0
 
 Exposed libsodium's sealing APIs for anonymous, asymmetric
 encryption. Thanks to @notnoopci for contributing this feature!
