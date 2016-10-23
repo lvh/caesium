@@ -50,3 +50,15 @@
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
            (b/decrypt bob-pk alice-sk nonce forgery))))))
+
+(deftest anonymous-encrypt-decrypt-test
+  (let [ptext (box-vector "plaintext")
+        bob-pk (box-vector "bob-public-key")
+        bob-sk (box-vector "bob-secret-key")
+        ctext (b/anonymous-encrypt bob-pk ptext)]
+    (is (not (bb/bytes= ptext ctext)))
+    (is (bb/bytes= ptext (b/anonymous-decrypt bob-pk bob-sk ctext)))
+    (let [forgery (r/randombytes (alength ^bytes ctext))]
+      (is (thrown-with-msg?
+           RuntimeException #"Ciphertext verification failed"
+           (b/anonymous-decrypt bob-pk bob-sk forgery))))))
