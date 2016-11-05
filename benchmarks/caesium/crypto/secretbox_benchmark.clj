@@ -67,30 +67,37 @@
 (def sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24]))
 
 (defmacro bench-secretnonce
-  [fs converter]
+  [prefix fs converter]
   (let [rand-buf `(comp ~converter ~randombytes)]
-    `(doseq [[size# msg#] (map (juxt identity ~rand-buf) sizes)
+    `(doseq [[size# ptext#] (map (juxt identity ~rand-buf) sizes)
              f# ~fs]
        (let [key# (~rand-buf s/keybytes)
              nonce# (~rand-buf s/noncebytes)
              out# (~rand-buf (+ s/macbytes size#))]
-         (print-title f# (fmt-bytes size#) (mapv type [out# msg# nonce# key#]))
-         (bench (f# out# msg# nonce# key#))))))
+         (print-title ~prefix
+                      f#
+                      (fmt-bytes size#)
+                      (mapv type [out# msg# nonce# key#]))
+         (bench (f# out# ptext# nonce# key#))))))
 
 (deftest ^:benchmark to-buf!-benchmarks
-  (print-title "secretbox to-buf! with direct bufs, pre-allocation")
-  (bench-secretnonce [secretbox-easy-to-direct-byte-bufs-with-macros!
-                      secretbox-easy-to-direct-byte-bufs!
-                      secretbox-easy-to-byte-bufs-nocast!
-                      secretbox-easy-refl!]
-                     bb/->direct-byte-buf)
+  (bench-secretnonce
+   "secretbox to-buf! with direct bufs, pre-allocation"
+   [secretbox-easy-to-direct-byte-bufs-with-macros!
+    secretbox-easy-to-direct-byte-bufs!
+    secretbox-easy-to-byte-bufs-nocast!
+    secretbox-easy-refl!]
+   bb/->direct-byte-buf)
 
-  (print-title "secretbox to-buf! with indirect bufs, pre-allocation")
-  (bench-secretnonce [secretbox-easy-to-indirect-byte-bufs-with-macros!
-                      secretbox-easy-to-indirect-byte-bufs!
-                      secretbox-easy-to-byte-bufs-nocast!
-                      secretbox-easy-refl!]
-                     bb/->indirect-byte-buf)
+  (bench-secretnonce
+   "secretbox to-buf! with indirect bufs, pre-allocation"
+   [secretbox-easy-to-indirect-byte-bufs-with-macros!
+    secretbox-easy-to-indirect-byte-bufs!
+    secretbox-easy-to-byte-bufs-nocast!
+    secretbox-easy-refl!]
+   bb/->indirect-byte-buf)
 
-  (print-title "secretbox to-buf! with byte arrays, pre-allocation")
-  (bench-secretnonce [s/secretbox-easy-to-buf!] identity))
+  (bench-secretnonce
+   "secretbox to-buf! with byte arrays, pre-allocation"
+   [s/secretbox-easy-to-buf!]
+   identity))
