@@ -1,9 +1,9 @@
 (ns caesium.bench-utils)
 
 (defn print-title
-  [title]
+  [& title-parts]
   (println)
-  (println title))
+  (apply println title-parts))
 
 (defn fmt-bytes
   [n]
