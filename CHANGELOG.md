@@ -1,6 +1,7 @@
 # 0.10.0 (WIP)
 
-Nothing yet!
+Test data is now removed from the production JARs; resulting in a (slightly)
+smaller binary.
 
 # 0.9.0
 
