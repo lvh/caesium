@@ -9,7 +9,7 @@
             [medley.core :as m]
             [clojure.string :as str])
   (:import [jnr.ffi LibraryLoader]
-           [jnr.ffi.annotations In Out Pinned LongLong IgnoreError]
+           [jnr.ffi.annotations In Out Pinned LongLong]
            [jnr.ffi.types size_t]))
 
 (def ^:private bound-byte-type-syms
@@ -227,9 +227,7 @@
   This has to be a seq and not a map, because the same key (symbol,
   method name) might occur with multiple values (e.g. when binding the
   same char* fn with different JVM byte types)."
-  (->> raw-bound-fns
-       (mapcat permuted-byte-types)
-       (map (fn [[s args]] [(vary-meta s #(assoc % `IgnoreError {})) args]))))
+  (mapcat permuted-byte-types raw-bound-fns))
 
 (defmacro ^:private defsodium
   []
