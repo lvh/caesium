@@ -66,18 +66,25 @@
 
 (def sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24]))
 
+(defn ^:private describe-buffer
+  [x]
+  (cond
+    (instance? (Class/forName "[B") x) "array"
+    (instance? ByteBuffer x) (if (.isDirect ^ByteBuffer x) "dbuf" "ibuf")
+    :else (type x)))
+
 (defmacro bench-secretnonce
   [prefix fs converter]
   `(let [rand-buf# (comp ~converter randombytes)]
     (doseq [[size# ptext#] (map (juxt identity rand-buf#) sizes)
-             f# ~fs]
+            [f# f-sym#] (map vector ~fs (quote ~fs))]
        (let [key# (rand-buf# s/keybytes)
              nonce# (rand-buf# s/noncebytes)
              out# (rand-buf# (+ s/macbytes size#))]
          (print-title ~prefix
-                      f#
+                      f-sym#
                       (fmt-bytes size#)
-                      (mapv type [out# ptext# nonce# key#]))
+                      (mapv describe-buffer [out# ptext# nonce# key#]))
          (bench (f# out# ptext# nonce# key#))))))
 
 (deftest ^:benchmark to-buf!-benchmarks
