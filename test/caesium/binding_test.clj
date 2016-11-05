@@ -5,7 +5,7 @@
   (:import [caesium.binding Sodium]
            [java.lang.annotation Annotation]
            [java.lang.reflect Method Type AnnotatedElement]
-           [jnr.ffi.annotations In Out Pinned LongLong IgnoreError]
+           [jnr.ffi.annotations In Out Pinned LongLong]
            [jnr.ffi.byref LongLongByReference]
            [java.nio ByteBuffer]
            [jnr.ffi.types size_t]))
@@ -56,7 +56,6 @@
 
 (deftest interface-test
   (doseq [^Method method (.getMethods Sodium)]
-    (is (-> method .getAnnotations clean-annotations (get IgnoreError)))
     (if-let [params (seq (map (fn [t as]
                                 {:method method
                                  :type t
@@ -87,8 +86,7 @@
   (let [rtype (.getGenericReturnType method)]
     (condp = rtype
       Integer/TYPE (is (= "sodium_init" (.getName method)))
-      Long/TYPE (is (= #{size_t IgnoreError}
-                       (clean-annotations (.getAnnotations method))))
+      Long/TYPE (is (= #{size_t} (clean-annotations (.getAnnotations method))))
       (is (= String rtype)))))
 
 (defmacro with-ns
