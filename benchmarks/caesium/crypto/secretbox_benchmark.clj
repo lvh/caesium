@@ -93,9 +93,4 @@
    [secretbox-easy-to-indirect-byte-bufs-with-macros!
     secretbox-easy-to-indirect-byte-bufs!
     secretbox-easy-to-byte-bufs-nocast!]
-   bb/->indirect-byte-buf)
-
-  (bench-secretnonce
-   "secretbox to-buf! with byte arrays, pre-allocation"
-   [s/secretbox-easy-to-buf!]
-   identity))
+   bb/->indirect-byte-buf))
