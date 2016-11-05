@@ -3,7 +3,7 @@
 (defn print-title
   [& title-parts]
   (println)
-  (apply println title-parts))
+  (apply println "~> " title-parts))
 
 (defn fmt-bytes
   [n]
