@@ -85,16 +85,14 @@
    "secretbox to-buf! with direct bufs, pre-allocation"
    [secretbox-easy-to-direct-byte-bufs-with-macros!
     secretbox-easy-to-direct-byte-bufs!
-    secretbox-easy-to-byte-bufs-nocast!
-    secretbox-easy-refl!]
+    secretbox-easy-to-byte-bufs-nocast!]
    bb/->direct-byte-buf)
 
   (bench-secretnonce
    "secretbox to-buf! with indirect bufs, pre-allocation"
    [secretbox-easy-to-indirect-byte-bufs-with-macros!
     secretbox-easy-to-indirect-byte-bufs!
-    secretbox-easy-to-byte-bufs-nocast!
-    secretbox-easy-refl!]
+    secretbox-easy-to-byte-bufs-nocast!]
    bb/->indirect-byte-buf)
 
   (bench-secretnonce
