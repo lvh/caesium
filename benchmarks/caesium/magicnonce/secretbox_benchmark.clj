@@ -1,7 +1,7 @@
 (ns caesium.magicnonce.secretbox-benchmark
   (:require [caesium.randombytes :refer [randombytes]]
             [caesium.magicnonce.secretbox :as ms]
-            [caesium.bench-utils :refer [fmt-bytes]]
+            [caesium.bench-utils :refer [fmt-bytes print-title]]
             [clojure.test :refer [deftest]]
             [criterium.core :refer [bench quick-bench]]))
 
@@ -9,7 +9,7 @@
   (let [f @#'ms/synthetic-nonce
         key (randombytes ms/keybytes)
         sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24])]
-    (println "synthetic nonce benchmarks")
+    (print-title "synthetic nonce benchmarks")
     (doseq [[size message] (map (juxt identity randombytes) sizes)]
       (println (fmt-bytes size))
       (quick-bench (f message key)))))
@@ -17,7 +17,7 @@
 (deftest ^:benchmark implicit-nonce-benchmarks
   (let [key (randombytes ms/keybytes)
         sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24])]
-    (println "implicit nonce schemes")
+    (print-title "implicit nonce schemes")
     (doseq [[size message] (map (juxt identity randombytes) sizes)
             f [ms/secretbox-nmr ms/secretbox-rnd ms/secretbox-det]]
       (println f (fmt-bytes size))

@@ -3,7 +3,8 @@
             [caesium.crypto.secretbox-test :as st]
             [caesium.byte-bufs :as bb]
             [criterium.core :refer [bench]]
-            [clojure.test :refer [deftest]]))
+            [clojure.test :refer [deftest]]
+            [caesium.bench-utils :refer [print-title]]))
 
 (defn secretbox-easy-wrap-byte-array
   [m n k]
@@ -36,13 +37,13 @@
     (bb/->bytes c)))
 
 (deftest ^:benchmark wrap-byte-array
-  (println "byte array allocation, wrapped to byte buf")
+  (print-title "byte array allocation, wrapped to byte buf")
   (bench (secretbox-easy-wrap-byte-array st/ptext st/n0 st/secret-key)))
 
 (deftest ^:benchmark directly-wrap-byte-array
-  (println "byte array allocation, directly wrapped to byte buf (no dispatch)")
+  (print-title "byte array allocation, directly wrapped to byte buf (no dispatch)")
   (bench (secretbox-easy-directly-wrap-byte-array st/ptext st/n0 st/secret-key)))
 
 (deftest ^:benchmark unwrap-byte-buf
-  (println "byte buf allocation, unwrapped to byte array")
+  (print-title "byte buf allocation, unwrapped to byte array")
   (bench (secretbox-easy-unwrap-byte-buf st/ptext st/n0 st/secret-key)))

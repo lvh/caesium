@@ -1,6 +1,6 @@
 (ns caesium.crypto.secretbox-benchmark
   (:require [caesium
-             [bench-utils :refer [fmt-bytes]]
+             [bench-utils :refer [fmt-bytes print-title]]
              [binding :refer [sodium]]
              [byte-bufs :as bb]
              [randombytes :refer [randombytes]]]
@@ -74,23 +74,23 @@
        (let [key# (~rand-buf s/keybytes)
              nonce# (~rand-buf s/noncebytes)
              out# (~rand-buf (+ s/macbytes size#))]
-         (println f# (fmt-bytes size#) (mapv type [out# msg# nonce# key#]))
+         (print-title f# (fmt-bytes size#) (mapv type [out# msg# nonce# key#]))
          (bench (f# out# msg# nonce# key#))))))
 
 (deftest ^:benchmark to-buf!-benchmarks
-  (println "secretbox to-buf! with direct bufs, pre-allocation")
+  (print-title "secretbox to-buf! with direct bufs, pre-allocation")
   (bench-secretnonce [secretbox-easy-to-direct-byte-bufs-with-macros!
                       secretbox-easy-to-direct-byte-bufs!
                       secretbox-easy-to-byte-bufs-nocast!
                       secretbox-easy-refl!]
                      bb/->direct-byte-buf)
 
-  (println "secretbox to-buf! with indirect bufs, pre-allocation")
+  (print-title "secretbox to-buf! with indirect bufs, pre-allocation")
   (bench-secretnonce [secretbox-easy-to-indirect-byte-bufs-with-macros!
                       secretbox-easy-to-indirect-byte-bufs!
                       secretbox-easy-to-byte-bufs-nocast!
                       secretbox-easy-refl!]
                      bb/->indirect-byte-buf)
 
-  (println "secretbox to-buf! with byte arrays, pre-allocation")
+  (print-title "secretbox to-buf! with byte arrays, pre-allocation")
   (bench-secretnonce [s/secretbox-easy-to-buf!] identity))
