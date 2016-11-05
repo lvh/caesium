@@ -77,7 +77,7 @@
          (print-title ~prefix
                       f#
                       (fmt-bytes size#)
-                      (mapv type [out# msg# nonce# key#]))
+                      (mapv type [out# ptext# nonce# key#]))
          (bench (f# out# ptext# nonce# key#))))))
 
 (deftest ^:benchmark to-buf!-benchmarks
