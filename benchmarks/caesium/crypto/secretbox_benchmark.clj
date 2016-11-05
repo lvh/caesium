@@ -68,12 +68,12 @@
 
 (defmacro bench-secretnonce
   [prefix fs converter]
-  (let [rand-buf `(comp ~converter ~randombytes)]
-    `(doseq [[size# ptext#] (map (juxt identity ~rand-buf) sizes)
+  `(let [rand-buf# (comp ~converter randombytes)]
+    (doseq [[size# ptext#] (map (juxt identity rand-buf#) sizes)
              f# ~fs]
-       (let [key# (~rand-buf s/keybytes)
-             nonce# (~rand-buf s/noncebytes)
-             out# (~rand-buf (+ s/macbytes size#))]
+       (let [key# (rand-buf# s/keybytes)
+             nonce# (rand-buf# s/noncebytes)
+             out# (rand-buf# (+ s/macbytes size#))]
          (print-title ~prefix
                       f#
                       (fmt-bytes size#)
