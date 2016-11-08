@@ -9,16 +9,14 @@
   (let [f @#'ms/synthetic-nonce
         key (randombytes ms/keybytes)
         sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24])]
-    (print-title "synthetic nonce benchmarks")
     (doseq [[size message] (map (juxt identity randombytes) sizes)]
-      (println (fmt-bytes size))
+      (print-title "synthetic nonce generation" (fmt-bytes size))
       (quick-bench (f message key)))))
 
 (deftest ^:benchmark implicit-nonce-benchmarks
   (let [key (randombytes ms/keybytes)
         sizes (map (partial bit-shift-left 1) [6 8 10 12 20 24])]
-    (print-title "implicit nonce schemes")
     (doseq [[size message] (map (juxt identity randombytes) sizes)
             f [ms/secretbox-nmr ms/secretbox-rnd ms/secretbox-det]]
-      (println f (fmt-bytes size))
+      (print-title "implicit nonce scheme" f (fmt-bytes size))
       (bench (f message key)))))
