@@ -67,7 +67,7 @@ outdated, here are a few properties you may care about:
   at time of writing not true for at least 1 other library).
 
 caesium tries to just give you the libsodium experience from Clojure. C
-pseudo-namespaces are mapped to real Cojure namespaces. It usually maps fns to
+pseudo-namespaces are mapped to real Clojure namespaces. It usually maps fns to
 predictable names; `sodium_crypto_secretbox_open_easy` will be called
 `caesium.crypto.secretbox/open-easy`. Formally: take the C pseudo-namespace,
 turn it into a real namespace, replace the leading `sodium` with caesium,
