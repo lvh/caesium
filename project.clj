@@ -18,7 +18,7 @@
                                   [org.clojure/test.check "0.9.0"]
                                   [com.gfredericks/test.chuck "0.2.7"]
                                   [com.taoensso/timbre "4.7.3"]]}
-             :test {:plugins [[lein-cljfmt "0.3.0"]
+             :test {:plugins [[lein-cljfmt "0.5.7"]
                               [lein-kibit "0.1.2"]
                               [jonase/eastwood "0.2.3"]
                               [lein-codox "0.9.4"]

@@ -80,12 +80,20 @@
              LongLongByReference #{})
            annotations))))
 
+(defn int-func?
+  "checks if given fn is supposed to have an int return type"
+  [f]
+  (let [fns  #{"sodium_init" "crypto_pwhash_argon2i_alg_argon2i13"
+               "crypto_pwhash_alg_default" "crypto_pwhash_alg_argon2i13"
+               "crypto_pwhash_alg_argon2id13" "crypto_pwhash_argon2id_alg_argon2id13"}]
+    (contains? fns f)))
+
 (defn check-const-method
   "Check a method binding a const fn."
   [^Method method]
   (let [rtype (.getGenericReturnType method)]
     (condp = rtype
-      Integer/TYPE (is (= "sodium_init" (.getName method)))
+      Integer/TYPE (is (int-func? (.getName method)))
       Long/TYPE (is (= #{size_t} (clean-annotations (.getAnnotations method))))
       (is (= String rtype)))))
 
