@@ -244,7 +244,7 @@
     [^long ^{size_t {}} crypto_pwhash_argon2i_memlimit_interactive []]
     [^long ^{size_t {}} crypto_pwhash_argon2i_opslimit_moderate []]
     [^long ^{size_t {}} crypto_pwhash_argon2i_memlimit_moderate []]
-    [^long ^{size_t {}} crypto_pwhash_argon2i_opslimit_sensitive[]]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_opslimit_sensitive []]
     [^long ^{size_t {}} crypto_pwhash_argon2i_memlimit_sensitive []]
     [^int crypto_pwhash_argon2i
      [^bytes ^{Pinned {}} buf
@@ -265,7 +265,7 @@
      [^bytes ^{Pinned {}} buf
       ^bytes ^{Pinned {}} msg
       ^long ^{LongLong {}} msglen]]
- 
+
     [^long ^{size_t {}} crypto_hash_sha256_bytes []]
     [^int crypto_hash_sha256
      [^bytes ^{Pinned {}} buf
@@ -335,7 +335,6 @@
         prefix (-> namespace ns-name str (s/split #"\.") rest vec)
         path (concat (remove fn-name-parts prefix) [fn-name])]
     (symbol (s/join "_" path))))
-
 
 (defn ^:private java-call-sym
   "Creates the Clojure Java method call syntax to call a method on the

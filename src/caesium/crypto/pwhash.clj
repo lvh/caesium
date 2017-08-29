@@ -43,7 +43,6 @@
               argon2i-opslimit-sensitive
               argon2i-memlimit-sensitive])
 
-
 (defn pwhash-to-buf!
   [buf msg salt opslimit memlimit alg]
   (b/✨ pwhash buf msg salt opslimit memlimit alg)
@@ -59,28 +58,27 @@
   (b/✨ pwhash-str buf msg opslimit memlimit)
   buf)
 
-
 (defn pwhash
   "hashes a given password using default method"
   [key-size msg salt opslimit memlimit alg]
-   (let [buf (bb/alloc key-size)]
-     (pwhash-to-buf!
-      buf 
-      (bb/->indirect-byte-buf msg)
-      (bb/->indirect-byte-buf salt)
-      opslimit memlimit alg)
-     (bb/->bytes buf)))
+  (let [buf (bb/alloc key-size)]
+    (pwhash-to-buf!
+     buf 
+     (bb/->indirect-byte-buf msg)
+     (bb/->indirect-byte-buf salt)
+     opslimit memlimit alg)
+    (bb/->bytes buf)))
 
 (defn pwhash-argon2i
   "hashes a given password using argon2i"
   [key-size msg salt opslimit memlimit alg]
-   (let [buf (bb/alloc key-size)]
-     (pwhash-argon2i-to-buf!
-      buf 
-      (bb/->indirect-byte-buf msg)
-      (bb/->indirect-byte-buf salt)
-      opslimit memlimit alg)
-     (bb/->bytes buf)))
+  (let [buf (bb/alloc key-size)]
+    (pwhash-argon2i-to-buf!
+     buf 
+     (bb/->indirect-byte-buf msg)
+     (bb/->indirect-byte-buf salt)
+     opslimit memlimit alg)
+    (bb/->bytes buf)))
 
 (defn pwhash-str
   [msg opslimit memlimit]
@@ -89,15 +87,12 @@
      buf
      (bb/->indirect-byte-buf msg)
      opslimit memlimit)
-     (String. (bb/->bytes buf))))
+    (String. (bb/->bytes buf))))
 
 (defn pwhash-str-verify
   [hashpass msg]
   (let [buf (bb/->bytes hashpass)]
     (b/✨ pwhash-str-verify
-    (bb/->indirect-byte-buf buf)
-    (bb/->indirect-byte-buf msg))))
-  
-  
-              
+         (bb/->indirect-byte-buf buf)
+         (bb/->indirect-byte-buf msg))))
 
