@@ -63,7 +63,7 @@
   [key-size msg salt opslimit memlimit alg]
   (let [buf (bb/alloc key-size)]
     (pwhash-to-buf!
-     buf 
+     buf
      (bb/->indirect-byte-buf msg)
      (bb/->indirect-byte-buf salt)
      opslimit memlimit alg)
@@ -74,7 +74,7 @@
   [key-size msg salt opslimit memlimit alg]
   (let [buf (bb/alloc key-size)]
     (pwhash-argon2i-to-buf!
-     buf 
+     buf
      (bb/->indirect-byte-buf msg)
      (bb/->indirect-byte-buf salt)
      opslimit memlimit alg)
