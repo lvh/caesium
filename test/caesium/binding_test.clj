@@ -83,9 +83,11 @@
 (defn check-const-method
   "Check a method binding a const fn."
   [^Method method]
-  (let [rtype (.getGenericReturnType method)]
+  (let [rtype (.getGenericReturnType method)
+        int-funcs #{"sodium_init" "crypto_pwhash_argon2i_alg_argon2i13"
+                    "crypto_pwhash_alg_default" "crypto_pwhash_alg_argon2i13"}]
     (condp = rtype
-      Integer/TYPE (is (= "sodium_init" (.getName method)))
+      Integer/TYPE (is (true? (contains? int-funcs (.getName method))))
       Long/TYPE (is (= #{size_t} (clean-annotations (.getAnnotations method))))
       (is (= String rtype)))))
 
