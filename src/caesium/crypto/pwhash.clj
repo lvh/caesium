@@ -91,8 +91,6 @@
 
 (defn pwhash-str-verify
   [hashpass msg]
-  (let [buf (bb/->bytes hashpass)]
-    (b/✨ pwhash-str-verify
-         (bb/->indirect-byte-buf buf)
-         (bb/->indirect-byte-buf msg))))
-
+  (let [buf (bb/->indirect-byte-buf hashpass)
+        msg (bb/->indirect-byte-buf msg)]
+    (b/✨ pwhash-str-verify buf msg)))
