@@ -278,7 +278,7 @@
               ~docstring
               (~(java-call-sym c-name) sodium)))))
 
-(defmacro ✨
+(defmacro magic-sparkles
   "Produces a form for calling named fn with lots of magic:
 
   * The fn-name is specified using its short name, which is resolved

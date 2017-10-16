@@ -20,9 +20,9 @@
   This API matches libsodium's `crypto_box_keypair` and
   `crpyto_box_seed_keypair`."
   ([pk sk]
-   (b/✨ keypair pk sk))
+   (b/magic-sparkles keypair pk sk))
   ([pk sk seed]
-   (b/✨ seed-keypair pk sk seed)))
+   (b/magic-sparkles seed-keypair pk sk seed)))
 
 (defn keypair!
   "Create a `crypto_box` keypair.
@@ -82,7 +82,7 @@
   buffer, which includes in-place encryption. You probably
   want [[box-easy]]."
   [c m n pk sk]
-  (b/✨ easy c m plen n pk sk)
+  (b/magic-sparkles easy c m plen n pk sk)
   c)
 
 (defn box-open-easy-to-buf!
@@ -95,7 +95,7 @@
   buffer, which includes in-place decryption. You probably
   want [[box-open-easy]]."
   [m c n pk sk]
-  (let [res (b/✨ open-easy m c n pk sk)]
+  (let [res (b/magic-sparkles open-easy m c n pk sk)]
     (if (zero? res)
       m
       (throw (RuntimeException. "Ciphertext verification failed")))))
@@ -109,7 +109,7 @@
   buffer, which includes in-place encryption. You probably
   want [[box-seal]]."
   [c m pk]
-  (b/✨ box-seal c m plen pk)
+  (b/magic-sparkles box-seal c m plen pk)
   c)
 
 (defn box-seal-open-to-buf!
@@ -122,7 +122,7 @@
   buffer, which includes in-place decryption. You probably
   want [[box-seal-open]]."
   [m c pk sk]
-  (let [res (b/✨ seal-open m c plen pk sk)]
+  (let [res (b/magic-sparkles seal-open m c plen pk sk)]
     (if (zero? res)
       m
       (throw (RuntimeException. "Ciphertext verification failed")))))
