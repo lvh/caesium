@@ -110,18 +110,18 @@
            (and (is (= expected-form expanded))
                 (is (= expected-metas (map meta args))))))
     'caesium.crypto.box
-    '(caesium.binding/✨ keypair sk pk)
+    '(caesium.binding/magic-sparkles keypair sk pk)
     `(.crypto_box_keypair b/sodium ~'pk ~'sk)
     [buf-tag buf-tag]
 
     'caesium.crypto.box
-    '(caesium.binding/✨ open-easy m c n pk sk)
+    '(caesium.binding/magic-sparkles open-easy m c n pk sk)
     `(.crypto_box_open_easy
       b/sodium ~'m ~'c (long (bb/buflen ~'c)) ~'n ~'pk ~'sk)
     [buf-tag buf-tag nil buf-tag buf-tag buf-tag]
 
     'caesium.crypto.generichash
-    '(caesium.binding/✨ generichash buf msg key)
+    '(caesium.binding/magic-sparkles generichash buf msg key)
     `(.crypto_generichash
       b/sodium
       ~'buf (long (bb/buflen ~'buf))
@@ -130,17 +130,17 @@
     [buf-tag nil buf-tag nil buf-tag nil]
 
     'caesium.crypto.scalarmult
-    '(caesium.binding/✨ scalarmult q n p)
+    '(caesium.binding/magic-sparkles scalarmult q n p)
     `(.crypto_scalarmult b/sodium ~'q ~'n ~'p)
     [buf-tag buf-tag buf-tag]
 
     'caesium.crypto.scalarmult
-    '(caesium.binding/✨ scalarmult-base q n)
+    '(caesium.binding/magic-sparkles scalarmult-base q n)
     `(.crypto_scalarmult_base b/sodium ~'q ~'n)
     [buf-tag buf-tag]
 
     'caesium.crypto.sign
-    '(caesium.binding/✨ sign-open m sm pk)
+    '(caesium.binding/magic-sparkles sign-open m sm pk)
     `(.crypto_sign_open
       b/sodium
       ~'m nil

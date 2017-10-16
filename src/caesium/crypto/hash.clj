@@ -11,7 +11,7 @@
   You only want this to manage the output byte array yourself. Otherwise, you
   want [[sha256]]."
   [buf msg]
-  (b/✨ sha256 buf msg))
+  (b/magic-sparkles sha256 buf msg))
 
 (defn sha256
   "Computes the SHA-256 hash of message in the given byte array.
@@ -30,7 +30,7 @@
   You only want this to manage the output byte array yourself. Otherwise, you
   want [[sha512]]."
   [buf msg]
-  (b/✨ sha512 buf msg))
+  (b/magic-sparkles sha512 buf msg))
 
 (defn sha512
   "Computes the SHA-512 hash of message in the given byte array.
