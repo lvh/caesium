@@ -14,13 +14,13 @@
   ([]
    (let [pk (bb/alloc publickeybytes)
          sk (bb/alloc secretkeybytes)]
-     (b/✨ sign-keypair pk sk)
+     (b/call! sign-keypair pk sk)
      {:public pk :secret sk}))
   ([seed]
    (let [pk (bb/alloc publickeybytes)
          sk (bb/alloc secretkeybytes)
          seed (bb/->indirect-byte-buf seed)]
-     (b/✨ sign-seed-keypair pk sk seed)
+     (b/call! sign-seed-keypair pk sk seed)
      {:public pk :secret sk})))
 
 (def ^:deprecated generate-signing-keys
@@ -31,7 +31,7 @@
   "Puts a signed version of the given message using given secret key into the
   given out buffer."
   [sm m sk]
-  (b/✨ sign sm m sk)
+  (b/call! sign sm m sk)
   sm)
 
 (defn signed
@@ -48,7 +48,7 @@
   "Puts a signature of the given message using given secret key into the given
   out buffer."
   [sig m sk]
-  (b/✨ sign-detached sig m sk)
+  (b/call! sign-detached sig m sk)
   sig)
 
 (defn sign
@@ -71,7 +71,7 @@
    (let [m (bb/alloc (- (bb/buflen sm) bytes))
          sm (bb/->indirect-byte-buf sm)
          pk (bb/->indirect-byte-buf pk)
-         res (b/✨ sign-open m sm pk)]
+         res (b/call! sign-open m sm pk)]
      (if (zero? res)
        (bb/->bytes m)
        (throw (RuntimeException. "Signature validation failed")))))
@@ -79,6 +79,6 @@
    (let [sig (bb/->indirect-byte-buf sig)
          m (bb/->indirect-byte-buf m)
          pk (bb/->indirect-byte-buf pk)
-         res (b/✨ sign-verify-detached sig m pk)]
+         res (b/call! sign-verify-detached sig m pk)]
      (when-not (zero? res)
        (throw (RuntimeException. "Signature validation failed"))))))

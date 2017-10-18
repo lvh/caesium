@@ -278,16 +278,13 @@
               ~docstring
               (~(java-call-sym c-name) sodium)))))
 
-(defmacro ✨
+(defmacro call!
   "Produces a form for calling named fn with lots of magic:
 
   * The fn-name is specified using its short name, which is resolved
     against the ns as per [[defconsts]].
   * All bufs are annotated as ByteBuffers.
-  * Buffer lengths are automatically added.
-
-  The emoji name of this macro accurately reflects how easy I want it
-  to be for third parties to call it."
+  * Buffer lengths are automatically added."
   [fn-name & args]
   (let [c-name (c-name *ns* fn-name)
         [_ c-args] (m/find-first (comp #{c-name} first) raw-bound-fns)

@@ -30,7 +30,7 @@
   ([buf msg]
    (hash-to-buf! buf msg {}))
   ([buf msg {:keys [key] :or {key (bb/alloc 0)}}]
-   (b/✨ generichash buf msg key)
+   (b/call! generichash buf msg key)
    buf))
 
 (defn hash
@@ -66,8 +66,8 @@
      ;; wasn't passed and an empty salt, to call a different fn.
      (let [salt (or salt (bb/alloc blake2b-saltbytes))
            personal (or personal (bb/alloc blake2b-personalbytes))]
-       (b/✨ blake2b-salt-personal buf msg key salt personal))
-     (b/✨ blake2b buf msg key))
+       (b/call! blake2b-salt-personal buf msg key salt personal))
+     (b/call! blake2b buf msg key))
    buf))
 
 (defn blake2b
