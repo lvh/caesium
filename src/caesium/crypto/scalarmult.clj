@@ -15,9 +15,9 @@
   buffer. If no point is specified, the standard base point of the
   curve is used."
   ([q n]
-   (b/✨ scalarmult-base q n))
+   (b/call! scalarmult-base q n))
   ([q n p]
-   (b/✨ scalarmult q n p)))
+   (b/call! scalarmult q n p)))
 
 (defn scalarmult
   "Computes the scalar multiplication of a point. If no point is

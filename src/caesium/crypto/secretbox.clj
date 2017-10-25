@@ -16,7 +16,7 @@
   You only want this to manage the output byte buffer yourself. Otherwise,
   you want [[secretbox-easy]]."
   [c m n k]
-  (b/✨ easy c m n k))
+  (b/call! easy c m n k))
 
 (defn secretbox-easy
   "Encrypt with `crypto_secretbox_easy`.
@@ -46,7 +46,7 @@
   You only want this to manage the output byte array yourself. Otherwise,
   you want [[secretbox-open-easy]]."
   [m c n k]
-  (let [res (b/✨ open-easy m c n k)]
+  (let [res (b/call! open-easy m c n k)]
     (if (zero? res)
       m
       (throw (RuntimeException. "Ciphertext verification failed")))))
