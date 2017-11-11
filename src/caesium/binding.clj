@@ -189,6 +189,180 @@
       ^bytes ^{Pinned {}} salt
       ^bytes ^{Pinned {}} personal]]
 
+    [^int crypto_pwhash_alg_argon2i13 []]
+    [^int crypto_pwhash_alg_argon2id13 []]
+    [^int crypto_pwhash_alg_default []]
+    [^long ^{size_t {}} crypto_pwhash_bytes_min []]
+    [^long ^{size_t {}} crypto_pwhash_bytes_max []]
+    [^long ^{size_t {}} crypto_pwhash_passwd_min []]
+    [^long ^{size_t {}} crypto_pwhash_passwd_max []]
+    [^long ^{size_t {}} crypto_pwhash_saltbytes []]
+    [^long ^{size_t {}} crypto_pwhash_strbytes []]
+    [^String crypto_pwhash_strprefix []]
+    [^long ^{size_t {}} crypto_pwhash_opslimit_min []]
+    [^long ^{size_t {}} crypto_pwhash_opslimit_max []]
+    [^long ^{size_t {}} crypto_pwhash_memlimit_min []]
+    [^long ^{size_t {}} crypto_pwhash_memlimit_max []]
+    [^long ^{size_t {}} crypto_pwhash_opslimit_interactive []]
+    [^long ^{size_t {}} crypto_pwhash_memlimit_interactive []]
+    [^long ^{size_t {}} crypto_pwhash_opslimit_moderate []]
+    [^long ^{size_t {}} crypto_pwhash_memlimit_moderate []]
+    [^long ^{size_t {}} crypto_pwhash_opslimit_sensitive []]
+    [^long ^{size_t {}} crypto_pwhash_memlimit_sensitive []]
+    [^String crypto_pwhash_primitive []]
+    [^int crypto_pwhash
+     [^bytes ^{Pinned {}} buf
+      ^long ^{LongLong {}} buflen
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^bytes ^{Pinned {}} salt
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit
+      ^long ^{LongLong {}} alg]]
+    [^int crypto_pwhash_str
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+    [^int crypto_pwhash_str_alg
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit
+      ^long ^{LongLong {}} alg]]
+    [^int crypto_pwhash_str_verify
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen]]
+    [^int crypto_pwhash_str_needs_rehash
+     [^bytes ^{Pinned {}} buf
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+
+    [^int crypto_pwhash_argon2i_alg_argon2i13 []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_bytes_min []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_bytes_max []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_passwd_min []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_passwd_max []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_saltbytes []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_strbytes []]
+    [^String crypto_pwhash_argon2i_strprefix []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_opslimit_min []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_opslimit_max []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_memlimit_min []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_memlimit_max []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_opslimit_interactive []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_memlimit_interactive []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_opslimit_moderate []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_memlimit_moderate []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_opslimit_sensitive []]
+    [^long ^{size_t {}} crypto_pwhash_argon2i_memlimit_sensitive []]
+    [^int crypto_pwhash_argon2i
+     [^bytes ^{Pinned {}} buf
+      ^long ^{LongLong {}} buflen
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^bytes ^{Pinned {}} salt
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit
+      ^long ^{LongLong {}} alg]]
+    [^int crypto_pwhash_argon2i_str
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+    [^int crypto_pwhash_argon2i_str_verify
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen]]
+    [^int crypto_pwhash_argon2i_str_needs_rehash
+     [^bytes ^{Pinned {}} buf
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+
+    [^int crypto_pwhash_argon2id_alg_argon2id13 []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_bytes_min []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_bytes_max []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_passwd_min []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_passwd_max []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_saltbytes []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_strbytes []]
+    [^String crypto_pwhash_argon2id_strprefix []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_opslimit_min []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_opslimit_max []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_memlimit_min []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_memlimit_max []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_opslimit_interactive []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_memlimit_interactive []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_opslimit_moderate []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_memlimit_moderate []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_opslimit_sensitive []]
+    [^long ^{size_t {}} crypto_pwhash_argon2id_memlimit_sensitive []]
+    [^int crypto_pwhash_argon2id
+     [^bytes ^{Pinned {}} buf
+      ^long ^{LongLong {}} buflen
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^bytes ^{Pinned {}} salt
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit
+      ^long ^{LongLong {}} alg]]
+    [^int crypto_pwhash_argon2id_str
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+    [^int crypto_pwhash_argon2id_str_verify
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen]]
+    [^int crypto_pwhash_argon2id_str_needs_rehash
+     [^bytes ^{Pinned {}} buf
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_bytes_min []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_bytes_max []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_passwd_min []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_passwd_max []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_saltbytes []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_strbytes []]
+    [^String crypto_pwhash_scryptsalsa208sha256_strprefix []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_opslimit_min []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_opslimit_max []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_memlimit_min []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_memlimit_max []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_opslimit_interactive []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_memlimit_interactive []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_opslimit_sensitive []]
+    [^long ^{size_t {}} crypto_pwhash_scryptsalsa208sha256_memlimit_sensitive []]
+    [^int crypto_pwhash_scryptsalsa208sha256
+     [^bytes ^{Pinned {}} buf
+      ^long ^{LongLong {}} buflen
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^bytes ^{Pinned {}} salt
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+    [^int crypto_pwhash_scryptsalsa208sha256_str
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+    [^int crypto_pwhash_scryptsalsa208sha256_str_verify
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen]]
+    [^int crypto_pwhash_scryptsalsa208sha256_str_needs_rehash
+     [^bytes ^{Pinned {}} buf
+      ^long ^{LongLong {}} opslimit
+      ^long ^{LongLong {}} memlimit]]
+
     [^long ^{size_t {}} crypto_hash_sha256_bytes []]
     [^int crypto_hash_sha256
      [^bytes ^{Pinned {}} buf
