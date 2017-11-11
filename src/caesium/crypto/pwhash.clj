@@ -83,7 +83,7 @@
 
 (defn pwhash-to-buf!
   [buf msg salt opslimit memlimit alg]
-  (b/✨ pwhash buf msg salt opslimit memlimit alg)
+  (b/call! pwhash buf msg salt opslimit memlimit alg)
   buf)
 
 (defn pwhash
@@ -99,7 +99,7 @@
 
 (defn pwhash-str-to-buf!
   [buf msg opslimit memlimit]
-  (b/✨ pwhash-str buf msg opslimit memlimit)
+  (b/call! pwhash-str buf msg opslimit memlimit)
   buf)
 
 (defn pwhash-str
@@ -114,7 +114,7 @@
 
 (defn pwhash-str-alg-to-buf!
   [buf msg opslimit memlimit alg]
-  (b/✨ pwhash-str-alg buf msg opslimit memlimit alg)
+  (b/call! pwhash-str-alg buf msg opslimit memlimit alg)
   buf)
 
 (defn pwhash-str-alg
@@ -130,21 +130,21 @@
   [hashpass passwd]
   (let [buf (bb/->indirect-byte-buf hashpass)
         msg (bb/->indirect-byte-buf passwd)]
-    (b/✨ pwhash-str-verify buf msg)))
+    (b/call! pwhash-str-verify buf msg)))
 
 (defn str-needs-rehash
   [hashpass opslimit memlimit]
   (let [buf (bb/->indirect-byte-buf hashpass)]
-    (b/✨  str-needs-rehash buf opslimit memlimit)))
+    (b/call! str-needs-rehash buf opslimit memlimit)))
 
 (defn pwhash-argon2i-to-buf!
   [buf msg salt opslimit memlimit alg]
-  (b/✨ pwhash-argon2i buf msg salt opslimit memlimit alg)
+  (b/call! pwhash-argon2i buf msg salt opslimit memlimit alg)
   buf)
 
 (defn argon2i-str-to-buf!
   [buf msg opslimit memlimit]
-  (b/✨ pwhash-argon2i-str buf msg opslimit memlimit)
+  (b/call! pwhash-argon2i-str buf msg opslimit memlimit)
   buf)
 
 (defn argon2i
@@ -171,16 +171,16 @@
   [hashpass passwd]
   (let [buf (bb/->indirect-byte-buf hashpass)
         msg (bb/->indirect-byte-buf passwd)]
-    (b/✨ argon2i-str-verify buf msg)))
+    (b/call! argon2i-str-verify buf msg)))
 
 (defn argon2i-str-needs-rehash
   [hashpass opslimit memlimit]
   (let [buf (bb/->indirect-byte-buf hashpass)]
-    (b/✨  argon2i-str-needs-rehash buf opslimit memlimit)))
+    (b/call! argon2i-str-needs-rehash buf opslimit memlimit)))
 
 (defn argon2id-to-buf!
   [buf msg salt opslimit memlimit alg]
-  (b/✨ pwhash-argon2id buf msg salt opslimit memlimit alg)
+  (b/call! pwhash-argon2id buf msg salt opslimit memlimit alg)
   buf)
 
 (defn argon2id
@@ -196,7 +196,7 @@
 
 (defn argon2id-str-to-buf!
   [buf msg opslimit memlimit]
-  (b/✨ pwhash-argon2id-str buf msg opslimit memlimit)
+  (b/call! pwhash-argon2id-str buf msg opslimit memlimit)
   buf)
 
 (defn argon2id-str
@@ -212,16 +212,16 @@
   [hashpass passwd]
   (let [buf (bb/->indirect-byte-buf hashpass)
         msg (bb/->indirect-byte-buf passwd)]
-    (b/✨ argon2id-str-verify buf msg)))
+    (b/call! argon2id-str-verify buf msg)))
 
 (defn argon2id-str-needs-rehash
   [hashpass opslimit memlimit]
   (let [buf (bb/->indirect-byte-buf hashpass)]
-    (b/✨  argon2id-str-needs-rehash buf opslimit memlimit)))
+    (b/call! argon2id-str-needs-rehash buf opslimit memlimit)))
 
 (defn scryptsalsa208sha256-to-buf!
   [buf msg salt opslimit memlimit]
-  (b/✨ pwhash-scryptsalsa208sha256 buf msg salt opslimit memlimit)
+  (b/call! pwhash-scryptsalsa208sha256 buf msg salt opslimit memlimit)
   buf)
 
 (defn scryptsalsa208sha256
@@ -237,7 +237,7 @@
 
 (defn scryptsalsa208sha256-str-to-buf!
   [buf msg opslimit memlimit]
-  (b/✨ pwhash-scryptsalsa208sha256-str buf msg opslimit memlimit)
+  (b/call! pwhash-scryptsalsa208sha256-str buf msg opslimit memlimit)
   buf)
 
 (defn scryptsalsa208sha256-str
@@ -253,9 +253,9 @@
   [hashpass passwd]
   (let [buf (bb/->indirect-byte-buf hashpass)
         msg (bb/->indirect-byte-buf passwd)]
-    (b/✨ scryptsalsa208sha256-str-verify buf msg)))
+    (b/call! scryptsalsa208sha256-str-verify buf msg)))
 
 (defn scryptsalsa208sha256-str-needs-rehash
   [hashpass opslimit memlimit]
   (let [buf (bb/->indirect-byte-buf hashpass)]
-    (b/✨  scryptsalsa208sha256-str-needs-rehash buf opslimit memlimit)))
+    (b/call!  scryptsalsa208sha256-str-needs-rehash buf opslimit memlimit)))
