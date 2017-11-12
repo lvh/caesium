@@ -40,6 +40,10 @@ small wrappers around that, everything in it applies.
 
 [libsodiumdocs]: http://doc.libsodium.org
 
+### Password hashing
+
+Documentation coming soon.
+
 ## Differences with other bindings
 
 Instead of making specific claims about specific libraries which may become
