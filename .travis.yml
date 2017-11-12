@@ -8,8 +8,8 @@ cache:
     - $HOME/.lein
     - $HOME/.m2
 install:
-  - wget https://github.com/lvh/libsodium-debs/raw/master/libsodium-1.0.13_amd64.deb
-  - sudo dpkg -i libsodium-1.0.13_amd64.deb
+  - wget https://github.com/lvh/libsodium-debs/raw/master/libsodium-1.0.15_amd64.deb
+  - sudo dpkg -i libsodium-1.0.15_amd64.deb
 script:
   - lein with-profile +test cljfmt check
   - lein with-profile +test kibit
