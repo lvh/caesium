@@ -86,7 +86,7 @@
   (let [fns  #{"sodium_init" "crypto_pwhash_argon2i_alg_argon2i13"
                "crypto_pwhash_alg_default" "crypto_pwhash_alg_argon2i13"
                "crypto_pwhash_alg_argon2id13" "crypto_pwhash_argon2id_alg_argon2id13"}]
-    (contains? fns f)))
+    (fns f)))
 
 (defn check-const-method
   "Check a method binding a const fn."
