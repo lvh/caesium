@@ -100,3 +100,35 @@
   "Generates a new random key."
   []
   (r/randombytes keybytes))
+
+(defn secretbox-detached-to-bufs! [c mac m mlen n k]
+  (b/call! detached c mac m mlen n k))
+
+(defn secretbox-detached [m n k]
+  (let [c (bb/alloc (bb/buflen m))
+        mac (bb/alloc macbytes)]
+    (secretbox-detached-to-bufs!
+     c
+     mac
+     (bb/->indirect-byte-buf m)
+     (bb/buflen m)
+     (bb/->indirect-byte-buf n)
+     (bb/->indirect-byte-buf k))
+    {:cipher-text (bb/->bytes c) :mac (bb/->bytes mac)}))
+
+(defn secretbox-open-detached-to-bufs! [m c mac clen n k]
+  (let [res (b/call! open-detached m c mac clen n k)]
+    (if (zero? res)
+      m
+      (throw (RuntimeException. "Ciphertext verification failed")))))
+
+(defn secretbox-open-detached [c mac n k]
+  (let [m (bb/alloc (bb/buflen c))]
+    (secretbox-open-detached-to-bufs!
+     m
+     (bb/->indirect-byte-buf c)
+     (bb/->indirect-byte-buf mac)
+     (bb/buflen c)
+     (bb/->indirect-byte-buf n)
+     (bb/->indirect-byte-buf k))
+    (bb/->bytes m)))
