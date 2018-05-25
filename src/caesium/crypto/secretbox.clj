@@ -114,7 +114,7 @@
      (bb/buflen m)
      (bb/->indirect-byte-buf n)
      (bb/->indirect-byte-buf k))
-    {:cipher-text (bb/->bytes c) :mac (bb/->bytes mac)}))
+    {:c (bb/->bytes c) :mac (bb/->bytes mac)}))
 
 (defn secretbox-open-detached-to-bufs! [m c mac clen n k]
   (let [res (b/call! open-detached m c mac clen n k)]

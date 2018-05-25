@@ -12,11 +12,18 @@
  s/macbytes 16
  s/primitive "xsalsa20poly1305")
 
+;; Secretbox Constants
 (def ptext (v/hex-resource "vectors/secretbox/plaintext"))
 (def secret-key (byte-array (range 32)))
 
 (def n0 (s/int->nonce 0))
 (def n1 (s/int->nonce 1))
+
+;; Secretbox Detached Constants
+(def detached-ptext (v/hex-resource "vectors/secretbox/detached/plaintext0"))
+(def detached-secret-key (byte-array (v/hex-resource "vectors/secretbox/detached/key0")))
+
+(def detached-n0 (v/hex-resource "vectors/secretbox/detached/nonce0"))
 
 (deftest secretbox-kat-test
   (are [nonce ctext] (let [encrypted (s/encrypt secret-key nonce ptext)
@@ -30,6 +37,17 @@
         RuntimeException #"Ciphertext verification failed"
         (s/decrypt secret-key nonce ciphertext))
     n1 (v/hex-resource "vectors/secretbox/forgery1")))
+
+(deftest secretbox-detached-kat-test
+  "Test vectors from:
+  https://github.com/jedisct1/libsodium/blob/master/test/default/secretbox.c
+  https://github.com/jedisct1/libsodium/blob/master/test/default/secretbox.exp"
+  (let [{:keys [mac c]} (s/secretbox-detached detached-ptext detached-n0 detached-secret-key)
+        known-answer-cipher-text (v/hex-resource "vectors/secretbox/detached/ciphertext0")
+        decrypted (s/secretbox-open-detached c mac detached-n0 detached-secret-key)]
+    (is (bb/bytes= c (byte-array (drop 16 known-answer-cipher-text))))
+    (is (bb/bytes= mac (byte-array (take 16 known-answer-cipher-text))))
+    (is (bb/bytes= decrypted detached-ptext))))
 
 (deftest new-key!-test
   (let [[f & rs] (repeatedly 10 s/new-key!)]
