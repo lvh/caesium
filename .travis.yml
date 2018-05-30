@@ -11,10 +11,10 @@ install:
   - wget https://github.com/lvh/libsodium-debs/raw/master/libsodium-1.0.15_amd64.deb
   - sudo dpkg -i libsodium-1.0.15_amd64.deb
 script:
-  - lein with-profile +test ancient
   - lein with-profile +test cljfmt check
   - lein with-profile +test kibit
   - lein with-profile +test eastwood || true
+  - lein with-profile +test ancient || true
   - lein test
 
 after_success:
