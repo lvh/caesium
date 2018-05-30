@@ -1,4 +1,8 @@
-# 0.10.0 (WIP)
+# 0.10.1
+
+Added support for `secretbox_detached`.
+
+# 0.10.0
 
 Test data is now removed from the production JARs; resulting in a (slightly)
 smaller binary.
