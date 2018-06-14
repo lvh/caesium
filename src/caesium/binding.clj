@@ -111,6 +111,23 @@
       ^bytes ^{Pinned {}} pk
       ^bytes ^{Pinned {}} sk]]
 
+    [^int crypto_box_detached
+     [^bytes ^{Pinned {}} c
+      ^bytes ^{Pinned {}} mac
+      ^bytes ^{Pinned {}} m
+      ^long ^{LongLong {}} mlen
+      ^bytes ^{Pinned {}} n
+      ^bytes ^{Pinned {}} pk
+      ^bytes ^{Pinned {}} sk]]
+    [^int crypto_box_open_detached
+     [^bytes ^{Pinned {}} m
+      ^bytes ^{Pinned {}} c
+      ^bytes ^{Pinned {}} mac
+      ^long ^{LongLong {}} clen
+      ^bytes ^{Pinned {}} n
+      ^bytes ^{Pinned {}} pk
+      ^bytes ^{Pinned {}} sk]]
+
     [^long ^{size_t {}} crypto_sign_bytes []]
     [^long ^{size_t {}} crypto_sign_seedbytes []]
     [^long ^{size_t {}} crypto_sign_publickeybytes []]
