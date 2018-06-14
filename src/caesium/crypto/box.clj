@@ -268,7 +268,7 @@
      (bb/->indirect-byte-buf nonce)
      (bb/->indirect-byte-buf pk)
      (bb/->indirect-byte-buf sk))
-    {:ctext (bb/->bytes c)
+    {:c (bb/->bytes c)
      :mac (bb/->bytes mac)}))
 
 (defn box-open-detached-to-bufs! [m c mac clen n pk sk]

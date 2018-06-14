@@ -66,18 +66,18 @@
 (deftest detached-test
   (let [nonce (box-vector "nonce")
         ptext (box-vector "plaintext")
-        ctext-kat (box-vector "ciphertext")
+        c-kat (box-vector "ciphertext")
         bob-pk (box-vector "bob-public-key")
         bob-sk (box-vector "bob-secret-key")
         alice-pk (box-vector "alice-public-key")
         alice-sk (box-vector "alice-secret-key")
-        {:keys [ctext mac]} (b/box-detached ptext nonce alice-pk bob-sk)
-        open-detached (b/box-open-detached ctext mac nonce bob-pk alice-sk)]
-    (is (bb/bytes= (byte-array (drop b/macbytes ctext-kat)) ctext))
-    (is (bb/bytes= (byte-array (take b/macbytes ctext-kat)) mac))
+        {:keys [c mac]} (b/box-detached ptext nonce alice-pk bob-sk)
+        open-detached (b/box-open-detached c mac nonce bob-pk alice-sk)]
+    (is (bb/bytes= (byte-array (drop b/macbytes c-kat)) c))
+    (is (bb/bytes= (byte-array (take b/macbytes c-kat)) mac))
     (is (bb/bytes= ptext open-detached))
-    (let [forged-ctext (r/randombytes (- (alength ^bytes ctext) b/macbytes))
+    (let [forged-c (r/randombytes (- (alength ^bytes c-kat) b/macbytes))
           forged-mac (r/randombytes b/macbytes)]
       (is (thrown-with-msg?
            RuntimeException #"Ciphertext verification failed"
-           (b/box-open-detached forged-ctext forged-mac nonce bob-pk alice-sk))))))
+           (b/box-open-detached forged-c forged-mac nonce bob-pk alice-sk))))))
