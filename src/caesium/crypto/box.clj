@@ -253,3 +253,38 @@
   libsodium function."
   [pk sk ctext]
   (box-seal-open ctext pk sk))
+
+(defn box-detached-to-bufs! [c mac m mlen n pk sk]
+  (b/call! detached c mac m mlen n pk sk))
+
+(defn box-detached [ptext nonce pk sk]
+  (let [c (bb/alloc (bb/buflen ptext))
+        mac (bb/alloc macbytes)]
+    (box-detached-to-bufs!
+     c
+     mac
+     (bb/->indirect-byte-buf ptext)
+     (bb/buflen ptext)
+     (bb/->indirect-byte-buf nonce)
+     (bb/->indirect-byte-buf pk)
+     (bb/->indirect-byte-buf sk))
+    {:c (bb/->bytes c)
+     :mac (bb/->bytes mac)}))
+
+(defn box-open-detached-to-bufs! [m c mac clen n pk sk]
+  (let [res (b/call! open_detached m c mac clen n pk sk)]
+    (if (zero? res)
+      m
+      (throw (RuntimeException. "Ciphertext verification failed")))))
+
+(defn box-open-detached [ctext mac nonce pk sk]
+  (let [m (bb/alloc (bb/buflen ctext))]
+    (box-open-detached-to-bufs!
+     m
+     (bb/->indirect-byte-buf ctext)
+     (bb/->indirect-byte-buf mac)
+     (bb/buflen ctext)
+     (bb/->indirect-byte-buf nonce)
+     (bb/->indirect-byte-buf pk)
+     (bb/->indirect-byte-buf sk))
+    (bb/->bytes m)))
