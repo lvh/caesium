@@ -68,7 +68,7 @@
 (defn check-method
   "Check a method binding a non-const fn."
   [^Method method params]
-  (is (= (if (= "randombytes" (.getName method))
+  (is (= (if (#{"randombytes" "crypto_shorthash_keygen"} (.getName method))
            Void/TYPE
            Integer/TYPE)
          (.getGenericReturnType method)))

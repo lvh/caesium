@@ -128,6 +128,18 @@
       ^bytes ^{Pinned {}} pk
       ^bytes ^{Pinned {}} sk]]
 
+    [^long ^{size_t {}} crypto_shorthash_bytes]
+    [^long ^{size_t {}} crypto_shorthash_keybytes]
+    [^String crypto_shorthash_primitive []]
+
+    [^int crypto_shorthash
+     [^bytes ^{Pinned {}} out
+      ^bytes ^{Pinned {}} in
+      ^long ^{LongLong {}} inlen
+      ^bytes ^{Pinned {}} k]]
+    [^void crypto_shorthash_keygen
+     [^bytes ^{Pinned {}} k]]
+
     [^long ^{size_t {}} crypto_sign_bytes []]
     [^long ^{size_t {}} crypto_sign_seedbytes []]
     [^long ^{size_t {}} crypto_sign_publickeybytes []]
