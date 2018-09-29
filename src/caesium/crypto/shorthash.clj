@@ -1,8 +1,7 @@
 (ns caesium.crypto.shorthash
   (:refer-clojure :exclude [bytes])
   (:require [caesium.binding :as b]
-            [caesium.byte-bufs :as bb]
-            [caesium.util :as u]))
+            [caesium.byte-bufs :as bb]))
 
 (b/defconsts [bytes
               keybytes
