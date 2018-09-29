@@ -31,3 +31,8 @@
                   (is (bb/bytes= x y)))
                 test-answers
                 shorthash-vectors))))
+
+(deftest keygen!-test
+  (let [[f & rs] (repeatedly 10 sh/keygen!)]
+    (doseq [r rs]
+      (is (not (bb/bytes= f r))))))
