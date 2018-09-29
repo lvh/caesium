@@ -7,3 +7,8 @@
   "Gets a named resource in hex format; returns its contents as a byte
   array."
   (comp u/unhexify s/trim slurp io/resource))
+
+(def hex-resources
+  "Gets a named resource  in hex format that contains multiple test
+  vectors separated by a newline as a collection of byte arrays."
+  (comp #(map (comp u/unhexify s/trim) %) #(clojure.string/split % #"\n") slurp io/resource))
