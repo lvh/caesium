@@ -131,7 +131,7 @@
     [^long ^{size_t {}} crypto_shorthash_bytes]
     [^long ^{size_t {}} crypto_shorthash_keybytes]
     [^String crypto_shorthash_primitive []]
-    
+
     [^int crypto_shorthash
      [^bytes ^{Pinned {}} out
       ^bytes ^{Pinned {}} in
