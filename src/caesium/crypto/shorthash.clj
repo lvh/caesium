@@ -1,4 +1,5 @@
 (ns caesium.crypto.shorthash
+  (:refer-clojure :exclude [bytes])
   (:require [caesium.binding :as b]
             [caesium.byte-bufs :as bb]
             [caesium.util :as u]))

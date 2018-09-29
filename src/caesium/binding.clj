@@ -137,8 +137,8 @@
       ^bytes ^{Pinned {}} in
       ^long ^{LongLong {}} inlen
       ^bytes ^{Pinned {}} k]]
-    [^int crypto_shorthash_keygen
-     [^long ^{LongLong {}} k]]
+    [^void crypto_shorthash_keygen
+     [^bytes ^{Pinned {}} k]]
 
     [^long ^{size_t {}} crypto_sign_bytes []]
     [^long ^{size_t {}} crypto_sign_seedbytes []]
