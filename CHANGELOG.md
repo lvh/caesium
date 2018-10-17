@@ -1,6 +1,6 @@
 # 0.11.0 (WIP)
 
-Exposed the three `crypto.auth` HMAC functions.
+Added support for `crypto_shorthash` (siphash) and `crypto_auth` (HMAC).
 
 # 0.10.1
 
