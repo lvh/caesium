@@ -1,3 +1,7 @@
+# 0.11.0 (WIP)
+
+Exposed the three `crypto.auth` HMAC functions.
+
 # 0.10.1
 
 Added support for `secretbox_detached`.
