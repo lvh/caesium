@@ -404,6 +404,30 @@
       ^bytes ^{Pinned {}} msg
       ^long ^{LongLong {}} msglen]]
 
+    [^long ^{size_t {}} crypto_auth_hmacsha256_bytes []]
+    [^long ^{size_t {}} crypto_auth_hmacsha256_keybytes []]
+    [^int crypto_auth_hmacsha256
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^bytes ^{Pinned {}} k]]
+
+    [^long ^{size_t {}} crypto_auth_hmacsha512_bytes []]
+    [^long ^{size_t {}} crypto_auth_hmacsha512_keybytes []]
+    [^int crypto_auth_hmacsha512
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^bytes ^{Pinned {}} k]]
+
+    [^long ^{size_t {}} crypto_auth_hmacsha512256_bytes []]
+    [^long ^{size_t {}} crypto_auth_hmacsha512256_keybytes []]
+    [^int crypto_auth_hmacsha512256
+     [^bytes ^{Pinned {}} buf
+      ^bytes ^{Pinned {}} msg
+      ^long ^{LongLong {}} msglen
+      ^bytes ^{Pinned {}} k]]
+
     [^long ^{size_t {}} crypto_scalarmult_bytes []]
     [^long ^{size_t {}} crypto_scalarmult_scalarbytes []]
     [^String crypto_scalarmult_primitive []]

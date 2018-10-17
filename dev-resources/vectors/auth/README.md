@@ -1,0 +1,1 @@
+Test vectors for HMAC functions were taken from [RbNaCl](https://github.com/crypto-rb/rbnacl/blob/e4d5811b5b75122fade3177a1196f696830309f7/lib/rbnacl/test_vectors.rb#L163-L179).
