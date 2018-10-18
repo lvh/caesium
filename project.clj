@@ -6,9 +6,9 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [com.github.jnr/jnr-ffi "2.1.8"]
+                 [com.github.jnr/jnr-ffi "2.1.9"]
                  [commons-codec/commons-codec "1.11"]
-                 [byte-streams "0.2.3"]
+                 [byte-streams "0.2.4"]
                  [org.clojure/math.combinatorics "0.1.4"]
                  [medley "1.0.0"]
                  [com.taoensso/timbre "4.10.0"]]
