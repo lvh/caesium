@@ -438,7 +438,151 @@
     [^int crypto_scalarmult
      [^bytes ^{Pinned {}} q
       ^bytes ^{Pinned {}} n
-      ^bytes ^{Pinned {}} p]]])
+      ^bytes ^{Pinned {}} p]]
+
+    [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_keybytes []]
+    [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_nsecbytes []]
+    [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_npubbytes []]
+    [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_abytes []]
+    [^int crypto_aead_chacha20poly1305_ietf_encrypt
+     [^bytes ^{Pinned {}} c
+      ^jnr.ffi.byref.LongLongByReference clen_p
+      ^bytes ^{Pinned {}} m
+      ^long ^{LongLong {}} mlen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_chacha20poly1305_ietf_decrypt
+     [^bytes ^{Pinned {}} m
+      ^jnr.ffi.byref.LongLongByReference mlen_p
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} c
+      ^long ^{LongLong {}} clen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_chacha20poly1305_ietf_encrypt_detached
+     [^bytes ^{Pinned {}} c
+      ^bytes ^{Pinned {}} mac
+      ^jnr.ffi.byref.LongLongByReference maclen_p
+      ^bytes ^{Pinned {}} m
+      ^long ^{LongLong {}} mlen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_chacha20poly1305_ietf_decrypt_detached
+     [^bytes ^{Pinned {}} m
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} c
+      ^long ^{LongLong {}} clen
+      ^bytes ^{Pinned {}} mac
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_chacha20poly1305_ietf_keygen
+     [^bytes ^{Pinned {}} k]]
+
+    [^long ^{size_t {}} crypto_aead_chacha20poly1305_keybytes []]
+    [^long ^{size_t {}} crypto_aead_chacha20poly1305_nsecbytes []]
+    [^long ^{size_t {}} crypto_aead_chacha20poly1305_npubbytes []]
+    [^long ^{size_t {}} crypto_aead_chacha20poly1305_abytes []]
+    [^int crypto_aead_chacha20poly1305_encrypt
+     [^bytes ^{Pinned {}} c
+      ^jnr.ffi.byref.LongLongByReference clen_p
+      ^bytes ^{Pinned {}} m
+      ^long ^{LongLong {}} mlen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_chacha20poly1305_decrypt
+     [^bytes ^{Pinned {}} m
+      ^jnr.ffi.byref.LongLongByReference mlen_p
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} c
+      ^long ^{LongLong {}} clen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_chacha20poly1305_encrypt_detached
+     [^bytes ^{Pinned {}} c
+      ^bytes ^{Pinned {}} mac
+      ^jnr.ffi.byref.LongLongByReference maclen_p
+      ^bytes ^{Pinned {}} m
+      ^long ^{LongLong {}} mlen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_chacha20poly1305_decrypt_detached
+     [^bytes ^{Pinned {}} m
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} c
+      ^long ^{LongLong {}} clen
+      ^bytes ^{Pinned {}} mac
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_chacha20poly1305_keygen
+     [^bytes ^{Pinned {}} k]]
+
+    [^long ^{size_t {}} crypto_aead_xchacha20poly1305_ietf_keybytes []]
+    [^long ^{size_t {}} crypto_aead_xchacha20poly1305_ietf_nsecbytes []]
+    [^long ^{size_t {}} crypto_aead_xchacha20poly1305_ietf_npubbytes []]
+    [^long ^{size_t {}} crypto_aead_xchacha20poly1305_ietf_abytes []]
+    [^int crypto_aead_xchacha20poly1305_ietf_encrypt
+     [^bytes ^{Pinned {}} c
+      ^jnr.ffi.byref.LongLongByReference clen_p
+      ^bytes ^{Pinned {}} m
+      ^long ^{LongLong {}} mlen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_xchacha20poly1305_ietf_decrypt
+     [^bytes ^{Pinned {}} m
+      ^jnr.ffi.byref.LongLongByReference mlen_p
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} c
+      ^long ^{LongLong {}} clen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_xchacha20poly1305_ietf_encrypt_detached
+     [^bytes ^{Pinned {}} c
+      ^bytes ^{Pinned {}} mac
+      ^jnr.ffi.byref.LongLongByReference maclen_p
+      ^bytes ^{Pinned {}} m
+      ^long ^{LongLong {}} mlen
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_xchacha20poly1305_ietf_decrypt_detached
+     [^bytes ^{Pinned {}} m
+      ^bytes ^{Pinned {}} nsec
+      ^bytes ^{Pinned {}} c
+      ^long ^{LongLong {}} clen
+      ^bytes ^{Pinned {}} mac
+      ^bytes ^{Pinned {}} ad
+      ^long ^{LongLong {}} adlen
+      ^bytes ^{Pinned {}} npub
+      ^bytes ^{Pinned {}} k]]
+    [^int crypto_aead_xchacha20poly1305_ietf_keygen
+     [^bytes ^{Pinned {}} k]]])
 
 (def ^:private bound-fns
   "A mapping of type- and jnr.ffi-annotated bound method symbols to
