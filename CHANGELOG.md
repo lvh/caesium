@@ -1,6 +1,7 @@
 # 0.11.0 (WIP)
 
 Added support for `crypto_shorthash` (siphash) and `crypto_auth` (HMAC).
+Added support for chacha20poly1305, chacha20poly1305-ietf and xchacha20poly1305-ietf`.
 
 # 0.10.1
 
