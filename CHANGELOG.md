@@ -2,6 +2,10 @@
 
 Nothing yet :-)
 
+# 0.12.0
+
+Error handling and bugfixes for the new AEAD support introduced in 0.11.0.
+
 # 0.11.0
 
 Added support for `crypto_shorthash` (siphash) and `crypto_auth` (HMAC).
