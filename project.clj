@@ -1,4 +1,4 @@
-(defproject caesium "0.12.0"
+(defproject caesium "0.13.0-SNAPSHOT"
   :description "libsodium for clojure"
   :url "https://github.com/lvh/caesium"
   :deploy-repositories [["releases" :clojars]
