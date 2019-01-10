@@ -17,10 +17,11 @@
               xchacha20poly1305-ietf-abytes])
 
 (defn ^:private chacha20poly1305-ietf-keygen-to-buf! [k]
-  (b/call! chacha20poly1305-ietf-keybytes k))
+  (b/call! chacha20poly1305-ietf-keygen k))
 
-(defn chacha20poly1305-ietf-keygen []
+(defn chacha20poly1305-ietf-keygen
   "Generates a new random key."
+  []
   (let [k (bb/alloc chacha20poly1305-ietf-keybytes)]
     (chacha20poly1305-ietf-keygen-to-buf! k)
     k))
@@ -50,8 +51,10 @@
 
 (defn ^:private chacha20poly1305-ietf-decrypt-to-buf!
   [m nsec c ad npub k]
-  (b/call! chacha20poly1305-ietf-decrypt m nsec c ad npub k)
-  c)
+  (let [res (b/call! chacha20poly1305-ietf-decrypt m nsec c ad npub k)]
+    (if (zero? res)
+      c
+      (throw (RuntimeException. "Ciphertext verification failed")))))
 
 (defn chacha20poly1305-ietf-decrypt
   [c ad npub k]
@@ -87,8 +90,10 @@
 
 (defn ^:private chacha20poly1305-ietf-decrypt-detached-to-buf!
   [m nsec c mac ad npub k]
-  (b/call! chacha20poly1305-ietf-decrypt-detached m nsec c mac ad npub k)
-  c)
+  (let [res (b/call! chacha20poly1305-ietf-decrypt-detached m nsec c mac ad npub k)]
+    (if (zero? res)
+      c
+      (throw (RuntimeException. "Ciphertext verification failed")))))
 
 (defn chacha20poly1305-ietf-decrypt-detached
   [c mac ad npub k]
@@ -104,12 +109,13 @@
     (bb/->bytes m)))
 
 (defn ^:private chacha20poly1305-keygen-to-buf! [k]
-  (b/call! chacha20poly1305-keybytes k))
+  (b/call! chacha20poly1305-keygen k))
 
-(defn chacha20poly1305-keygen []
+(defn chacha20poly1305-keygen
   "Generates a new random key."
+  []
   (let [k (bb/alloc chacha20poly1305-keybytes)]
-    (chacha20poly1305-ietf-keygen-to-buf! k)
+    (chacha20poly1305-keygen-to-buf! k)
     k))
 
 (defn new-chacha20poly1305-nonce
@@ -137,8 +143,10 @@
 
 (defn ^:private chacha20poly1305-decrypt-to-buf!
   [m nsec c ad npub k]
-  (b/call! chacha20poly1305-decrypt m nsec c ad npub k)
-  c)
+  (let [res (b/call! chacha20poly1305-decrypt m nsec c ad npub k)]
+    (if (zero? res)
+      c
+      (throw (RuntimeException. "Ciphertext verification failed")))))
 
 (defn chacha20poly1305-decrypt
   [c ad npub k]
@@ -174,8 +182,10 @@
 
 (defn ^:private chacha20poly1305-decrypt-detached-to-buf!
   [m nsec c mac ad npub k]
-  (b/call! chacha20poly1305-decrypt-detached m nsec c mac ad npub k)
-  c)
+  (let [res (b/call! chacha20poly1305-decrypt-detached m nsec c mac ad npub k)]
+    (if (zero? res)
+      c
+      (throw (RuntimeException. "Ciphertext verification failed")))))
 
 (defn chacha20poly1305-decrypt-detached
   [c mac ad npub k]
@@ -191,12 +201,13 @@
     (bb/->bytes m)))
 
 (defn ^:private xchacha20poly1305-ietf-keygen-to-buf! [k]
-  (b/call! xchacha20poly1305-keybytes k))
+  (b/call! xchacha20poly1305-ietf-keygen k))
 
-(defn xchacha20poly1305-ietf-keygen []
+(defn xchacha20poly1305-ietf-keygen
   "Generates a new random key."
+  []
   (let [k (bb/alloc xchacha20poly1305-ietf-keybytes)]
-    (chacha20poly1305-keygen-to-buf! k)
+    (xchacha20poly1305-ietf-keygen-to-buf! k)
     k))
 
 (defn new-xchacha20poly1305-ietf-nonce
@@ -224,8 +235,10 @@
 
 (defn ^:private xchacha20poly1305-ietf-decrypt-to-buf!
   [m nsec c ad npub k]
-  (b/call! xchacha20poly1305-ietf-decrypt m nsec c ad npub k)
-  c)
+  (let [res (b/call! xchacha20poly1305-ietf-decrypt m nsec c ad npub k)]
+    (if (zero? res)
+      c
+      (throw (RuntimeException. "Ciphertext verification failed")))))
 
 (defn xchacha20poly1305-ietf-decrypt
   [c ad npub k]
@@ -261,8 +274,10 @@
 
 (defn ^:private xchacha20poly1305-ietf-decrypt-detached-to-buf!
   [m nsec c mac ad npub k]
-  (b/call! xchacha20poly1305-ietf-decrypt-detached m nsec c mac ad npub k)
-  c)
+  (let [res (b/call! xchacha20poly1305-ietf-decrypt-detached m nsec c mac ad npub k)]
+    (if (zero? res)
+      c
+      (throw (RuntimeException. "Ciphertext verification failed")))))
 
 (defn xchacha20poly1305-ietf-decrypt-detached
   [c mac ad npub k]
