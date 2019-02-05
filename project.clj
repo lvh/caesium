@@ -5,7 +5,7 @@
                         ["snapshots" :clojars]]
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.9.0"]
+  :dependencies [[org.clojure/clojure "1.10.0"]
                  [com.github.jnr/jnr-ffi "2.1.9"]
                  [commons-codec/commons-codec "1.11"]
                  [byte-streams "0.2.4"]
