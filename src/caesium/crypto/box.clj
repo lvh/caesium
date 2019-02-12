@@ -18,7 +18,7 @@
   key) bufs. If also passed a seed, uses it to seed the key pair.
 
   This API matches libsodium's `crypto_box_keypair` and
-  `crpyto_box_seed_keypair`."
+  `crypto_box_seed_keypair`."
   ([pk sk]
    (b/call! keypair pk sk))
   ([pk sk seed]
