@@ -3,7 +3,8 @@
             [caesium.test-utils :refer [const-test]]
             [caesium.vectors :as v]
             [clojure.test :refer [is deftest]]
-            [caesium.byte-bufs :as bb])
+            [caesium.byte-bufs :as bb]
+            [caesium.randombytes :as r])
   (:import (java.nio ByteBuffer)))
 
 (const-test
@@ -112,6 +113,18 @@
     (is (= 100 (count ks)))
     (doseq [^ByteBuffer k ks]
       (is (= aead/chacha20poly1305-keybytes (.limit k))))))
+
+(deftest decryption-fns-invalid-ciphertext-test
+  (let [decryption-fns (filter #(clojure.string/includes? (key %) "decrypt")
+                               (ns-publics 'caesium.crypto.aead))
+        k (r/randombytes 32)
+        ctext (r/randombytes 16)
+        ad (r/randombytes 12)
+        nonce (r/randombytes 12)]
+    (doseq [[fn-name decryption-fn] decryption-fns]
+      (is (thrown? RuntimeException
+                   (decryption-fn ctext ad nonce k))
+          (str "Function `" fn-name "` should throw an exception when given an invalid ciphertext.")))))
 
 (def aead-xchacha20poly1305-ietf-vector
   (comp v/hex-resource (partial str "vectors/aead/xchacha20poly1305ietf/")))
