@@ -607,6 +607,7 @@
 (defsodium)
 
 (defn load-sodium
+  "Load native libsodium library."
   ([]
    (load-sodium "sodium"))
   ([lib]
