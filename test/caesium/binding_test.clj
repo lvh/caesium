@@ -10,6 +10,10 @@
            [java.nio ByteBuffer]
            [jnr.ffi.types size_t]))
 
+(deftest library-not-installed-test
+  (let [result (try (b/load-sodium "not-sodium") (catch Exception e e))]
+    (is (= (type result) (type (ClassNotFoundException.))))))
+
 (deftest permuted-byte-types-test
   (is (= '[[^long ^{size_t {}} crypto_secretbox_keybytes []]]
          (#'b/permuted-byte-types
