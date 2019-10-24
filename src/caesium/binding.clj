@@ -606,12 +606,22 @@
 
 (defsodium)
 
+(defn ^:private load-sodium
+  "Load native libsodium library."
+  ([]
+   (load-sodium "sodium"))
+  ([lib]
+   (try
+     (->
+      (LibraryLoader/create Sodium)
+      (.option LibraryOption/IgnoreError true)
+      (.load lib))
+     (catch Exception e
+       (throw (ClassNotFoundException. "unable to load native libsodium; is it installed?"))))))
+
 (def ^Sodium sodium
   "The sodium library singleton instance."
-  (->
-   (LibraryLoader/create Sodium)
-   (.option LibraryOption/IgnoreError true)
-   (.load "sodium")))
+  (load-sodium))
 
 (assert (#{0 1} (.sodium_init sodium)))
 ;; TODO When does this get called? Guaranteed from 1 thread?
