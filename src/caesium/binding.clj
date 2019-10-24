@@ -606,7 +606,7 @@
 
 (defsodium)
 
-(defn load-sodium
+(defn ^:private load-sodium
   "Load native libsodium library."
   ([]
    (load-sodium "sodium"))

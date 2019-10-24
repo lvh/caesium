@@ -11,7 +11,7 @@
            [jnr.ffi.types size_t]))
 
 (deftest library-not-installed-test
-  (let [result (try (b/load-sodium "not-sodium") (catch Exception e e))]
+  (let [result (try (#'b/load-sodium "not-sodium") (catch Exception e e))]
     (is (= (type result) (type (ClassNotFoundException.))))))
 
 (deftest permuted-byte-types-test
