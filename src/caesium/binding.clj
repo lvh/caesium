@@ -582,7 +582,32 @@
       ^bytes ^{Pinned {}} npub
       ^bytes ^{Pinned {}} k]]
     [^int crypto_aead_xchacha20poly1305_ietf_keygen
-     [^bytes ^{Pinned {}} k]]])
+     [^bytes ^{Pinned {}} k]]
+
+    [^long ^{size_t {}} crypto_kx_publickeybytes []]
+    [^long ^{size_t {}} crypto_kx_secretkeybytes []]
+    [^long ^{size_t {}} crypto_kx_seedbytes []]
+    [^long ^{size_t {}} crypto_kx_sessionkeybytes []]
+    [^String crypto_kx_primitive []]
+    [^int crypto_kx_keypair
+     [^bytes ^{Pinned {}} pk
+      ^bytes ^{Pinned {}} sk]]
+    [^int crypto_kx_seed_keypair
+     [^bytes ^{Pinned {}} pk
+      ^bytes ^{Pinned {}} sk
+      ^bytes ^{Pinned {}} seed]]
+    [^int crypto_kx_client_session_keys
+     [^bytes ^{Pinned {}} rx
+      ^bytes ^{Pinned {}} tx
+      ^bytes ^{Pinned {}} client_pk
+      ^bytes ^{Pinned {}} client_sk
+      ^bytes ^{Pinned {}} server_pk]]
+    [^int crypto_kx_server_session_keys
+     [^bytes ^{Pinned {}} rx
+      ^bytes ^{Pinned {}} tx
+      ^bytes ^{Pinned {}} server_pk
+      ^bytes ^{Pinned {}} server_sk
+      ^bytes ^{Pinned {}} client_pk]]])
 
 (def ^:private bound-fns
   "A mapping of type- and jnr.ffi-annotated bound method symbols to
