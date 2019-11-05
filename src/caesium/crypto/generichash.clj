@@ -60,14 +60,16 @@
   ([buf msg]
    (blake2b-to-buf! buf msg {}))
   ([buf msg {:keys [key salt personal] :or {key (bb/alloc 0)}}]
-   (if (or salt personal)
-     ;; You can't set the defaults in the argspec's destructuring form,
-     ;; because you want to be able to differentiate between a salt that
-     ;; wasn't passed and an empty salt, to call a different fn.
-     (let [salt (or salt (bb/alloc blake2b-saltbytes))
-           personal (or personal (bb/alloc blake2b-personalbytes))]
-       (b/call! blake2b-salt-personal buf msg key salt personal))
-     (b/call! blake2b buf msg key))
+   (if-not (zero?
+            (if (or salt personal)
+              ;; You can't set the defaults in the argspec's destructuring form,
+              ;; because you want to be able to differentiate between a salt that
+              ;; wasn't passed and an empty salt, to call a different fn.
+              (let [salt (or salt (bb/alloc blake2b-saltbytes))
+                    personal (or personal (bb/alloc blake2b-personalbytes))]
+                (b/call! blake2b-salt-personal buf msg key salt personal))
+              (b/call! blake2b buf msg key)))
+     (throw (RuntimeException. "Error in blake2b hashing")))
    buf))
 
 (defn blake2b

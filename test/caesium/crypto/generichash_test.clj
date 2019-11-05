@@ -108,3 +108,7 @@
     (is (bb/bytes= (apply g/blake2b args)
                    (blake2b-vector "digest-empty-string-32"))
         (str "args: " args))))
+
+(deftest blake2b-large-buffer-test
+  (let [result (try (g/blake2b (byte-array 10) {:size 1000}) (catch Exception e e))]
+    (is (= (type result) (type (RuntimeException.))))))
