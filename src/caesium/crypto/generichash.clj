@@ -69,7 +69,7 @@
                     personal (or personal (bb/alloc blake2b-personalbytes))]
                 (b/call! blake2b-salt-personal buf msg key salt personal))
               (b/call! blake2b buf msg key)))
-     (throw (RuntimeException. "Error in blake2b hashing"))
+     (throw (RuntimeException. "Error in BLAKE2b hashing"))
      buf)))
 
 (defn blake2b
