@@ -69,8 +69,8 @@
                             (b/call! blake2b-salt-personal buf msg key salt personal))
                           (b/call! blake2b buf msg key))]
      (if-not (zero? blake2b-result)
-       (throw (RuntimeException. "Error in BLAKE2b hashing")))
-     buf)))
+       (throw (RuntimeException. "Error in BLAKE2b hashing"))
+       buf))))
 
 (defn blake2b
   "Hashes a message using BLAKE2b. Optionally takes key, salt and personal.
