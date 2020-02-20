@@ -2,6 +2,14 @@
 
 Nothing yet :-)
 
+# 0.13.0
+
+Added support for `crypto_kx` (key exchange).
+
+Some safety improvements to BLAKE2b API (#62) error handling.
+
+Minor documentation improvements, significant testing and library management improvements.
+
 # 0.12.0
 
 Error handling and bugfixes for the new AEAD support introduced in 0.11.0.
