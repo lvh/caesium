@@ -1,6 +1,6 @@
 # caesium
 
-![caesium spectral lines](https://dl.dropboxusercontent.com/u/38476311/Logos/caesium.png)
+![caesium spectral lines](https://raw.githubusercontent.com/lvh/caesium/master/caesium.png)
 
 [![Clojars Project](http://clojars.org/caesium/latest-version.svg)](http://clojars.org/caesium)
 [![Build Status](https://travis-ci.org/lvh/caesium.svg?branch=master)](https://travis-ci.org/lvh/caesium)
