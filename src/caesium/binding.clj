@@ -607,7 +607,21 @@
       ^bytes ^{Pinned {}} tx
       ^bytes ^{Pinned {}} server_pk
       ^bytes ^{Pinned {}} server_sk
-      ^bytes ^{Pinned {}} client_pk]]])
+      ^bytes ^{Pinned {}} client_pk]]
+
+    [^long ^{size_t {}} crypto_kdf_bytes_min]
+    [^long ^{size_t {}} crypto_kdf_bytes_max]
+    [^long ^{size_t {}} crypto_kdf_contextbytes]
+    [^long ^{size_t {}} crypto_kdf_keybytes]
+    [^String crypto_kdf_primitive []]
+    [^void crypto_kdf_keygen
+     [^bytes ^{Pinned {}} k]]
+    [^int crypto_kdf_derive_from_key
+     [^bytes ^{Pinned {}} subk
+      ^long ^{LongLong {}} subklen
+      ^long ^{LongLong {}} subkid
+      ^bytes ^{Pinned {}} ctx
+      ^bytes ^{Pinned {}} k]]])
 
 (def ^:private bound-fns
   "A mapping of type- and jnr.ffi-annotated bound method symbols to
