@@ -1,5 +1,6 @@
 # Unreleased
 
+Added support for `crypto_kdf` (key derivation).
 Added support for `crypto_scalarmult_ristretto255` and `crypto_core_ristretto255`.
 
 # 0.13.0
