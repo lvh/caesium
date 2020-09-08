@@ -440,6 +440,17 @@
       ^bytes ^{Pinned {}} n
       ^bytes ^{Pinned {}} p]]
 
+    [^long ^{size_t {}} crypto_scalarmult_ristretto255_bytes []]
+    [^long ^{size_t {}} crypto_scalarmult_ristretto255_scalarbytes []]
+
+    [^int crypto_scalarmult_ristretto255_base
+     [^bytes ^{Pinned {}} q
+      ^bytes ^{Pinned {}} n]]
+    [^int crypto_scalarmult_ristretto255
+     [^bytes ^{Pinned {}} q
+      ^bytes ^{Pinned {}} n
+      ^bytes ^{Pinned {}} p]]
+    
     [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_keybytes []]
     [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_nsecbytes []]
     [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_npubbytes []]
@@ -607,7 +618,55 @@
       ^bytes ^{Pinned {}} tx
       ^bytes ^{Pinned {}} server_pk
       ^bytes ^{Pinned {}} server_sk
-      ^bytes ^{Pinned {}} client_pk]]])
+      ^bytes ^{Pinned {}} client_pk]]
+
+    [^long ^{size_t {}} crypto_core_ristretto255_bytes []]
+    [^long ^{size_t {}} crypto_core_ristretto255_hashbytes []]
+    [^long ^{size_t {}} crypto_core_ristretto255_scalarbytes []]
+    [^long ^{size_t {}} crypto_core_ristretto255_nonreducedscalarbytes []]
+    [^int crypto_core_ristretto255_is_valid_point
+     [^bytes ^{Pinned {}} p]]
+    [^int crypto_core_ristretto255_add
+     [^bytes ^{Pinned {}} r
+      ^bytes ^{Pinned {}} p
+      ^bytes ^{Pinned {}} q]]
+    [^int crypto_core_ristretto255_sub
+     [^bytes ^{Pinned {}} r
+      ^bytes ^{Pinned {}} p
+      ^bytes ^{Pinned {}} q]]
+    [^int crypto_core_ristretto255_from_hash
+     [^bytes ^{Pinned {}} p
+      ^bytes ^{Pinned {}} r]]
+    [^void crypto_core_ristretto255_random
+     [^bytes ^{Pinned {}} p]]
+    [^void crypto_core_ristretto255_scalar_random
+     [^bytes ^{Pinned {}} r]]
+    [^int crypto_core_ristretto255_scalar_invert
+     [^bytes ^{Pinned {}} recip
+      ^bytes ^{Pinned {}} s]]
+    [^void crypto_core_ristretto255_scalar_negate
+     [^bytes ^{Pinned {}} neg
+      ^bytes ^{Pinned {}} s]]
+    [^void crypto_core_ristretto255_scalar_complement
+     [^bytes ^{Pinned {}} result
+      ^bytes ^{Pinned {}} s]]
+    [^void crypto_core_ristretto255_scalar_add
+     [^bytes ^{Pinned {}} z
+      ^bytes ^{Pinned {}} x
+      ^bytes ^{Pinned {}} y]]
+    [^void crypto_core_ristretto255_scalar_sub
+     [^bytes ^{Pinned {}} z
+      ^bytes ^{Pinned {}} x
+      ^bytes ^{Pinned {}} y]]
+    [^void crypto_core_ristretto255_scalar_mul
+     [^bytes ^{Pinned {}} z
+      ^bytes ^{Pinned {}} x
+      ^bytes ^{Pinned {}} y]]
+    [^void crypto_core_ristretto255_scalar_reduce
+     [^bytes ^{Pinned {}} r
+      ^bytes ^{Pinned {}} s]]
+    [^int crypto_core_ristretto255_scalar_is_canonical
+     [^bytes ^{Pinned {}} s]]])
 
 (def ^:private bound-fns
   "A mapping of type- and jnr.ffi-annotated bound method symbols to

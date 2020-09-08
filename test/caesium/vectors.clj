@@ -12,3 +12,9 @@
   "Gets a named resource  in hex format that contains multiple test
   vectors separated by a newline as a collection of byte arrays."
   (comp #(map (comp u/unhexify s/trim) %) #(clojure.string/split % #"\n") slurp io/resource))
+
+(def string-resources
+  "Gets a named resource in plain text format that contains multiple test
+  vectors separated by a newline as a collection of byte arrays."
+  (comp #(map (fn [^String s] (.getBytes s)) %)
+        #(clojure.string/split % #"\n") slurp io/resource))
