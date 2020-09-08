@@ -44,10 +44,6 @@
   (testing "rejects s = -1, which causes y = 0"
     (test-encodings "bad-encodings-s-eq-minus-1" false?)))
 
-(deftest add-test)
-
-(deftest sub-test)
-  
 (deftest to-hash-libsodium-test
   ;; This is a direct port of the tv2 test from the
   ;; libsodium test suite:
