@@ -1,6 +1,6 @@
 # Unreleased
 
-Nothing yet :-)
+Added support for `crypto_kdf` (key derivation).
 
 # 0.13.0
 
