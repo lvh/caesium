@@ -632,7 +632,7 @@
       ^long ^{LongLong {}} subklen
       ^long ^{LongLong {}} subkid
       ^bytes ^{Pinned {}} ctx
-      ^bytes ^{Pinned {}} k]]]
+      ^bytes ^{Pinned {}} k]]
 
     [^long ^{size_t {}} crypto_core_ristretto255_bytes []]
     [^long ^{size_t {}} crypto_core_ristretto255_hashbytes []]
