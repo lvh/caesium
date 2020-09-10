@@ -11,7 +11,7 @@
   (.decode (Hex.) (.getBytes s)))
 
 (defn hexify
-  [b]
+  [^bytes b]
   (Hex/encodeHexString b))
 
 (defn n->bytes
