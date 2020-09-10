@@ -39,11 +39,13 @@
 (defprotocol BufLen
   (^Long buflen [this]))
 
-(extend-protocol BufLen
-  (Class/forName "[B")
-  (buflen [this]
-    (long (alength ^bytes this)))
+(extend (Class/forName "[B")
+  BufLen
+  {:buflen
+   (fn [^bytes this]
+     (long (alength this)))})
 
+(extend-protocol BufLen
   ByteBuffer
   (buflen [this]
     (long (.remaining ^ByteBuffer this))))
