@@ -12,9 +12,12 @@
  s/secretkeybytes 64
  s/primitive "ed25519")
 
+(deftest generate-signing-keys-alias-test
+  (is (= s/generate-signing-keys s/keypair!)))
+
 (deftest generate-signing-keys-test
-  (let [kp1 (s/generate-signing-keys)
-        kp2 (s/generate-signing-keys)]
+  (let [kp1 (s/keypair!)
+        kp2 (s/keypair!)]
     (is (not (bb/bytes= (:public kp1) (:public kp2))))
     (is (not (bb/bytes= (:secret kp1) (:secret kp2))))))
 
@@ -27,7 +30,7 @@
 (def signed (sign-resource "signed"))
 
 (deftest pair-from-secret-test
-  (let [kp (s/generate-signing-keys seed)]
+  (let [kp (s/keypair! seed)]
     (is (bb/bytes= public (:public kp)))
     (is (bb/bytes= secret (:secret kp)))))
 
@@ -36,11 +39,11 @@
 
 (deftest detached-verify-test
   (is (nil? (s/verify signature message public)))
-  (let [{pk :public sk :secret} (s/generate-signing-keys)]
+  (let [{pk :public sk :secret} (s/keypair!)]
     (is (nil? (s/verify (s/sign message sk) message pk))))
   (is (thrown-with-msg?
        RuntimeException #"^Signature validation failed$"
-       (let [{pk :public sk :secret} (s/generate-signing-keys)
+       (let [{pk :public sk :secret} (s/keypair!)
              other-sig (s/sign message sk)]
          (s/verify other-sig message public)))))
 
@@ -51,6 +54,6 @@
   (is (bb/bytes= message (s/verify signed public)))
   (is (thrown-with-msg?
        RuntimeException #"^Signature validation failed$"
-       (let [{pk :public sk :secret} (s/generate-signing-keys)
+       (let [{pk :public sk :secret} (s/keypair!)
              other-signed (s/signed message sk)]
          (s/verify other-signed public)))))
