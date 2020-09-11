@@ -15,9 +15,9 @@
 (def shorthash-vectors (v/hex-resources "vectors/shorthash/shorthash.txt"))
 
 (deftest shorthash-kat-test
-  "Tests and test vectors from:
-  https://github.com/jedisct1/libsodium/blob/master/test/default/shorthash.c
-  https://github.com/jedisct1/libsodium/blob/master/test/default/shorthash.exp"
+  ;; Tests and test vectors from:
+  ;; https://github.com/jedisct1/libsodium/blob/master/test/default/shorthash.c
+  ;; https://github.com/jedisct1/libsodium/blob/master/test/default/shorthash.exp
   (let [k (->> (iterate inc 0)
                (take sh/keybytes)
                (byte-array))

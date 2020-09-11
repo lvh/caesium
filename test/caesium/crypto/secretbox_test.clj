@@ -39,9 +39,9 @@
     n1 (v/hex-resource "vectors/secretbox/forgery1")))
 
 (deftest secretbox-detached-kat-test
-  "Test vectors from:
-  https://github.com/jedisct1/libsodium/blob/master/test/default/secretbox.c
-  https://github.com/jedisct1/libsodium/blob/master/test/default/secretbox.exp"
+  ;; Test vectors from:
+  ;; https://github.com/jedisct1/libsodium/blob/master/test/default/secretbox.c
+  ;; https://github.com/jedisct1/libsodium/blob/master/test/default/secretbox.exp
   (let [{:keys [mac c]} (s/secretbox-detached detached-ptext detached-n0 detached-secret-key)
         known-answer-cipher-text (v/hex-resource "vectors/secretbox/detached/ciphertext0")
         decrypted (s/secretbox-open-detached c mac detached-n0 detached-secret-key)]
