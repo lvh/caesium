@@ -72,10 +72,22 @@
 (defn check-method
   "Check a method binding a non-const fn."
   [^Method method params]
-  (is (= (if (#{"randombytes" "crypto_shorthash_keygen"} (.getName method))
-           Void/TYPE
-           Integer/TYPE)
-         (.getGenericReturnType method)))
+  (let [void-fns
+        #{"crypto_core_ristretto255_random"
+          "crypto_core_ristretto255_scalar_add"
+          "crypto_core_ristretto255_scalar_complement"
+          "crypto_core_ristretto255_scalar_mul"
+          "crypto_core_ristretto255_scalar_negate"
+          "crypto_core_ristretto255_scalar_random"
+          "crypto_core_ristretto255_scalar_reduce"
+          "crypto_core_ristretto255_scalar_sub"
+          "crypto_kdf_keygen"
+          "crypto_shorthash_keygen"
+          "randombytes"}]
+    (is (= (if (void-fns (.getName method))
+             Void/TYPE
+             Integer/TYPE)
+           (.getGenericReturnType method))))
   (doseq [{:keys [type annotations]} params]
     (is (= (condp = type
              ByteArray #{Pinned}
