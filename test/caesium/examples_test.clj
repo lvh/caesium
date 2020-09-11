@@ -5,6 +5,6 @@
 (deftest examples-test
   (let [examples (->> (io/file "examples")
                       (file-seq)
-                      (filter #(.isFile %)))]
-    (doseq [example examples]
+                      (filter #(.isFile ^java.io.File %)))]
+    (doseq [^java.io.File example examples]
       (load-file (.getAbsolutePath example)))))
