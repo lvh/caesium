@@ -17,7 +17,7 @@ a more convenient fork of the original [NaCl][nacl] library by
 [djb]: http://cr.yp.to/djb.html
 [libsodium]: https://github.com/jedisct1/libsodium
 
-***NOTE:*** Install [libsodium](https://libsodium.gitbook.io/doc/installation) before trying to use caesium.
+***NOTE:*** Install [libsodium 1.0.18+](https://libsodium.gitbook.io/doc/installation) before trying to use caesium.
 
 ## Minimum viable snippet
 
