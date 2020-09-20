@@ -17,7 +17,7 @@
 (defspec ->indirect-byte-buf-spec
   1000
   (for-all
-   [n gen/pos-int
+   [n gen/nat
     g (gen/elements ways-of-getting-a-buf-of-len-n)
     :let [src (g n)
           buf (bb/->indirect-byte-buf src)]]
@@ -30,7 +30,7 @@
 (defspec ->direct-byte-buf-spec
   1000
   (for-all
-   [n gen/pos-int
+   [n gen/nat
     g (gen/elements ways-of-getting-a-buf-of-len-n)
     :let [src (g n)
           buf (bb/->direct-byte-buf src)]]
@@ -43,14 +43,14 @@
 (defspec buflen-spec
   1000
   (prop'/for-all
-   [n gen/pos-int
+   [n gen/nat
     g (gen/elements ways-of-getting-a-buf-of-len-n)]
    (= n (bb/buflen (g n)))))
 
 (defspec slice-buflen-spec
   1000
   (prop'/for-all
-   [n gen/pos-int
+   [n gen/nat
     start (gen/choose 0 n)
     end (gen/choose start n)
     g (gen/elements ways-of-getting-a-buf-of-len-n)]
@@ -59,7 +59,7 @@
 (defspec wrapped-array-buflen-spec
   1000
   (prop'/for-all
-   [n gen/pos-int
+   [n gen/nat
     start (gen/choose 0 n)
     slicelen (gen/choose 0 (- n start))]
    (= slicelen
@@ -70,5 +70,5 @@
 (defspec alloc-spec
   1000
   (prop'/for-all
-   [n gen/pos-int]
+   [n gen/nat]
    (= n (bb/buflen (bb/alloc n)))))

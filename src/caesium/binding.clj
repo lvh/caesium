@@ -450,7 +450,7 @@
      [^bytes ^{Pinned {}} q
       ^bytes ^{Pinned {}} n
       ^bytes ^{Pinned {}} p]]
-    
+
     [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_keybytes []]
     [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_nsecbytes []]
     [^long ^{size_t {}} crypto_aead_chacha20poly1305_ietf_npubbytes []]

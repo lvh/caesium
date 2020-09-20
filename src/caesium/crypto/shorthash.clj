@@ -19,9 +19,10 @@
   [out in inlen k]
   (b/call! shorthash out in inlen k))
 
-(defn shorthash [in k]
+(defn shorthash
   "Computes a fixed-size fingerprint for the message `in`,
   using the key `k`."
+  [in k]
   (let [out (bb/alloc bytes)]
     (shorthash-to-buf!
      out

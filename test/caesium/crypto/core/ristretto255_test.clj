@@ -30,7 +30,7 @@
 (defn test-encodings
   [name pred]
   (doseq [x (ristretto255-vectors name)]
-      (is (pred (sut/valid-point? x)))))
+    (is (pred (sut/valid-point? x)))))
 
 (deftest valid-point?-test
   (testing "rejects non-canonical field encodings"
@@ -52,27 +52,27 @@
     (str "5d1be09e3d0c82fc538112490e35701979d99e06ca3e2b5b54bffe8b4dc772c1"
          "4d98b696a1bbfb5ca32c436cc61c16563790306c79eaca7705668b47dffe5bb6")
     "3066f82a1a747d45120d1740f14358531a8f04bbffe6a819f86dfe50f44a0a46"
-    
+
     (str "f116b34b8f17ceb56e8732a60d913dd10cce47a6d53bee9204be8b44f6678b27"
          "0102a56902e2488c46120e9276cfe54638286b9e4b3cdb470b542d46c2068d38")
     "f26e5b6f7d362d2d2a94c5d0e7602cb4773c95a2e5c31a64f133189fa76ed61b"
-    
+
     (str "8422e1bbdaab52938b81fd602effb6f89110e1e57208ad12d9ad767e2e25510c"
          "27140775f9337088b982d83d7fcf0b2fa1edffe51952cbe7365e95c86eaf325c")
     "006ccd2a9e6867e6a2c5cea83d3302cc9de128dd2a9a57dd8ee7b9d7ffe02826"
-    
+
     (str "ac22415129b61427bf464e17baee8db65940c233b98afce8d17c57beeb7876c2"
          "150d15af1cb1fb824bbd14955f2b57d08d388aab431a391cfc33d5bafb5dbbaf")
     "f8f0c87cf237953c5890aec3998169005dae3eca1fbb04548c635953c817f92a"
-    
+
     (str "165d697a1ef3d5cf3c38565beefcf88c0f282b8e7dbd28544c483432f1cec767"
          "5debea8ebb4e5fe7d6f6e5db15f15587ac4d4d4a1de7191e0c1ca6664abcc413")
     "ae81e7dedf20a497e10c304a765c1767a42d6e06029758d2d7e8ef7cc4c41179"
-    
+
     (str "a836e6c9a9ca9f1e8d486273ad56a78c70cf18f0ce10abb1c7172ddd605d7fd2"
          "979854f47ae1ccf204a33102095b4200e5befc0465accc263175485f0e17ea5c")
     "e2705652ff9f5e44d3e841bf1c251cf7dddb77d140870d1ab2ed64f1a9ce8628"
-    
+
     (str "2cdc11eaeb95daf01189417cdddbf95952993aa9cb9c640eb5058d09702c7462"
          "2c9965a697a3b345ec24ee56335b556e677b30e6f90ac77d781064f866a3c982")
     "80bd07262511cdde4863f8a7434cef696750681cb9510eea557088f76d9e5065"))

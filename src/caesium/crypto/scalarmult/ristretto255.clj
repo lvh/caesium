@@ -17,11 +17,11 @@
   ([q n]
    (let [res (b/call! base q n)]
      (when-not (zero? res)
-      (throw (RuntimeException. "scalarmult failed")))))
+       (throw (RuntimeException. "scalarmult failed")))))
   ([q n p]
    (let [res (b/call! ristretto255 q n p)]
      (when-not (zero? res)
-      (throw (RuntimeException. "scalarmult failed"))))))
+       (throw (RuntimeException. "scalarmult failed"))))))
 
 (defn scalarmult
   "Computes the scalar multiplication of a point. If no point is

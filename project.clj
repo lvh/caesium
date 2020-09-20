@@ -23,7 +23,8 @@
                               [lein-kibit "0.1.8"]
                               [jonase/eastwood "0.3.7"]
                               [lein-codox "0.10.7"]
-                              [lein-cloverage "1.1.2"]]}
+                              [lein-cloverage "1.1.2"]]
+                    :eastwood {:config-files ["eastwood.clj"]}}
              :benchmarks {:source-paths ["test/"]
                           :test-paths ^:replace ["benchmarks/"]}}
   :codox {:metadata {:doc/format :markdown}
