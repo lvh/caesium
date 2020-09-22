@@ -3,7 +3,8 @@
 ![caesium spectral lines](https://raw.githubusercontent.com/lvh/caesium/master/caesium.png)
 
 [![Clojars Project](http://clojars.org/caesium/latest-version.svg)](http://clojars.org/caesium)
-[![Build Status](https://travis-ci.org/lvh/caesium.svg?branch=master)](https://travis-ci.org/lvh/caesium)
+
+[![Build Status](https://github.com/lvh/caesium/workflows/build/badge.svg?branch=master)](https://github.com/lvh/caesium/actions?query=workflow%3Abuild)
 [![codecov](https://codecov.io/gh/lvh/caesium/branch/master/graph/badge.svg)](https://codecov.io/gh/lvh/caesium)
 [![Dependencies Status](https://versions.deps.co/lvh/caesium/status.svg)](https://versions.deps.co/lvh/caesium)
 
