@@ -1,0 +1,44 @@
+name: build
+on:
+  - push
+  - pull_request
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      LIBSODIUM_VERSION: 1.0.18
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-deps
+      with:
+        path: |
+          ~/.lein
+          ~/.m2
+          libsodium-build
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.LIBSODIUM_VERSION }}-${{ hashFiles('project.clj') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.LIBSODIUM_VERSION }}-
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Install libsodium
+      run: ./.github/scripts/install-libsodium.sh
+    - name: Install dependencies
+      run: lein with-profile +test deps
+    - name: Check Clojure code style
+      run: lein with-profile +test cljfmt check
+    - name: Run the static code analyzer
+      run: lein with-profile +test kibit
+    - name: Lint the code with Eastwood
+      run: lein with-profile +test eastwood || true
+    - name: Check the dependencies are up-to-date
+      run: lein with-profile +test ancient || true
+    - name: Run tests
+      run: lein test
+    - name: Gather code coverage stats
+      run: lein with-profile +test cloverage --codecov
+    - name: Upload coverage data to codecov.io
+      run: bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
