@@ -39,6 +39,6 @@ jobs:
     - name: Run tests
       run: lein test
     - name: Gather code coverage stats
-      run: lein with-profile +test cloverage --codecov || true
+      run: lein with-profile +test cloverage --codecov
     - name: Upload coverage data to codecov.io
       run: bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
