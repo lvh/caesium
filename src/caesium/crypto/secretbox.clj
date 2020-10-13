@@ -3,8 +3,7 @@
   (:require [caesium.binding :as b]
             [caesium.util :as u]
             [caesium.byte-bufs :as bb]
-            [caesium.randombytes :as r])
-  (:import [java.nio ByteBuffer]))
+            [caesium.randombytes :as r]))
 
 (declare keybytes noncebytes macbytes primitive)
 (b/defconsts [keybytes noncebytes macbytes primitive])

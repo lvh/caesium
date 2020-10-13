@@ -2,8 +2,7 @@
   "Bindings to the public key authenticated encryption scheme."
   (:require [caesium.binding :as b]
             [caesium.crypto.scalarmult :as s]
-            [caesium.byte-bufs :as bb])
-  (:import [java.nio ByteBuffer]))
+            [caesium.byte-bufs :as bb]))
 
 (declare seedbytes
          publickeybytes
