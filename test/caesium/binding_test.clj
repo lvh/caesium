@@ -4,8 +4,8 @@
             [clojure.test :refer [deftest is are]])
   (:import [caesium.binding Sodium]
            [java.lang.annotation Annotation]
-           [java.lang.reflect Method Type AnnotatedElement]
-           [jnr.ffi.annotations In Out Pinned LongLong]
+           [java.lang.reflect Method]
+           [jnr.ffi.annotations Pinned LongLong]
            [jnr.ffi.byref LongLongByReference]
            [java.nio ByteBuffer]
            [jnr.ffi.types size_t]))
