@@ -2,6 +2,10 @@
   (:require [caesium.binding :as b]
             [caesium.byte-bufs :as bb]))
 
+(declare hmacsha256-bytes hmacsha256-keybytes
+         hmacsha512-bytes hmacsha512-keybytes
+         hmacsha512256-bytes hmacsha512256-keybytes)
+
 (b/defconsts [hmacsha256-bytes hmacsha256-keybytes
               hmacsha512-bytes hmacsha512-keybytes
               hmacsha512256-bytes hmacsha512256-keybytes])

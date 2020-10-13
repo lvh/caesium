@@ -8,6 +8,7 @@
   (:require [caesium.binding :as b]
             [caesium.byte-bufs :as bb]))
 
+(declare bytes scalarbytes primitive)
 (b/defconsts [bytes scalarbytes primitive])
 
 (defn scalarmult-to-buf!

@@ -4,6 +4,7 @@
             [caesium.byte-bufs :as bb])
   (:import [java.nio ByteBuffer]))
 
+(declare seedbytes publickeybytes secretkeybytes sessionkeybytes primitive)
 (b/defconsts [seedbytes publickeybytes secretkeybytes sessionkeybytes primitive])
 
 (defn keypair-to-buf!

@@ -5,6 +5,14 @@
             [caesium.byte-bufs :as bb])
   (:import [java.nio ByteBuffer]))
 
+(declare seedbytes
+         publickeybytes
+         secretkeybytes
+         noncebytes
+         macbytes
+         sealbytes
+         primitive)
+
 (b/defconsts [seedbytes
               publickeybytes
               secretkeybytes

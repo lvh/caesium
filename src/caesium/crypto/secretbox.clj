@@ -6,6 +6,7 @@
             [caesium.randombytes :as r])
   (:import [java.nio ByteBuffer]))
 
+(declare keybytes noncebytes macbytes primitive)
 (b/defconsts [keybytes noncebytes macbytes primitive])
 
 (defn secretbox-easy-to-buf!
