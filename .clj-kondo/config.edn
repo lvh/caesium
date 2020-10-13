@@ -2,5 +2,9 @@
            com.gfredericks.test.chuck.clojure-test/for-all clojure.core/for
            com.gfredericks.test.chuck.properties/for-all clojure.core/for}
  :linters
-  {:unresolved-symbol
-    {:exclude [(caesium.binding/call!)]}}}
+ {:deprecated-var
+  {:exclude
+   {caesium.crypto.sign/generate-signing-keys
+    {:namespaces [caesium.crypto.sign-test]}}}
+  :unresolved-symbol
+  {:exclude [(caesium.binding/call!)]}}}
