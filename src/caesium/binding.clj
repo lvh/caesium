@@ -719,7 +719,7 @@
        #_{:clj-kondo/ignore [:unresolved-symbol]} Sodium)
       (.option LibraryOption/IgnoreError true)
       (.load lib))
-     (catch Exception e
+     (catch Exception _
        (throw (ClassNotFoundException. "unable to load native libsodium; is it installed?"))))))
 
 (def ^Sodium sodium
