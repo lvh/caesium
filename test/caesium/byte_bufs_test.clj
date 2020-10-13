@@ -51,8 +51,6 @@
   1000
   (prop'/for-all
    [n gen/nat
-    start (gen/choose 0 n)
-    end (gen/choose start n)
     g (gen/elements ways-of-getting-a-buf-of-len-n)]
    (= n (bb/buflen (g n)))))
 
