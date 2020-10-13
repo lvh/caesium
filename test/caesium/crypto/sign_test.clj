@@ -43,7 +43,7 @@
     (is (nil? (s/verify (s/sign message sk) message pk))))
   (is (thrown-with-msg?
        RuntimeException #"^Signature validation failed$"
-       (let [{pk :public sk :secret} (s/keypair!)
+       (let [{_pk :public sk :secret} (s/keypair!)
              other-sig (s/sign message sk)]
          (s/verify other-sig message public)))))
 
@@ -54,6 +54,6 @@
   (is (bb/bytes= message (s/verify signed public)))
   (is (thrown-with-msg?
        RuntimeException #"^Signature validation failed$"
-       (let [{pk :public sk :secret} (s/keypair!)
+       (let [{_pk :public sk :secret} (s/keypair!)
              other-signed (s/signed message sk)]
          (s/verify other-signed public)))))
