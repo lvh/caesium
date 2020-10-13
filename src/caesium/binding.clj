@@ -8,8 +8,13 @@
             [clojure.math.combinatorics :as c]
             [medley.core :as m])
   (:import [jnr.ffi LibraryLoader LibraryOption]
-           [jnr.ffi.annotations In Out Pinned LongLong]
-           [jnr.ffi.types size_t]))
+           [jnr.ffi.annotations
+            #_{:clj-kondo/ignore [:unused-import]} In
+            #_{:clj-kondo/ignore [:unused-import]} Out
+            #_{:clj-kondo/ignore [:unused-import]} Pinned
+            #_{:clj-kondo/ignore [:unused-import]} LongLong]
+           [jnr.ffi.types
+            #_{:clj-kondo/ignore [:unused-import]} size_t]))
 
 (def ^:private bound-byte-type-syms
   '[bytes java.nio.ByteBuffer])
