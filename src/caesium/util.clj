@@ -3,8 +3,8 @@
 
   This ns is not considered public API, and may break without semver
   major version increments."
-  (:import (java.util Arrays)
-           (org.apache.commons.codec.binary Hex)))
+  (:import
+   [org.apache.commons.codec.binary Hex]))
 
 (defn unhexify
   [^String s]
