@@ -1,6 +1,6 @@
 (ns caesium.byte-bufs-test
   (:require [caesium.byte-bufs :as bb]
-            [clojure.test :refer [deftest is]]
+            [clojure.test :refer [is]]
             [clojure.test.check.clojure-test :refer [defspec]]
             [clojure.test.check.generators :as gen]
             [com.gfredericks.test.chuck.clojure-test :refer [for-all]]

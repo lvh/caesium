@@ -1,9 +1,7 @@
 (ns caesium.crypto.pwhash
   (:refer-clojure :exclude [bytes hash])
   (:require [caesium.binding :as b]
-            [caesium.byte-bufs :as bb]
-            [caesium.util :as u]
-            [medley.core :as m]))
+            [caesium.byte-bufs :as bb]))
 
 (declare alg-argon2i13
          alg-argon2id13
