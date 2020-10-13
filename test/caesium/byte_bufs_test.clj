@@ -14,7 +14,7 @@
    (fn [n] (ByteBuffer/allocateDirect n))
    (fn [n] (ByteBuffer/wrap (byte-array n)))])
 
-(defspec ->indirect-byte-buf-spec
+(defspec #_{:clj-kondo/ignore [:unresolved-symbol]} ->indirect-byte-buf-spec
   1000
   (for-all
    [n gen/nat
@@ -27,7 +27,7 @@
      ;; when the input is a byte buffer, don't convert
      (is (not (.isDirect ^ByteBuffer buf))))))
 
-(defspec ->direct-byte-buf-spec
+(defspec #_{:clj-kondo/ignore [:unresolved-symbol]} ->direct-byte-buf-spec
   1000
   (for-all
    [n gen/nat
@@ -40,14 +40,14 @@
      ;; when the input is a byte buffer, don't convert
      (is (.isDirect ^ByteBuffer buf)))))
 
-(defspec buflen-spec
+(defspec #_{:clj-kondo/ignore [:unresolved-symbol]} buflen-spec
   1000
   (prop'/for-all
    [n gen/nat
     g (gen/elements ways-of-getting-a-buf-of-len-n)]
    (= n (bb/buflen (g n)))))
 
-(defspec slice-buflen-spec
+(defspec #_{:clj-kondo/ignore [:unresolved-symbol]} slice-buflen-spec
   1000
   (prop'/for-all
    [n gen/nat
@@ -56,7 +56,7 @@
     g (gen/elements ways-of-getting-a-buf-of-len-n)]
    (= n (bb/buflen (g n)))))
 
-(defspec wrapped-array-buflen-spec
+(defspec #_{:clj-kondo/ignore [:unresolved-symbol]} wrapped-array-buflen-spec
   1000
   (prop'/for-all
    [n gen/nat
@@ -67,7 +67,7 @@
           (ByteBuffer/wrap start slicelen)
           (bb/buflen)))))
 
-(defspec alloc-spec
+(defspec #_{:clj-kondo/ignore [:unresolved-symbol]} alloc-spec
   1000
   (prop'/for-all
    [n gen/nat]
