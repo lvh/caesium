@@ -715,7 +715,8 @@
   ([lib]
    (try
      (->
-      (LibraryLoader/create Sodium)
+      (LibraryLoader/create
+       #_{:clj-kondo/ignore [:unresolved-symbol]} Sodium)
       (.option LibraryOption/IgnoreError true)
       (.load lib))
      (catch Exception e
