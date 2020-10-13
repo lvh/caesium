@@ -1,0 +1,4 @@
+{:lint-as {caesium.binding/defconsts clojure.core/declare}
+ :linters
+  {:unresolved-symbol
+    {:exclude [(caesium.binding/call!)]}}}
