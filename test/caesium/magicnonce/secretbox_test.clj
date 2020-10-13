@@ -4,7 +4,6 @@
             [caesium.crypto.secretbox-test :as st]
             [clojure.test :refer [deftest is]]
             [caesium.randombytes :as r]
-            [caesium.util :as u]
             [caesium.crypto.generichash :as g]
             [caesium.byte-bufs :as bb]))
 

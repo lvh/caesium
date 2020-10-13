@@ -6,7 +6,7 @@
             [caesium.test-utils :refer [const-test]]
             [caesium.util :as u]
             [caesium.vectors :as v]
-            [clojure.test :refer [are deftest is testing]]))
+            [clojure.test :refer [deftest is testing]]))
 
 (const-test
  s/bytes 32

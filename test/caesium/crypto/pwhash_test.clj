@@ -1,11 +1,8 @@
 (ns caesium.crypto.pwhash-test
   (:require [caesium.crypto.pwhash :as p]
-            [caesium.byte-bufs :as bb]
             [caesium.test-utils :refer [const-test]]
-            [caesium.vectors :as v]
             [caesium.util :as u]
-            [caesium.randombytes :as r]
-            [clojure.test :refer [are deftest is]]))
+            [clojure.test :refer [deftest is]]))
 
 (const-test
  p/alg-argon2i13 1

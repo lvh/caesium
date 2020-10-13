@@ -2,7 +2,7 @@
   (:require [caesium.crypto.sign :as s]
             [caesium.byte-bufs :as bb]
             [caesium.vectors :refer [hex-resource]]
-            [clojure.test :refer [deftest is testing]]
+            [clojure.test :refer [deftest is]]
             [caesium.test-utils :refer [const-test]]))
 
 (const-test
