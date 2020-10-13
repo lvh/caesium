@@ -6,8 +6,7 @@
   namespaces."
   (:require [clojure.string :as s]
             [clojure.math.combinatorics :as c]
-            [medley.core :as m]
-            [clojure.string :as str])
+            [medley.core :as m])
   (:import [jnr.ffi LibraryLoader LibraryOption]
            [jnr.ffi.annotations In Out Pinned LongLong]
            [jnr.ffi.types size_t]))
@@ -733,7 +732,7 @@
   crypto_generichash_generichash."
   [^clojure.lang.Namespace namespace ^clojure.lang.Symbol fn-name]
   (let [fn-name (s/replace (name fn-name) "-" "_")
-        fn-name-parts (set (str/split fn-name #"_"))
+        fn-name-parts (set (s/split fn-name #"_"))
         prefix (-> namespace ns-name str (s/split #"\.") rest vec)
         path (concat (remove fn-name-parts prefix) [fn-name])]
     (symbol (s/join "_" path))))
@@ -775,7 +774,7 @@
                       (with-meta arg {:tag (tag arg)})
 
                       (= 'long (tag arg))
-                      (let [arg-sym (symbol (str/replace (name arg) #"len$" ""))]
+                      (let [arg-sym (symbol (s/replace (name arg) #"len$" ""))]
                         `(long (caesium.byte-bufs/buflen ~arg-sym)))
 
                       (= 'jnr.ffi.byref.LongLongByReference (tag arg))
