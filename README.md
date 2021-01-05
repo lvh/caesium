@@ -46,7 +46,40 @@ small wrappers around that, everything in it applies.
 
 ### Password hashing
 
-Documentation coming soon.
+Here's an example of how you can use pwhash:
+
+``` clojure
+(ns pwhash-usage
+  (:require [caesium.crypto.pwhash :as pwhash]
+            [caesium.randombytes :as rb]
+            [caesium.byte-bufs :as bb]
+            [caesium.util :as u]
+            [caesium.crypto.secretbox :as sb]))
+
+;; helper function for creating salts from integers. may be useful for deterministic
+;; key derivation, incrementing subkeys from 0.
+(def int->salt (partial u/n->bytes pwhash/saltbytes))
+
+;; hashing passwords
+(def password "example")
+(def hashed-password (pwhash/pwhash-str password 
+                                        pwhash/opslimit-sensitive
+                                        pwhash/memlimit-sensitive))
+(assert (= 0 (pwhash/pwhash-str-verify hashed-password password)))
+
+;; key derivation
+(def salt (rb/randombytes pwhash/saltbytes)) ; changing salt means changed derived key
+(def derived-key (pwhash/pwhash msb/keybytes
+                                password
+                                salt
+                                pwhash/opslimit-sensitive
+                                pwhash/memlimit-sensitive
+                                pwhash/alg-default))
+(def message (.getBytes "hello, world!"))
+(def encrypted-message (sb/encrypt derived-key (sb/int->nonce 0) message))
+(def decrypted-message (sb/decrypt derived-key (sb/int->nonce 0) encrypted-message))
+(assert (bb/bytes= message decrypted-message))
+```
 
 ## Differences with other bindings
 
