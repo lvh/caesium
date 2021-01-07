@@ -3,6 +3,7 @@
             [caesium.test-utils :refer [const-test]]
             [caesium.vectors :as v]
             [clojure.test :refer [is deftest]]
+            [clojure.string]
             [caesium.byte-bufs :as bb]
             [caesium.randombytes :as r])
   (:import (java.nio ByteBuffer)))

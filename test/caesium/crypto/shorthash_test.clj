@@ -1,6 +1,6 @@
 (ns caesium.crypto.shorthash-test
   (:require [caesium.crypto.shorthash :as sh]
-            [clojure.test :refer [is testing deftest]]
+            [clojure.test :refer [is deftest]]
             [caesium.test-utils :refer [const-test]]
             [caesium.byte-bufs :as bb]
             [caesium.vectors :as v]))

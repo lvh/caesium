@@ -13,6 +13,7 @@
   (:require [caesium.binding :as b]
             [caesium.byte-bufs :as bb]))
 
+(declare bytes-min bytes-max contextbytes keybytes primitive)
 (b/defconsts [bytes-min bytes-max contextbytes keybytes primitive])
 
 (defn ^:private keygen-to-buf

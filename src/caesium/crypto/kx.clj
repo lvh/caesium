@@ -1,9 +1,9 @@
 (ns caesium.crypto.kx
   (:require [caesium.binding :as b]
             [caesium.crypto.scalarmult :as s]
-            [caesium.byte-bufs :as bb])
-  (:import [java.nio ByteBuffer]))
+            [caesium.byte-bufs :as bb]))
 
+(declare seedbytes publickeybytes secretkeybytes sessionkeybytes primitive)
 (b/defconsts [seedbytes publickeybytes secretkeybytes sessionkeybytes primitive])
 
 (defn keypair-to-buf!

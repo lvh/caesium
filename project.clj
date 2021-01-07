@@ -20,7 +20,9 @@
              :dev {:dependencies [[criterium "0.4.5"]
                                   [org.clojure/test.check "1.0.0"]
                                   [com.gfredericks/test.chuck "0.2.10"]]}
-             :test {:plugins [[lein-ancient "0.6.15"]
+             :test {:aliases {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
+                    :dependencies [[clj-kondo "RELEASE"]]
+                    :plugins [[lein-ancient "0.6.15"]
                               [lein-cljfmt "0.6.6"]
                               [lein-kibit "0.1.8"]
                               [jonase/eastwood "0.3.7"]

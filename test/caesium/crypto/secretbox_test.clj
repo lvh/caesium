@@ -1,7 +1,6 @@
 (ns caesium.crypto.secretbox-test
   (:require [caesium.crypto.secretbox :as s]
             [caesium.test-utils :refer [const-test]]
-            [caesium.util :as u]
             [caesium.vectors :as v]
             [clojure.test :refer [is are deftest testing]]
             [caesium.byte-bufs :as bb]))

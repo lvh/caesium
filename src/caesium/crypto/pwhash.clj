@@ -1,9 +1,83 @@
 (ns caesium.crypto.pwhash
   (:refer-clojure :exclude [bytes hash])
   (:require [caesium.binding :as b]
-            [caesium.byte-bufs :as bb]
-            [caesium.util :as u]
-            [medley.core :as m]))
+            [caesium.byte-bufs :as bb]))
+
+(declare alg-argon2i13
+         alg-argon2id13
+         alg-default
+         bytes-min
+         bytes-max
+         passwd-min
+         passwd-max
+         saltbytes
+         strbytes
+         strprefix
+         opslimit-min
+         opslimit-max
+         memlimit-min
+         memlimit-max
+         opslimit-interactive
+         memlimit-interactive
+         opslimit-moderate
+         memlimit-moderate
+         opslimit-sensitive
+         memlimit-sensitive
+         primitive
+
+         argon2i-alg-argon2i13
+         argon2i-bytes-min
+         argon2i-bytes-max
+         argon2i-passwd-min
+         argon2i-passwd-max
+         argon2i-saltbytes
+         argon2i-strbytes
+         argon2i-strprefix
+         argon2i-opslimit-min
+         argon2i-opslimit-max
+         argon2i-memlimit-min
+         argon2i-memlimit-max
+         argon2i-opslimit-interactive
+         argon2i-memlimit-interactive
+         argon2i-opslimit-moderate
+         argon2i-memlimit-moderate
+         argon2i-opslimit-sensitive
+         argon2i-memlimit-sensitive
+
+         argon2id-alg-argon2id13
+         argon2id-bytes-min
+         argon2id-bytes-max
+         argon2id-passwd-min
+         argon2id-passwd-max
+         argon2id-saltbytes
+         argon2id-strbytes
+         argon2id-strprefix
+         argon2id-opslimit-min
+         argon2id-opslimit-max
+         argon2id-memlimit-min
+         argon2id-memlimit-max
+         argon2id-opslimit-interactive
+         argon2id-memlimit-interactive
+         argon2id-opslimit-moderate
+         argon2id-memlimit-moderate
+         argon2id-opslimit-sensitive
+         argon2id-memlimit-sensitive
+
+         scryptsalsa208sha256-bytes-min
+         scryptsalsa208sha256-bytes-max
+         scryptsalsa208sha256-passwd-min
+         scryptsalsa208sha256-passwd-max
+         scryptsalsa208sha256-saltbytes
+         scryptsalsa208sha256-strbytes
+         scryptsalsa208sha256-strprefix
+         scryptsalsa208sha256-opslimit-min
+         scryptsalsa208sha256-opslimit-max
+         scryptsalsa208sha256-memlimit-min
+         scryptsalsa208sha256-memlimit-max
+         scryptsalsa208sha256-opslimit-interactive
+         scryptsalsa208sha256-memlimit-interactive
+         scryptsalsa208sha256-opslimit-sensitive
+         scryptsalsa208sha256-memlimit-sensitive)
 
 (b/defconsts [alg-argon2i13
               alg-argon2id13

@@ -3,6 +3,19 @@
             [caesium.byte-bufs :as bb]
             [caesium.randombytes :as r]))
 
+(declare chacha20poly1305-ietf-keybytes
+         chacha20poly1305-ietf-nsecbytes
+         chacha20poly1305-ietf-npubbytes
+         chacha20poly1305-ietf-abytes
+         chacha20poly1305-keybytes
+         chacha20poly1305-nsecbytes
+         chacha20poly1305-npubbytes
+         chacha20poly1305-abytes
+         xchacha20poly1305-ietf-keybytes
+         xchacha20poly1305-ietf-nsecbytes
+         xchacha20poly1305-ietf-npubbytes
+         xchacha20poly1305-ietf-abytes)
+
 (b/defconsts [chacha20poly1305-ietf-keybytes
               chacha20poly1305-ietf-nsecbytes
               chacha20poly1305-ietf-npubbytes

@@ -3,6 +3,7 @@
   (:require [caesium.binding :as b]
             [caesium.byte-bufs :as bb]))
 
+(declare bytes seedbytes publickeybytes secretkeybytes primitive)
 (b/defconsts [bytes seedbytes publickeybytes secretkeybytes primitive])
 
 (defn keypair!

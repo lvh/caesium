@@ -4,6 +4,21 @@
             [caesium.byte-bufs :as bb]
             [medley.core :as m]))
 
+(declare bytes
+         bytes-min
+         bytes-max
+         keybytes
+         keybytes-min
+         keybytes-max
+         blake2b-bytes
+         blake2b-bytes-min
+         blake2b-bytes-max
+         blake2b-keybytes
+         blake2b-keybytes-min
+         blake2b-keybytes-max
+         blake2b-saltbytes
+         blake2b-personalbytes)
+
 (b/defconsts [bytes
               bytes-min
               bytes-max

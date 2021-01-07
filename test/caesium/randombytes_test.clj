@@ -1,8 +1,7 @@
 (ns caesium.randombytes-test
   (:require [caesium.randombytes :as r]
             [clojure.test :refer [deftest is]]
-            [caesium.byte-bufs :as bb])
-  (:import (java.nio ByteBuffer)))
+            [caesium.byte-bufs :as bb]))
 
 (deftest randombytes-test
   (let [buf (r/randombytes 10)]

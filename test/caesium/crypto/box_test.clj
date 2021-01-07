@@ -1,9 +1,9 @@
+
 (ns caesium.crypto.box-test
   (:require [caesium.crypto.box :as b]
             [caesium.byte-bufs :as bb]
             [caesium.randombytes :as r]
             [caesium.test-utils :refer [const-test]]
-            [caesium.util :as u]
             [caesium.vectors :as v]
             [clojure.test :refer [deftest is testing]]))
 

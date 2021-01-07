@@ -1,6 +1,7 @@
 *.class
 *.jar
 .DS_Store
+/.clj-kondo/.cache
 /.eastwood
 /.lein-*
 /.nrepl-port

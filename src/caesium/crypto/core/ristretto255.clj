@@ -8,6 +8,7 @@
   (:require [caesium.binding :as b]
             [caesium.byte-bufs :as bb]))
 
+(declare bytes hashbytes scalarbytes nonreducedscalarbytes)
 (b/defconsts [bytes hashbytes scalarbytes nonreducedscalarbytes])
 
 (defn ^:private valid-point-in-buf?

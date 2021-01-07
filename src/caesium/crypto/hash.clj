@@ -2,6 +2,7 @@
   (:require [caesium.binding :as b]
             [caesium.byte-bufs :as bb]))
 
+(declare sha256-bytes sha512-bytes)
 (b/defconsts [sha256-bytes sha512-bytes])
 
 (defn sha256-to-buf!

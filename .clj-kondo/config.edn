@@ -1,0 +1,10 @@
+{:lint-as {caesium.binding/defconsts clojure.core/declare
+           com.gfredericks.test.chuck.clojure-test/for-all clojure.core/for
+           com.gfredericks.test.chuck.properties/for-all clojure.core/for}
+ :linters
+ {:deprecated-var
+  {:exclude
+   {caesium.crypto.sign/generate-signing-keys
+    {:namespaces [caesium.crypto.sign-test]}}}
+  :unresolved-symbol
+  {:exclude [(caesium.binding/call!)]}}}

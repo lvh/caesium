@@ -3,6 +3,10 @@
   (:require [caesium.binding :as b]
             [caesium.byte-bufs :as bb]))
 
+(declare bytes
+         keybytes
+         primitive)
+
 (b/defconsts [bytes
               keybytes
               primitive])

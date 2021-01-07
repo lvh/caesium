@@ -34,6 +34,8 @@ jobs:
       run: lein with-profile +test kibit
     - name: Lint the code with Eastwood
       run: lein with-profile +test eastwood || true
+    - name: Lint the code with clj-kondo
+      run: lein with-profile +test clj-kondo --lint src:test || true
     - name: Check the dependencies are up-to-date
       run: lein with-profile +test ancient || true
     - name: Run tests

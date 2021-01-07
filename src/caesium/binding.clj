@@ -6,11 +6,15 @@
   namespaces."
   (:require [clojure.string :as s]
             [clojure.math.combinatorics :as c]
-            [medley.core :as m]
-            [clojure.string :as str])
+            [medley.core :as m])
   (:import [jnr.ffi LibraryLoader LibraryOption]
-           [jnr.ffi.annotations In Out Pinned LongLong]
-           [jnr.ffi.types size_t]))
+           [jnr.ffi.annotations
+            #_{:clj-kondo/ignore [:unused-import]} In
+            #_{:clj-kondo/ignore [:unused-import]} Out
+            #_{:clj-kondo/ignore [:unused-import]} Pinned
+            #_{:clj-kondo/ignore [:unused-import]} LongLong]
+           [jnr.ffi.types
+            #_{:clj-kondo/ignore [:unused-import]} size_t]))
 
 (def ^:private bound-byte-type-syms
   '[bytes java.nio.ByteBuffer])
@@ -711,10 +715,11 @@
   ([lib]
    (try
      (->
-      (LibraryLoader/create Sodium)
+      (LibraryLoader/create
+       #_{:clj-kondo/ignore [:unresolved-symbol]} Sodium)
       (.option LibraryOption/IgnoreError true)
       (.load lib))
-     (catch Exception e
+     (catch Exception _
        (throw (ClassNotFoundException. "unable to load native libsodium; is it installed?"))))))
 
 (def ^Sodium sodium
@@ -733,7 +738,7 @@
   crypto_generichash_generichash."
   [^clojure.lang.Namespace namespace ^clojure.lang.Symbol fn-name]
   (let [fn-name (s/replace (name fn-name) "-" "_")
-        fn-name-parts (set (str/split fn-name #"_"))
+        fn-name-parts (set (s/split fn-name #"_"))
         prefix (-> namespace ns-name str (s/split #"\.") rest vec)
         path (concat (remove fn-name-parts prefix) [fn-name])]
     (symbol (s/join "_" path))))
@@ -775,7 +780,7 @@
                       (with-meta arg {:tag (tag arg)})
 
                       (= 'long (tag arg))
-                      (let [arg-sym (symbol (str/replace (name arg) #"len$" ""))]
+                      (let [arg-sym (symbol (s/replace (name arg) #"len$" ""))]
                         `(long (caesium.byte-bufs/buflen ~arg-sym)))
 
                       (= 'jnr.ffi.byref.LongLongByReference (tag arg))
