@@ -715,7 +715,7 @@
       (.option LibraryOption/IgnoreError true)
       (.load lib))
      (catch Exception e
-       (throw (ClassNotFoundException. "unable to load native libsodium; is it installed?"))))))
+       (throw (ClassNotFoundException. "unable to load native libsodium; is it installed?" e))))))
 
 (def ^Sodium sodium
   "The sodium library singleton instance."
