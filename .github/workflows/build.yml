@@ -61,3 +61,5 @@ jobs:
       run: lein with-profile +test cloverage --codecov
     - name: Upload coverage data to codecov.io
       run: bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
+    - name: Attempt to AOT compile caesium.sodium
+      run: lein compile caesium.sodium
