@@ -48,6 +48,8 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
+    - name: Show lein/JDK version
+      run: lein version
     - name: Install libsodium
       run: ./.github/scripts/install-libsodium.sh
     - name: Install dependencies
