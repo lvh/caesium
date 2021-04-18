@@ -20,6 +20,7 @@ jobs:
       run: lein with-profile +test ancient || true
 
   test:
+    runs-on: ubuntu-latest
     name: ${{ matrix.java }}
     strategy:
       matrix:
