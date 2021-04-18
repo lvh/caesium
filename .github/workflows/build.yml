@@ -2,10 +2,25 @@ name: build
 on:
   - push
   - pull_request
+
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: lein with-profile +test deps
+    - name: Check Clojure code style
+      run: lein with-profile +test cljfmt check
+    - name: Run the static code analyzer
+      run: lein with-profile +test kibit
+    - name: Lint the code with Eastwood
+      run: lein with-profile +test eastwood || true
+    - name: Check the dependencies are up-to-date
+      run: lein with-profile +test ancient || true
+
   test:
     name: ${{ matrix.java }}
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         java: [ '8', '11', '16' ]
@@ -37,14 +52,6 @@ jobs:
       run: ./.github/scripts/install-libsodium.sh
     - name: Install dependencies
       run: lein with-profile +test deps
-    - name: Check Clojure code style
-      run: lein with-profile +test cljfmt check
-    - name: Run the static code analyzer
-      run: lein with-profile +test kibit
-    - name: Lint the code with Eastwood
-      run: lein with-profile +test eastwood || true
-    - name: Check the dependencies are up-to-date
-      run: lein with-profile +test ancient || true
     - name: Run tests
       run: lein test
     - name: Gather code coverage stats
