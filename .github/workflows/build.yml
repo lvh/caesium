@@ -4,11 +4,20 @@ on:
   - pull_request
 jobs:
   test:
+    name: {{ matrix.java }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '8', '11', '14', '15' ]
     env:
       LIBSODIUM_VERSION: 1.0.18
     steps:
     - uses: actions/checkout@v2
+    - name: Setup JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: ${{ matrix.java }}
     - name: Cache dependencies
       uses: actions/cache@v2
       env:
