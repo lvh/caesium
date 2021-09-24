@@ -81,6 +81,46 @@ Here's an example of how you can use pwhash:
 (assert (bb/bytes= message decrypted-message))
 ```
 
+### Usage with Github Actions secrets
+
+Here is how you can create or update a repository secret for GitHub actions:
+
+``` clojure
+(require '[caesium.crypto.box])
+(require '[clj-http.client :as http])
+(require '[jsonista.core :as json])
+(import '(java.util Base64))
+
+(def public-key
+  "The public key of the repository of which you want to create or update a secret"
+  (let [payload (-> {:request-method :get
+                     :url "https://api.github.com/repos/{owner}/{repo}/actions/secrets/public-key"
+                     :basic-auth ["{user}" "{GITHUB_TOKEN}"]
+                     :headers {"Content-Type" "application/json"
+                               "Accept" "application/vnd.github.v3+json"}}
+                    http/request
+                    :body
+                    json/read-value)
+        ^String encoded-key (get payload "key")]
+    {:decoded-key (.decode (Base64/getDecoder) (.getBytes encoded-key))
+     :key-id (get payload "key_id")}))
+
+(let [{:keys [^String decoded-key ^String key-id]} public-key
+      plaintext "MY_SECRET_VALUE"
+      cyphertext (caesium.crypto.box/box-seal
+                   (byte-streams/to-byte-array plaintext)
+                   decoded-key)]
+  (http/request
+    {:request-method :put
+     :url "https://api.github.com/repos/{owner}/{repo}/actions/secrets/{MY_SECRET}"
+     :body (json/write-value-as-string
+             {:encrypted_value (.encodeToString (Base64/getEncoder) cyphertext)
+              :key_id key-id})
+     :basic-auth ["{user}" "{GITHUB_TOKEN}"]
+     :headers {"Content-Type" "application/json"
+               "Accept" "application/vnd.github.v3+json"}}))
+```
+
 ## Differences with other bindings
 
 Instead of making specific claims about specific libraries which may become
