@@ -7,19 +7,19 @@
                                       :creds :gpg}]]
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.10.1"]
-                 [com.github.jnr/jnr-ffi "2.1.12"]
-                 [commons-codec/commons-codec "1.14"]
+  :dependencies [[org.clojure/clojure "1.11.1"]
+                 [com.github.jnr/jnr-ffi "2.2.12"]
+                 [commons-codec/commons-codec "1.15"]
                  [byte-streams "0.2.4"]
                  [org.clojure/math.combinatorics "0.1.6"]
-                 [medley "1.2.0"]
-                 [com.taoensso/timbre "4.10.0"]]
+                 [medley "1.4.0"]
+                 [com.taoensso/timbre "5.2.1"]]
   :main ^:skip-aot caesium.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
-             :dev {:dependencies [[criterium "0.4.5"]
-                                  [org.clojure/test.check "1.0.0"]
-                                  [com.gfredericks/test.chuck "0.2.10"]]}
+             :dev {:dependencies [[criterium "0.4.6"]
+                                  [org.clojure/test.check "1.1.1"]
+                                  [com.gfredericks/test.chuck "0.2.13"]]}
              :test {:plugins [[lein-ancient "0.6.15"]
                               [lein-cljfmt "0.6.6"]
                               [lein-kibit "0.1.8"]
