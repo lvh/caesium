@@ -11,8 +11,8 @@
            [jnr.ffi.types size_t]))
 
 (deftest library-not-installed-test
-  (let [result (try (#'b/load-sodium "notsodium-801a67af") (catch Exception e e))]
-    (is (= (type result) (type (ClassNotFoundException.))))))
+  (let [result (try (#'b/load-sodium "notsodium-801a67af") (catch Throwable t t))]
+    (is (= (type result) (type (UnsatisfiedLinkError.))))))
 
 (deftest permuted-byte-types-test
   (is (= '[[^long ^{size_t {}} crypto_secretbox_keybytes []]]

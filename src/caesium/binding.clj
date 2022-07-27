@@ -712,7 +712,7 @@
    (try
      (->
       (LibraryLoader/create Sodium)
-      (.option LibraryOption/IgnoreError true)
+      (.failImmediately)
       (.load lib))
      (catch Exception e
        (throw (ClassNotFoundException. "unable to load native libsodium; is it installed?" e))))))
