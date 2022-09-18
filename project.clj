@@ -20,12 +20,12 @@
              :dev {:dependencies [[criterium "0.4.6"]
                                   [org.clojure/test.check "1.1.1"]
                                   [com.gfredericks/test.chuck "0.2.13"]]}
-             :test {:plugins [[lein-ancient "0.6.15"]
-                              [lein-cljfmt "0.6.6"]
+             :test {:plugins [[lein-ancient "0.7.0"]
+                              [lein-cljfmt "0.9.0"]
                               [lein-kibit "0.1.8"]
-                              [jonase/eastwood "0.3.7"]
-                              [lein-codox "0.10.7"]
-                              [lein-cloverage "1.2.1"]]
+                              [jonase/eastwood "1.3.0"]
+                              [lein-codox "0.10.8"]
+                              [lein-cloverage "1.2.4"]]
                     :eastwood {:config-files ["eastwood.clj"]}}
              :benchmarks {:source-paths ["test/"]
                           :test-paths ^:replace ["benchmarks/"]}}
