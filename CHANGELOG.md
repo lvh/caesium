@@ -2,6 +2,12 @@
 
 Nothing yet!
 
+# 0.15.0
+
+Fail immediately and with a more informative error when possible (#88).
+Added support for `crypto_pwhash` (password hashing).
+Some housekeeping (more examples, better CI).
+
 # 0.14.0
 
 Added support for `crypto_kdf` (key derivation).
