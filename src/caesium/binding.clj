@@ -722,7 +722,6 @@
   (load-sodium))
 
 (assert (#{0 1} (.sodium_init sodium)))
-;; TODO When does this get called? Guaranteed from 1 thread?
 
 (defn ^:private c-name
   "Resolves the fn name in the current ns to the fn name in the equivalent
