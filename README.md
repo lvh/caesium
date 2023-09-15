@@ -69,7 +69,7 @@ Here's an example of how you can use pwhash:
 
 ;; key derivation
 (def salt (rb/randombytes pwhash/saltbytes)) ; changing salt means changed derived key
-(def derived-key (pwhash/pwhash msb/keybytes
+(def derived-key (pwhash/pwhash sb/keybytes
                                 password
                                 salt
                                 pwhash/opslimit-sensitive
